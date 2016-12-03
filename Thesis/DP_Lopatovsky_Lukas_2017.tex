@@ -12,9 +12,16 @@
 % \usepackage[cp1250]{inputenc} % LaTeX source encoded as Windows-1250
 
 \usepackage{graphicx} %graphics files inclusion
-% \usepackage{subfig} %subfigures
-% \usepackage{amsmath} %advanced maths
-% \usepackage{amssymb} %additional math symbols
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[chapter]{algorithm} % http://ctan.org/pkg/algorithms
+\usepackage[noend]{algpseudocode} % http://ctan.org/pkg/algorithmicx
+\usepackage{pseudocode}
+\usepackage{comment}
+
+
 
 \usepackage{dirtree} %directory tree visualisation
 
@@ -58,6 +65,28 @@
 
 \setsecnumdepth{all}
 \chapter{Continuous-time Markov Chain}
+
+
+\section{Definition}
+
+\begin{equation}
+\begin{aligned}
+& \mathrm{P}( X_t+s = j \mid X_s = i, X_{s_n} = i_n, \cdots , X_{s_0} ) = \\ 
+& = \mathrm{P}( X_t+s = j \mid X_s = i ) = \mathrm{P}( X_t = j \mid X_0 = i )
+\end{aligned}
+\end{equation}
+
+Chapman-Kolmogoroff equation: 
+
+\begin{equation}
+\sum_{k}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)    
+\end{equation}
+
+Jump rate:
+
+\begin{equation}
+\mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \text{if } i\neq j     
+\end{equation}
 
 \section{}
 
