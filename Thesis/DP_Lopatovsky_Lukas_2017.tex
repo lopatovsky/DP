@@ -40,7 +40,7 @@
 \authorFN{Lopatovsk{\' y}} %author's surname
 \author{Luk{\' a}{\v s} Lopatovsk{\' y}} %author's name without academic degrees
 \authorWithDegrees{Bc. Luk{\' a}{\v s} Lopatovsk{\' y}} %author's name with academic degrees
-\supervisor{Ing. Daniel Vašata, Ph.D.}
+\supervisor{Ing. Daniel Va{v s}ata, Ph.D.}
 \acknowledgements{THANKS (remove entirely in case you do not with to thank anyone)}
 \abstractEN{Summarize the contents and contribution of your work in a few sentences in English language.}
 \abstractCS{V n{\v e}kolika v{\v e}t{\' a}ch shr{\v n}te obsah a p{\v r}{\' i}nos t{\' e}to pr{\' a}ce v {\v c}esk{\' e}m jazyce.}
@@ -61,26 +61,68 @@
 \begin{introduction}
 	This is the master thesis. welcome!
 	\section{Motivation and objectives}
+	About a discrete model and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
+	
+	
 \end{introduction}
 
 \setsecnumdepth{all}
-\chapter{Continuous-time Markov Chain}
 
+\chapter{Discrete-time Markov Chain}
+- under consideration
+\chapter{Discrete-time Hidden Markov Model}
+- under consideration
+
+\chapter{Finite State Continuous Time Markov Chain} 
 
 \section{Definition}
-
+%cit:[S.Karlin]
+A finite state continuous time Markov chain (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $i_0, i_1, \cdots, i_n, i, j \in C$ (for $n>0$ and $C$ being the finite state space), that in any time $0 \leq s_0 < s_1 < \cdots < s_n < s$ satisfies the following equations: 
+\begin{itemize}
+\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< s$. The process is memoryless.    
+    
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( X_t+s = j \mid X_s = i, X_{s_n} = i_n, \cdots , X_{s_0} ) = \\ 
-& = \mathrm{P}( X_t+s = j \mid X_s = i ) = \mathrm{P}( X_t = j \mid X_0 = i )
+& \mathrm{P}( X_{t+s} = j \mid X_s = i, X_{s_n} = i_n, \cdots , X_{s_0} ) = \\ 
+& = \mathrm{P}( X_{t+s} = j \mid X_s = i )
 \end{aligned}
 \end{equation}
 
-Chapman-Kolmogoroff equation: 
+The equation describes that the stochastic process is memoryless.
+
+\item \textbf{Homogeneity:} Probability of transition in any given time $s \geq 0$ depends only at the length of the time interval $t \geq 0$. 
 
 \begin{equation}
-\sum_{k}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)    
+\begin{aligned}
+& \mathrm{P}( X_{t+s} = j \mid X_s = i ) = \mathrm{P}( X_t = j \mid X_0 = i ) = \\
+& = \mathrm{p_t}(i,j)
+\end{aligned}
 \end{equation}
+
+\end{itemize}
+
+\section{Properties} 
+
+Holding the upper mentioned conditions the transition rate $\mathrm{p_t}(i,j), i,j \in C$ satisfies:%cit:[S.Karlin]
+
+
+\begin{equation}
+\mathrm{p_t}(i,j) \geq 0
+\end{equation}
+
+\begin{equation}
+\sum_{j \in C} \mathrm{p_t}(i,j) = 1
+\end{equation}
+
+\begin{equation}\label{eq:ckeq}
+\sum_{k \in C}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)     
+\end{equation}
+
+Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
+
+%proof of Chapman-kolmogorov?
+
+
 
 Jump rate:
 
