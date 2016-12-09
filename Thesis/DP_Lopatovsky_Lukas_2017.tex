@@ -74,7 +74,10 @@
 \chapter{Discrete-time Hidden Markov Model}
 - under consideration
 
+
 \chapter{Finite State Continuous Time Markov Chain} 
+
+%releationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
 
 \section{Definition}
 %cit:[S.Karlin]
@@ -134,7 +137,7 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 \matr{P_s} \matr{P_t} = \matr{P_{s+t}},   t,s > 0  
 \end{equation}
 
-%proof of Chapman-kolmogorov?
+?proof of Chapman-kolmogorov?
 
 %construction from Discrete time with poisson timing
 
@@ -146,29 +149,33 @@ Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the $\mathrm{p
 \mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \text{if } i\neq j     
 \end{equation}
 
-We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to some other state j. The jump rate $\mathrm{q}(i,j)$ can be derived from equation of transition probabilities summing to the one.
+We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to some other state j. The jump rate $\mathrm{q}(i,i)$ can be derived from equation of transition probabilities summing to the one.
 
 \begin{equation}
-1 = \mathrm{p_t}(i,i) + \sum{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
+1 = \mathrm{p_t}(i,i) + \sum_{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
 \end{equation}
 
 dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain:
 
 \begin{equation}
- \mathrm{q}(i,i) = 1 - \sum{j \in C ,j \neq i} \mathrm{q}(i,j) 
+ \mathrm{q}(i,i) = 1 - \sum_{j \in C ,j \neq i} \mathrm{q}(i,j) 
 \end{equation}
- 
+
+It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $\mathrm{q}(i,j) = \lambda\mathrm{u}(i,j)$ holds. Where $\mathrm{u}(i,j)$ is the transition rate from the $i$ to $j$ in DTMC. This is why we call the $\mathrm{q}(i,j)$ the jump rate.  
+
+\subsection{The Infinitesimal Matrix}
 
 
 
+$\matr{Q}$
 
 
-\section{}
+\section{Continuous Time Hidden Markov Model}
 
 
-\chapter{State-of-the-art}
+\chapter{Expectation Maximization}
 
-\chapter{Analysis and design}
+\chapter{Baum-Welch}
 
 \chapter{Realisation}
 
