@@ -21,14 +21,15 @@
 \usepackage{pseudocode}
 \usepackage{comment}
 
-
-
 \usepackage{dirtree} %directory tree visualisation
 
 % % list of acronyms
 % \usepackage[acronym,nonumberlist,toc,numberedsection=autolabel]{glossaries}
 % \iflanguage{czech}{\renewcommand*{\acronymname}{Seznam pou{\v z}it{\' y}ch zkratek}}{}
 % \makeglossaries
+
+%%%%%%%%%%%% own commands %%%%%%%%%%%%%%%%%%
+\newcommand{\matr}[1]{\mathbf{#1}} 
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % EDIT THIS
@@ -114,21 +115,53 @@ Holding the upper mentioned conditions the transition rate $\mathrm{p_t}(i,j), i
 \sum_{j \in C} \mathrm{p_t}(i,j) = 1
 \end{equation}
 
+\begin{equation}\label{eq:l0}  
+\lim_{t \to 0^+} \mathrm{p_t}(i,j)= 
+\begin{cases}
+1, i = j\\
+0, i \neq j
+\end{cases}
+\end{equation}
+
 \begin{equation}\label{eq:ckeq}
 \sum_{k \in C}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)     
 \end{equation}
 
 Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
+We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t(i,j)}$ to get the equation in following form:
+
+\begin{equation}
+\matr{P_s} \matr{P_t} = \matr{P_{s+t}},   t,s > 0  
+\end{equation}
 
 %proof of Chapman-kolmogorov?
 
+%construction from Discrete time with poisson timing
 
+\subsection{ Jump Rates }
 
-Jump rate:
+Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the $\mathrm{p_t(i,j)}$ for every $i,j$ and $0 < t < t_0$, we can compute the values for any time $t > 0$. The property \eqref{eq:l0} asserts that $\mathrm{P_t(i,j)}$ is continuous for $t=0$,so for $t>0$ ref[S.Karlin] and we can find it's right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
 
 \begin{equation}
 \mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \text{if } i\neq j     
 \end{equation}
+
+We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to some other state j. The jump rate $\mathrm{q}(i,j)$ can be derived from equation of transition probabilities summing to the one.
+
+\begin{equation}
+1 = \mathrm{p_t}(i,i) + \sum{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
+\end{equation}
+
+dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain:
+
+\begin{equation}
+ \mathrm{q}(i,i) = 1 - \sum{j \in C ,j \neq i} \mathrm{q}(i,j) 
+\end{equation}
+ 
+
+
+
+
 
 \section{}
 
