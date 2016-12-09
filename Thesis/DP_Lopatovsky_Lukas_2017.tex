@@ -155,19 +155,32 @@ We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to som
 1 = \mathrm{p_t}(i,i) + \sum_{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
 \end{equation}
 
-dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain:
+dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain following equation. 
 
-\begin{equation}
- \mathrm{q}(i,i) = 1 - \sum_{j \in C ,j \neq i} \mathrm{q}(i,j) 
+\begin{equation}\label{eq:qii}
+ \mathrm{q}(i,i) =  \sum_{j \in C ,j \neq i} \mathrm{q}(i,j) 
 \end{equation}
 
-It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $\mathrm{q}(i,j) = \lambda\mathrm{u}(i,j)$ holds. Where $\mathrm{u}(i,j)$ is the transition rate from the $i$ to $j$ in DTMC. This is why we call the $\mathrm{q}(i,j)$ the jump rate.  
+(We assume the finite rates $\mathrm{q}(i,j)$, infinite rate would immediately leads to the leaving of the state, so it makes no sense to consider.)\\
+
+It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $\mathrm{q}(i,j) = \lambda\mathrm{u}(i,j)$ holds. Where $\mathrm{u}(i,j)$ is the transition rate from the $i$ to $j$ in DTMC. This is why we call the $\mathrm{q}(i,j)$ the jump rate.[zdroj]  
+
+%ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
+%u(i, i) = 1 - sum_j u(i, j)
 
 \subsection{The Infinitesimal Matrix}
 
+We can also look at $\mathrm{q}(i,i)$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the Infinitesimal matrix $\matr{Q}$ as following:
 
+\begin{equation}  
+\matr{Q}(i,j)= 
+\begin{cases}
+\mathrm{q}(i,j), \text{if } i\neq j\\
+- \sum_{k \in C ,k \neq i} \mathrm{q}(i,k), \text{if } i=j
+\end{cases}
+\end{equation}
 
-$\matr{Q}$
+Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof]
 
 
 \section{Continuous Time Hidden Markov Model}
