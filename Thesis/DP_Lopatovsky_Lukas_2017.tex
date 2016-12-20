@@ -207,17 +207,18 @@ Look at [st] for more detailed, easily understandable tutorial with examples.
 We will continue by iterating through two following steps: 
 
 \begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(0)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ Count the probability under current parameters estimation.  
+\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$.
 
+\begin{equation}\label{eq:exp}
+ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})
+\end{equation}
 
-
-
-
-
-\item \textbf{Maximization:} Maximize the probabilities of parameters using their log-likelihood evaluation of previous step.  
+\item \textbf{Maximization:} Find the value $\hat\theta^{(t+1)}$ that maximize $\mathrm{Q}(\hat\theta^{(t)})$.  
 \end{enumerate}  
 
-...when finito?, It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?].    
+As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
+
+It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?].    
 
 
 
