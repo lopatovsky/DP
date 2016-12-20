@@ -20,6 +20,7 @@
 \usepackage[noend]{algpseudocode} % http://ctan.org/pkg/algorithmicx
 \usepackage{pseudocode}
 \usepackage{comment}
+\usepackage{enumitem}
 
 \usepackage{dirtree} %directory tree visualisation
 
@@ -191,17 +192,34 @@ Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\
 
 %(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
 
-Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimation (MLE) in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). As to find the MLE directly can be very computationally expensive, the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.  
+Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
+hood estimation, however the latent variables makes finding of the MLE more difficult. To count it directly can be very computationally expensive, so the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
+
+Let's have vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
+%[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
+
+Look at [st] for more detailed, easily understandable tutorial with examples.    
 
 \begin{enumerate}
-\item \textbf{Initialization:} $\hat \theta^{(0)} $
-\item \textbf{Expectation:} 
-\item \textbf{Maximization:}
+\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta^{(0)} $.
+\end{enumerate} 
+
+We will continue by iterating through two following steps: 
+
+\begin{enumerate}[resume]
+\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(0)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ Count the probability under current parameters estimation.  
+
+
+
+
+
+
+\item \textbf{Maximization:} Maximize the probabilities of parameters using their log-likelihood evaluation of previous step.  
 \end{enumerate}  
 
 ...when finito?, It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?].    
 
-%simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
+
 
     
 
