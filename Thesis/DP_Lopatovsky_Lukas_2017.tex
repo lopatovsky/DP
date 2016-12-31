@@ -63,20 +63,47 @@
 \begin{introduction}
 	This is the master thesis. welcome!
 	\section{Motivation and objectives}
-	About a discrete model and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
-	
-	
+	About a discrete model [inspired by Rabiner? ] and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
 \end{introduction}
 
 \setsecnumdepth{all}
 
 \chapter{Discrete-time Hidden Markov Model}
-This chapter will briefly discuss Discrete-time Hidden Markov Model (later just HMM) as defined in [Rabiner], where you can also look for the more comprehensive explanation.
+This chapter will briefly discuss Discrete-time Hidden Markov Model (later just HMM) as defined in [Rabiner], where you can also look for the more comprehensive explanation with examples.
 
-We have decided to write this chapter, because Continuos-time HMM is its direct logical extension and also it is using some of the subroutines that are the same as if defined for discrete time model.
+We have decided to write this chapter, because Continuous-time HMM is its direct logical extension and also it is using some of the subroutines that are the same as if defined for discrete time model.
 
 \section{Discrete Markov Process}
     
+Discrete Markov Process is the stochastic process in discrete equidistant time $t= 1,2,\cdots$, that in every time is in some state from the set of $N$ distinct states $S_1,S_2, \cdots, S_N $. The change of the state can occur in every $t$, with some given probability $a_{ij}$, what is the probability that the system will move from the state $S_i$ to the state $S_j$ in any time step, or possibly it can remain in the same state with probability $a_{ii}$. Then we denote the actual state at time $t$ as $q_t$.
+
+To tell about the system to be Markov, it should hold so called Markov property. It can be expressed by equation \eqref{eq:mp}, it means that the probability of transition to another state depends only on the current state and doesn't use the information about any past states - the system is memory-less.
+
+\begin{equation}\label{eq:mp}
+\begin{aligned}
+\mathrm{P}(q_t & = S_j \mid q_{t-1} = S_{j-1}, q_{t-2} = S_{j-2}, \cdots)  \\   
+               & = \mathrm{P}(q_t = S_j \mid q_{t-1} = S_{j-1} )
+\end{aligned}
+\end{equation}
+
+The other important property is Homogeneity. The probability of transition from one state to another is constant throughout the time. 
+
+\begin{equation}\label{eq:homo}
+   a_{ij} = \mathrm{P}(q_t = S_j \mid q_{t-1} = S_{j-1} ),\qquad 1 \leq i,j \leq N, \forall t
+\end{equation}
+
+For the transition probabilities are applied classical stochastic constrains.
+
+\begin{equation}
+   a_{ij} \geq 0
+\end{equation}
+
+\begin{equation}
+   \sum_{j=1}^N a_{ij} = 1
+\end{equation}
+
+    
+
 \section{Discrete-time Hidden Markov Model}
 
 \section{Three Basic Problems for HMMs}
@@ -104,7 +131,7 @@ A finite state continuous time Markov chain (later as CTMC) is a~stochastic proc
 \end{aligned}
 \end{equation}
 
-The equation describes that the stochastic process is memoryless.
+The equation describes that the stochastic process is memory-less.
 
 \item \textbf{Homogeneity:} Probability of transition in any given time $s \geq 0$ depends only at the length of the time interval $t \geq 0$. 
 
@@ -146,7 +173,7 @@ Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation.
 We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t(i,j)}$ to get the equation in following form:
 
 \begin{equation}
-\matr{P_s} \matr{P_t} = \matr{P_{s+t}},   t,s > 0  
+\matr{P_s} \matr{P_t} = \matr{P_{s+t}},   \qquad t,s > 0  
 \end{equation}
 
 ?proof of Chapman-kolmogorov?
@@ -158,7 +185,7 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the $\mathrm{p_t(i,j)}$ for every $i,j$ and $0 < t < t_0$, we can compute the values for any time $t > 0$. The property \eqref{eq:l0} asserts that $\mathrm{P_t(i,j)}$ is continuous for $t=0$,so for $t>0$ ref[S.Karlin] and we can find it's right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
 
 \begin{equation}
-\mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \text{if } i\neq j     
+\mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \quad \text{if } i\neq j     
 \end{equation}
 
 We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to some other state j. The jump rate $\mathrm{q}(i,i)$ can be derived from equation of transition probabilities summing to the one.
@@ -188,7 +215,7 @@ We can also look at $\mathrm{q}(i,i)$ as at the rate in which the $X_t$ is leavi
 \matr{Q}(i,j)= 
 \begin{cases}
 \mathrm{q}(i,j), \text{if } i\neq j\\
-- \sum_{k \in C ,k \neq i} \mathrm{q}(i,k), \text{if } i=j
+- \sum_{k \in C ,k \neq i} \mathrm{q}(i,k), \quad \text{if } i=j
 \end{cases}
 \end{equation}
 
@@ -241,7 +268,7 @@ It is important to notice that this approach leads to the local optimum. To get 
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
 
-\chapter{Realisation}
+%\chapter{Realisation}
 
 \setsecnumdepth{part}
 \chapter{Conclusion}
