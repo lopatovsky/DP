@@ -31,6 +31,7 @@
 
 %%%%%%%%%%%% own commands %%%%%%%%%%%%%%%%%%
 \newcommand{\matr}[1]{\mathbf{#1}} 
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % EDIT THIS
@@ -176,11 +177,36 @@ Similarly we can define backward variable $\beta_t(i)$ as
 \begin{equation}
 \beta_t(i) = \mathrm{P}(O_{t+1},O_{t+2},\cdots,O_T,q_t = S_i \mid \lambda ) 
 \end{equation}
-The DP algorithm can be easily derived from knowledge how it was done in the forward.
+The DP algorithm can be derived analogically as the one for the Forward.
 
 We need to count $N$ variables at each time-step, each of that takes exactly $N$ operations to evaluate. It makes overall complexity $\mathcal{O}(N^2T)$.    
 
+\subsection{Individually Most Likely States Sequence}
+There is more ways how we can look at the world "optimal" in the problem 2 statement. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in specific state in particular time.
 
+\begin{equation}
+\gamma_t(i) = \mathrm{P}(q_t = S_i \mid O,\lambda ) 
+\end{equation}
+
+Here we can use already defined forward and backward variables and count the $\gamma_t(i)$ as
+\begin{equation}
+\begin{aligned}
+\gamma_t(i) &= \frac{ \mathrm{P}( q_t = S_i, O \mid \lambda )}{ \mathrm{P}( O \mid \lambda )} =
+               \frac{  \alpha_t(i) \beta_t(i) }{ \mathrm{P}( O \mid \lambda )} = \\
+            &= \frac{  \alpha_t(i) \beta_t(i) }{ \sum_j=1^N \alpha_t(j) \beta_t(j) } 
+\end{aligned}
+\end{equation}
+
+To get the desired individual most likely state $q_t$, it is enough to find one of the highest probability.
+
+\begin{equation}
+q_t = \argmax_{1 \leq i \leq N} \gamma_t(i), \qquad 1 \leq t \leq T
+\end{equation} 
+
+Applying this algorithm to the whole sequence will lead to the highest expected number of correctly assigned states, however such a sequence as a whole can have low probability or in extreme cases can not even be feasible. This would happen if probability of transition among two consecutive states in the sequence was zero.   
+
+
+   
 \subsection{Viterbi Algorithm} there is more ways what can be considered optimal in this case ... more:[citate]
 \subsection{Baum-Welch Algorithm}
 
