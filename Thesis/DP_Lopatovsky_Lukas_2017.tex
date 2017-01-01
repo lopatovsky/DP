@@ -102,9 +102,41 @@ For the transition probabilities are applied classical stochastic constrains.
    \sum_{j=1}^N a_{ij} = 1
 \end{equation}
 
-    
-
 \section{Discrete-time Hidden Markov Model}
+
+Discrete-time Hidden Markov Model is the extension of the previous model. In the classic Markov Model we can directly see the states we are currently in as observations. Such a model is of restricted use and doesn't fit well to many problems. In HMM are the states observable by another probabilistic function that for each of the states assign the probabilities that the observation $O = O_1,O_2,\cdots,O_T$ will occur. It forms the doubly embedded stochastic process, where the underlying one is hidden and observable only by the statistical properties of another process dependable upon it.
+
+An HMM can be described by its:
+
+\begin{enumerate}[resume]
+\item \textbf{Hidden States}
+\begin{equation}
+S = \{ S_1,S_2, \cdots, S_N \}
+\end{equation} 
+\item \textbf{State Transition Probability Distribution}
+\begin{equation}
+A = \{ a_{ij} \}, \quad 1 \leq i,j \leq N
+\end{equation} 
+\item \textbf{Observation Symbols}
+\begin{equation}
+V = \{ V_1,V_2, \cdots, V_M \} 
+\end{equation}
+\item \textbf{Observation Symbols Probability Distribution} \\
+$B = \{ b_{ik} \}$, where $b_{ik}$ is the probability that the observation $k$ will occur, if the system is currently in state $i$. 
+\begin{equation}
+b_{ij} = \mathrm{P}(v_k \text{ at t } \mid q_t = S_i) \qquad 1 \leq i \leq N, \quad 1 \leq k \leq M
+\end{equation}
+\item \textbf{Initial state distribution} \\
+$\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $S_i$.
+\begin{equation}
+\pi_{i} = \mathrm{P}(q_1 = S_i), \qquad 1 \leq i \leq N
+\end{equation}
+\end{enumerate}
+
+For the convenience we will declare parameter $\lambda = \{A,B,\pi\}$, compactly denoting all parameters of the model.   
+
+
+
 
 \section{Three Basic Problems for HMMs}
 
