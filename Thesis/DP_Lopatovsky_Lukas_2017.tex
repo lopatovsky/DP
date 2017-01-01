@@ -122,9 +122,9 @@ A = \{ a_{ij} \}, \quad 1 \leq i,j \leq N
 V = \{ V_1,V_2, \cdots, V_M \} 
 \end{equation}
 \item \textbf{Observation Symbols Probability Distribution} \\
-$B = \{ b_{ik} \}$, where $b_{ik}$ is the probability that the observation $k$ will occur, if the system is currently in state $i$. 
+$B = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observation $k$ will occur, if the system is currently in state $i$. 
 \begin{equation}
-b_{ij} = \mathrm{P}(v_k \text{ at t } \mid q_t = S_i) \qquad 1 \leq i \leq N, \quad 1 \leq k \leq M
+b_i(k) = \mathrm{P}(V_k \text{ at t } \mid q_t = S_i), \qquad 1 \leq i \leq N, \quad 1 \leq k \leq M
 \end{equation}
 \item \textbf{Initial state distribution} \\
 $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $S_i$.
@@ -151,26 +151,35 @@ The Forward-Backward Algorithm is actually the pair of separate algorithms (Forw
 
 Forward Algorithm is the Dynamic Programming algorithm taking advantage from the Markov property - the independence upon past events. We will denote the forward variable as $\alpha_t(i)$ defined as
 \begin{equation}
-\alpha_t = O_1,O_2,\cdots,O_T
+\alpha_t(i) = \mathrm{P}(O_1,O_2,\cdots,O_t,q_t = S_i \mid \lambda )
 \end{equation}
 
-that can be gradually counted by following equations.
+that can be gradually counted by following equations for $t=1$ and $t=t+1$.
 
 \begin{equation}
-\alpha_1
+\alpha_1(i) = \pi_i b_i(O_1), \qquad 1 \leq i \leq N
 \end{equation}
 
 \begin{equation}
-\alpha_{t+1}
+\begin{aligned}
+\alpha_{t+1}(i) = \left( \sum_{j=1}^N \alpha_t(j) a_{ji} \right) b_i(O_{t+1}), \qquad 1& \leq t \leq T - 1, \\                                                                                  1& \leq j \leq N																			
+\end{aligned}
 \end{equation}
   
 Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $T$.
 
 \begin{equation}
-\mathrm{P}(O|\lambda)
+\mathrm{P}(O|\lambda) = \sum_{i=1}^N \alpha_T(i)
 \end{equation} 
 
-Similarly we can define backward variable ...
+Similarly we can define backward variable $\beta_t(i)$ as
+\begin{equation}
+\beta_t(i) = \mathrm{P}(O_{t+1},O_{t+2},\cdots,O_T,q_t = S_i \mid \lambda ) 
+\end{equation}
+The DP algorithm can be easily derived from knowledge how it was done in the forward.
+
+We need to count $N$ variables at each time-step, each of that takes exactly $N$ operations to evaluate. It makes overall complexity $\mathcal{O}(N^2T)$.    
+
 
 \subsection{Viterbi Algorithm} there is more ways what can be considered optimal in this case ... more:[citate]
 \subsection{Baum-Welch Algorithm}
