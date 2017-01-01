@@ -137,18 +137,43 @@ For the convenience we will declare parameter $\lambda = \{A,B,\pi\}$, compactly
 
 \section{Three Basic Problems for HMMs}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
-When dealing with real-world application we need to deal with following problems, as proposed in [citace]. We will first describe the problems and later in separate subsections explain an efficient way haw to solve them. 
+When dealing with real-world application we need to deal with following problems, as proposed in [citace]. First we will describe the problems and later in the successive subsections we will explain the algorithms that can effectively solve them. 
 
 \begin{enumerate}
 \item Compute the probability $ \mathrm{P}(O|\lambda) $ of the observation sequence $O = O_1,O_2,\cdots,O_T$, given the set of parameters $\lambda = \{A,B,\pi\}$. 
-\item Choose the optimal state sequence $Q = q_1,q_2,\cdots,q_T$, having the observation sequence $O$ and parameters $lambda$.
+\item Choose the optimal state sequence $Q = q_1,q_2,\cdots,q_T$, having the observation sequence $O$ and parameters $\lambda$.
 \item Adjust the model parameters $\lambda$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(O|\lambda) $. 
 \end{enumerate}
 
 
-\subsection{first..}
-\subsection{second..} there is more ways what can be considered optimal in this case ... more:[citate]
-\subsection{third..}
+\subsection{Forward-Backward Algorithm}
+The Forward-Backward Algorithm is actually the pair of separate algorithms (Forward vs. Backward). We will explain the Forward one and at the end we will describe the modifications that are needed to do for the other. To solve the first proposed problem we could get by each of them separately, however we need to define both of them for the use in the algorithms later in the text.  
+
+Forward Algorithm is the Dynamic Programming algorithm taking advantage from the Markov property - the independence upon past events. We will denote the forward variable as $\alpha_t(i)$ defined as
+\begin{equation}
+\alpha_t = O_1,O_2,\cdots,O_T
+\end{equation}
+
+that can be gradually counted by following equations.
+
+\begin{equation}
+\alpha_1
+\end{equation}
+
+\begin{equation}
+\alpha_{t+1}
+\end{equation}
+  
+Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $T$.
+
+\begin{equation}
+\mathrm{P}(O|\lambda)
+\end{equation} 
+
+Similarly we can define backward variable ...
+
+\subsection{Viterbi Algorithm} there is more ways what can be considered optimal in this case ... more:[citate]
+\subsection{Baum-Welch Algorithm}
 
 \chapter{Finite State Continuous Time Markov Chain} 
 
