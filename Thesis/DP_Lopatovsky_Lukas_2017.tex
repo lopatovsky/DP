@@ -133,17 +133,21 @@ $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being
 \end{equation}
 \end{enumerate}
 
-For the convenience we will declare parameter $\lambda = \{A,B,\pi\}$, compactly denoting all parameters of the model.   
-
-
-
+For the convenience we will declare parameter $\lambda = \{A,B,\pi\}$, compactly denoting the set of all parameters of the model.   
 
 \section{Three Basic Problems for HMMs}
+% citate: Jack Ferguson of IDA in lectures at Bell laboratories
+When dealing with real-world application we need to deal with following problems, as proposed in [citace]. We will first describe the problems and later in separate subsections explain an efficient way haw to solve them. 
 
-todo: list + explanation 
+\begin{enumerate}
+\item Compute the probability $ \mathrm{P}(O|\lambda) $ of the observation sequence $O = O_1,O_2,\cdots,O_T$, given the set of parameters $\lambda = \{A,B,\pi\}$. 
+\item Choose the optimal state sequence $Q = q_1,q_2,\cdots,q_T$, having the observation sequence $O$ and parameters $lambda$.
+\item Adjust the model parameters $\lambda$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(O|\lambda) $. 
+\end{enumerate}
+
 
 \subsection{first..}
-\subsection{second..}
+\subsection{second..} there is more ways what can be considered optimal in this case ... more:[citate]
 \subsection{third..}
 
 \chapter{Finite State Continuous Time Markov Chain} 
