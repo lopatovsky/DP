@@ -70,6 +70,42 @@
 
 \setsecnumdepth{all}
 
+\chapter{Expectation-Maximization Algorithm}
+
+
+%(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
+
+Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
+hood estimation, however the latent variables makes finding of the MLE more difficult. To count it directly can be very computationally expensive, so the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
+
+Let's have vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
+%[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
+
+Look at [st] for more detailed, easily understandable tutorial with examples.    
+
+\begin{enumerate}
+\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta^{(0)} $.
+\end{enumerate} 
+
+We will continue by iterating through two following steps: 
+
+\begin{enumerate}[resume]
+\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$.
+
+\begin{equation}\label{eq:exp}
+ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})
+\end{equation}
+
+\item \textbf{Maximization:} Find the value $\hat\theta^{(t+1)}$ that maximize $\mathrm{Q}(\hat\theta^{(t)})$.  
+\end{enumerate}  
+
+As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
+
+It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?].    
+
+
+
+
 \chapter{Discrete-time Hidden Markov Model}
 This chapter will briefly discuss Discrete-time Hidden Markov Model (later just HMM) as defined in [Rabiner], where you can also look for the more comprehensive explanation with examples.
 
@@ -259,7 +295,7 @@ q_t^* = \argmax_{1 \leq i \leq N} ( \delta_{t}(i) ),  \qquad t = T
 q_t^* = \psi_{t+1}(q_{t+1}^*), \qquad t = T-1, T-2, \cdots, 1  
 \end{equation}
 
-The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can see its complexity is also $\mathcal{O}(N^2T)$.
+The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can see its complexity is also $\mathcal{O}(Ngit ^2T)$.
 
 
  
@@ -375,44 +411,6 @@ Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\
 
 
 \section{Continuous Time Hidden Markov Model}
-
-
-\chapter{Expectation-Maximization Algorithm}
-
-
-%(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
-
-Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
-hood estimation, however the latent variables makes finding of the MLE more difficult. To count it directly can be very computationally expensive, so the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
-
-Let's have vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
-%[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
-
-Look at [st] for more detailed, easily understandable tutorial with examples.    
-
-\begin{enumerate}
-\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta^{(0)} $.
-\end{enumerate} 
-
-We will continue by iterating through two following steps: 
-
-\begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$.
-
-\begin{equation}\label{eq:exp}
- \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})
-\end{equation}
-
-\item \textbf{Maximization:} Find the value $\hat\theta^{(t+1)}$ that maximize $\mathrm{Q}(\hat\theta^{(t)})$.  
-\end{enumerate}  
-
-As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
-
-It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?].    
-
-
-
-    
 
 
 
