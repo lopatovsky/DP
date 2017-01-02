@@ -32,6 +32,7 @@
 %%%%%%%%%%%% own commands %%%%%%%%%%%%%%%%%%
 \newcommand{\matr}[1]{\mathbf{#1}} 
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+%\newcommand{\max}{\mathop{\mathrm{max}}}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % EDIT THIS
@@ -155,7 +156,7 @@ Forward Algorithm is the Dynamic Programming algorithm taking advantage from the
 \alpha_t(i) = \mathrm{P}(O_1,O_2,\cdots,O_t,q_t = S_i \mid \lambda )
 \end{equation}
 
-that can be gradually counted by following equations for $t=1$ and $t=t+1$.
+that can be gradually counted by following equations for $t=1$ and $t=t+1$ using bottom-up strategy.
 
 \begin{equation}
 \alpha_1(i) = \pi_i b_i(O_1), \qquad 1 \leq i \leq N
@@ -163,9 +164,10 @@ that can be gradually counted by following equations for $t=1$ and $t=t+1$.
 
 \begin{equation}
 \begin{aligned}
-\alpha_{t+1}(i) = \left( \sum_{j=1}^N \alpha_t(j) a_{ji} \right) b_i(O_{t+1}), \qquad 1& \leq t \leq T - 1, \\                                                                                  1& \leq j \leq N																			
-\end{aligned}
+\alpha_{t+1}(i) = \left( \sum_{j=1}^N \alpha_t(j) a_{ji} \right) b_i(O_{t+1}), \qquad 1& \leq t \leq T - 1, \\ 
+                                                                                 1& \leq i \leq N		\end{aligned}
 \end{equation}
+
   
 Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $T$.
 
@@ -204,10 +206,64 @@ q_t = \argmax_{1 \leq i \leq N} \gamma_t(i), \qquad 1 \leq t \leq T
 \end{equation} 
 
 Applying this algorithm to the whole sequence will lead to the highest expected number of correctly assigned states, however such a sequence as a whole can have low probability or in extreme cases can not even be feasible. This would happen if probability of transition among two consecutive states in the sequence was zero.   
-
-
    
-\subsection{Viterbi Algorithm} there is more ways what can be considered optimal in this case ... more:[citate]
+\subsection{Viterbi Algorithm} 
+
+An another way how to look on the problem 2 is to find single most probable state sequence. It means to maximize $\mathrm{P}(Q\mid O,\lambda)$, what is equivalent to maximize $\mathrm{P}(Q,O\mid\lambda)$.
+
+Viterbi Algorithm is the Dynamic Programming algorithm, that similarly to the Forward-Backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from $time = 1$ till $t-1$ and with current state $i$.
+
+\begin{equation}\label{eq:delta}
+\delta_t(i) = \max_{q_1,q_2,\cdots,q_{t-1}} \mathrm{P}( q_1,q_2,\cdots, q_t = S_i, O_1, O_2, \cdots, O_t \mid \lambda )
+\end{equation}
+
+To get the actual state sequence, we need to store the information about the state that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
+
+\begin{equation}
+\delta_1(i) = \pi_i b_i(O_1), \qquad 1 \leq i \leq N 
+\end{equation}
+
+\begin{equation}
+\psi_1(i) = 0 
+\end{equation}
+
+and consecutive bottom-up computation as
+
+\begin{equation}
+\begin{aligned}
+\delta_{t}(i) = ( \max_{ 1 \leq j \leq N } \delta_{t-1}(j)a_{ji} ) b_i(O_{t}), \qquad 2& \leq t \leq T, \\
+																					   1& \leq i \leq N
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\psi_{t}(i) = ( \argmax_{ 1 \leq j \leq N } \delta_{t-1}(j)a_{ji} ), \qquad \qquad 2& \leq t \leq T, \\
+																			1& \leq i \leq N
+\end{aligned}
+\end{equation}
+
+Now we can get the searched state sequence probability 
+
+\begin{equation}
+\mathrm{P}^* = \max_{1 \leq i \leq N} ( \delta_{t}(i) )  
+\end{equation}
+
+and the actual state path by backtracking
+
+\begin{equation}
+q_t^* = \argmax_{1 \leq i \leq N} ( \delta_{t}(i) ),  \qquad t = T  
+\end{equation}
+
+\begin{equation}
+q_t^* = \psi_{t+1}(q_{t+1}^*), \qquad t = T-1, T-2, \cdots, 1  
+\end{equation}
+
+The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can see its complexity is also $\mathcal{O}(N^2T)$.
+
+
+ 
+
 \subsection{Baum-Welch Algorithm}
 
 \chapter{Finite State Continuous Time Markov Chain} 
