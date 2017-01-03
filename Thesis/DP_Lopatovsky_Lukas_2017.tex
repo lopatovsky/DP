@@ -101,8 +101,7 @@ We will continue by iterating through two following steps:
 
 As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
 
-It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?].    
-git 
+It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?]. 
 
 
 
@@ -358,16 +357,9 @@ Now we have all what is needed to define the reestimated model~$\hat\lambda=(\ha
 \end{aligned}
 \end{equation}
 
+The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\lambda,\hat\lambda)$ and maximization step, the maximization over parameter~$\hat\lambda$. The algorithm will stop ones it is no longer improving. It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can helpful to start the algorithm more times with different parameter initialization.  
 
-
-Maximization is Forward - Backward
-
-ukoncenie - konvergence
-
-proof it is growing {odkaz}
-
-local optima!
-
+%proof it is growing { was mentioned in EM }
 
 \chapter{Finite State Continuous Time Markov Chain} 
 
