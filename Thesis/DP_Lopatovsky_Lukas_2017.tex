@@ -361,13 +361,27 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 %proof it is growing { was mentioned in EM }
 
-\chapter{Finite State Continuous Time Markov Chain} 
+
+\chapter{Continuous-Time Hidden Markov Model}
+
+When mentioning continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
+
+In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
+
+Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential distribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
+
+There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
+Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
+
+Now we will continue by formally defining Continuous time Markov process, after which we will extend it to the hidden model.
+
+\section{Continuous-Time Markov Process} 
 
 %relationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
 %construction from discrete HMM is probably important, heterogenous MM.
-\section{Definition}
+\subsection{Definition}
 %cit:[S.Karlin]
-A finite state continuous time Markov chain (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $i_0, i_1, \cdots, i_n, i, j \in C$ (for $n>0$ and $C$ being the finite state space), that in any time $0 \leq s_0 < s_1 < \cdots < s_n < s$ satisfies the following equations: 
+A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $i_0, i_1, \cdots, i_n, i, j \in C$ (for $n>0$ and $C$ being the finite state space), that in any time $0 \leq s_0 < s_1 < \cdots < s_n < s$ satisfies the following equations: 
 \begin{itemize}
 \item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< s$. The process is memoryless.    
     
@@ -391,7 +405,7 @@ The equation describes that the stochastic process is memory-less.
 
 \end{itemize}
 
-\section{Properties} 
+\subsection{Properties} 
 
 Holding the upper mentioned conditions the transition rate $\mathrm{p_t}(i,j), i,j \in C$ satisfies:%cit:[S.Karlin]
 
@@ -427,7 +441,7 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 
 %construction from Discrete time with poisson timing
 
-\subsection{ Jump Rates }
+\subsubsection{ Jump Rates }
 
 Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the $\mathrm{p_t(i,j)}$ for every $i,j$ and $0 < t < t_0$, we can compute the values for any time $t > 0$. The property \eqref{eq:l0} asserts that $\mathrm{P_t(i,j)}$ is continuous for $t=0$,so for $t>0$ ref[S.Karlin] and we can find it's right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
 
@@ -441,7 +455,7 @@ We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to som
 1 = \mathrm{p_t}(i,i) + \sum_{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
 \end{equation}
 
-dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain following equation. 
+dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
 
 \begin{equation}\label{eq:qii}
  \mathrm{q}(i,i) =  \sum_{j \in C ,j \neq i} \mathrm{q}(i,j) 
@@ -454,7 +468,7 @@ It can be shown that by construction of the CTMC from discrete time Markov chain
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
 
-\subsection{The Infinitesimal Matrix}
+\subsubsection{The Infinitesimal Matrix}
 
 We can also look at $\mathrm{q}(i,i)$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the Infinitesimal matrix $\matr{Q}$ as following:
 
@@ -469,11 +483,7 @@ We can also look at $\mathrm{q}(i,i)$ as at the rate in which the $X_t$ is leavi
 Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
 
-\section{Continuous Time Hidden Markov Model}
-
-
-
-\chapter{Baum-Welch}
+\chapter{Next}
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
 
