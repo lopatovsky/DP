@@ -368,7 +368,7 @@ When mentioning continuous-time hidden Markov model, we will consider its finite
 
 In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
 
-Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential distribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
+Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential gitdistribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
 
 There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
 Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
@@ -383,7 +383,7 @@ Now we will continue by formally defining Continuous time Markov process, after 
 %cit:[S.Karlin]
 A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $i_0, i_1, \cdots, i_n, i, j \in C$ (for $n>0$ and $C$ being the finite state space), that in any time $0 \leq s_0 < s_1 < \cdots < s_n < s$ satisfies the following equations: 
 \begin{itemize}
-\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< s$. The process is memoryless.    
+\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< s$.  
     
 \begin{equation}
 \begin{aligned}
@@ -392,7 +392,7 @@ A finite state continuous time Markov process (later as CTMC) is a~stochastic pr
 \end{aligned}
 \end{equation}
 
-The equation describes that the stochastic process is memory-less.
+The equation describes that the stochastic process is memoryless.
 
 \item \textbf{Homogeneity:} Probability of transition in any given time $s \geq 0$ depends only at the length of the time interval $t \geq 0$. 
 
@@ -407,7 +407,7 @@ The equation describes that the stochastic process is memory-less.
 
 \subsection{Properties} 
 
-Holding the upper mentioned conditions the transition rate $\mathrm{p_t}(i,j), i,j \in C$ satisfies:%cit:[S.Karlin]
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), i,j \in C$ satisfies following conditions:%cit:[S.Karlin]
 
 
 \begin{equation}
@@ -433,7 +433,7 @@ Holding the upper mentioned conditions the transition rate $\mathrm{p_t}(i,j), i
 Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
 We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t(i,j)}$ to get the equation in following form:
 
-\begin{equation}
+\begin{equation}\label{eq:ckm}
 \matr{P_s} \matr{P_t} = \matr{P_{s+t}},   \qquad t,s > 0  
 \end{equation}
 
@@ -443,13 +443,17 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 
 \subsubsection{ Jump Rates }
 
-Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the $\mathrm{p_t(i,j)}$ for every $i,j$ and $0 < t < t_0$, we can compute the values for any time $t > 0$. The property \eqref{eq:l0} asserts that $\mathrm{P_t(i,j)}$ is continuous for $t=0$,so for $t>0$ ref[S.Karlin] and we can find it's right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
+Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_t(i,j)}$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
+%cit[vytistena st. kniha]
+
+The property \eqref{eq:l0}  asserts that $\mathrm{p_t(i,j)}$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
+Moreover from \eqref{eq:ckm} follows that $\mathrm{p_t(i,j)}$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
 
 \begin{equation}
 \mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \quad \text{if } i\neq j     
 \end{equation}
 
-We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state i to some other state j. The jump rate $\mathrm{q}(i,i)$ can be derived from equation of transition probabilities summing to the one.
+We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state~$i$ to some other state~$j$. The jump rate $\mathrm{q}(i,i)$ can be derived from the equation of transition probabilities summing to the one.
 
 \begin{equation}
 1 = \mathrm{p_t}(i,i) + \sum_{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
@@ -461,7 +465,7 @@ dividing by time interval $t$ and letting $t$ decrease close to zero, we will ob
  \mathrm{q}(i,i) =  \sum_{j \in C ,j \neq i} \mathrm{q}(i,j) 
 \end{equation}
 
-(We assume the finite rates $\mathrm{q}(i,j)$, infinite rate would immediately leads to the leaving of the state, so it makes no sense to consider.)\\
+(We assume the finite rates $\mathrm{q}(i,j)$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
 
 It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $\mathrm{q}(i,j) = \lambda\mathrm{u}(i,j)$ holds. Where $\mathrm{u}(i,j)$ is the transition rate from the $i$ to $j$ in DTMC. This is why we call the $\mathrm{q}(i,j)$ the jump rate.[zdroj]  
 
