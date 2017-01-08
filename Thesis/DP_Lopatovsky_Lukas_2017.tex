@@ -66,6 +66,7 @@
 	This is the master thesis. welcome!
 	\section{Motivation and objectives}
 	About a discrete model [inspired by Rabiner? ] and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
+	Add articles and DP that have done it before - less or more successfully 
 \end{introduction}
 
 \setsecnumdepth{all}
@@ -204,7 +205,6 @@ that can be gradually counted by following equations for $t=1$ and $t=t+1$ using
                                                                                  1& \leq i \leq N		\end{aligned}
 \end{equation}
 
-  
 Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $T$.
 
 \begin{equation}
@@ -361,14 +361,13 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 %proof it is growing { was mentioned in EM }
 
-
 \chapter{Continuous-Time Hidden Markov Model}
 
 When mentioning continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
 
 In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
 
-Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential gitdistribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
+Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential distribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
 
 There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
 Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
@@ -405,8 +404,6 @@ The equation describes that the stochastic process is memoryless.
 
 \end{itemize}
 
-\subsection{Construction} 
-...from Discrete - pozor na znacenie.
 
 \subsection{Properties} 
 
@@ -443,6 +440,29 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 ?proof of Chapman-kolmogorov?
 
 %construction from Discrete time with poisson timing
+
+\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
+
+The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
+
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $Y_n$ being mutually independent. To make the construction, we will change the equidistant timing of $Y_n$ by Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition happens at each arrival in $N(t)$ with probability $a_ij$ (notice that the transition may not change the state, if $i==j$). Such a process $X_t = Y_{N(t)}$ is continuous-time Markov process.
+
+Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
+
+\begin{equation}
+\begin{aligned}
+\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_t = j \mid X_t = i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = j \mid Y_{N(t)} = i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( Y_n = j \mid Y_0 = i )  = \\
+				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
+\end{aligned}
+\end{equation} 
+
+
+  
+
+
+
 
 \subsubsection{ Jump Rates }
 
@@ -490,9 +510,9 @@ We can also look at $\mathrm{q}(i,i)$ as at the rate in which the $X_t$ is leavi
 Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
 \section{Hidden Markov Model}
+-in separate chapter
 
-
-\chapter{Next}
+\chapter{EM Algorithms for CT-HMM}
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
 
