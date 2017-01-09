@@ -153,7 +153,7 @@ An HMM can be described by its:
 S = \{ S_1,S_2, \cdots, S_N \}
 \end{equation} 
 \item \textbf{State Transition Probability Distribution}
-\begin{equation}
+\begin{equation}\label{eq:tp}
 \matr{A} = \{ a_{ij} \}, \quad 1 \leq i,j \leq N
 \end{equation} 
 \item \textbf{Observation Symbols}
@@ -380,24 +380,26 @@ Now we will continue by formally defining Continuous time Markov process, after 
 %construction from discrete HMM is probably important, heterogenous MM.
 \subsection{Definition}
 %cit:[S.Karlin]
-A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $i_0, i_1, \cdots, i_n, i, j \in C$ (for $n>0$ and $C$ being the finite state space), that in any time $0 \leq s_0 < s_1 < \cdots < s_n < s$ satisfies the following equations: 
+A finite state continuous time Markov process (later as CTMC) is a~stochastic process $Y_t (t > 0)$ on the states $i_0, i_1, \cdots, i_N, i, j \in S$ (for $N>0$ and $S$ being the finite state space), that in any time $t$  occurs in the corresponding state $y_t$. 
+
+For the times $0 \leq s_0 < s_1 < \cdots < s_V < s$ it satisfies the following equations: 
 \begin{itemize}
 \item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< s$.  
     
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( X_{t+s} = j \mid X_s = i, X_{s_n} = i_n, \cdots , X_{s_0} ) = \\ 
-& = \mathrm{P}( X_{t+s} = j \mid X_s = i )
+& \mathrm{P}( y_{t+s} = j \mid y_s = i, y_{s_n} = i_n, \cdots , y_{s_0} ) = \\ 
+& = \mathrm{P}( y_{t+s} = j \mid y_s = i )
 \end{aligned}
 \end{equation}
 
 The equation describes that the stochastic process is memoryless.
 
-\item \textbf{Homogeneity:} Probability of transition in any given time $s \geq 0$ depends only at the length of the time interval $t \geq 0$. 
+\item \textbf{Homogeneity:} Probability of transition from the state $i$ to $j$ in any given time $s \geq 0$ depends only at the length of the time interval $t \geq 0$. 
 
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( X_{t+s} = j \mid X_s = i ) = \mathrm{P}( X_t = j \mid X_0 = i ) = \\
+& \mathrm{P}( y_{t+s} = j \mid y_s = i ) = \mathrm{P}( y_t = j \mid y_0 = i ) = \\
 & = \mathrm{p_t}(i,j)
 \end{aligned}
 \end{equation}
@@ -407,7 +409,7 @@ The equation describes that the stochastic process is memoryless.
 
 \subsection{Properties} 
 
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), i,j \in C$ satisfies following conditions:%cit:[S.Karlin]
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), i,j \in S$ satisfies following conditions:%cit:[S.Karlin]
 
 
 \begin{equation}
@@ -415,7 +417,7 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \end{equation}
 
 \begin{equation}
-\sum_{j \in C} \mathrm{p_t}(i,j) = 1
+\sum_{j \in S} \mathrm{p_t}(i,j) = 1
 \end{equation}
 
 \begin{equation}\label{eq:l0}  
@@ -427,7 +429,7 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \end{equation}
 
 \begin{equation}\label{eq:ckeq}
-\sum_{k \in C}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)     
+\sum_{k \in S}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)     
 \end{equation}
 
 Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
@@ -445,15 +447,15 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 
 The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
 
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $Y_n$ being mutually independent. To make the construction, we will change the equidistant timing of $Y_n$ by Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition happens at each arrival in $N(t)$ with probability $a_ij$ (notice that the transition may not change the state, if $i==j$). Such a process $X_t = Y_{N(t)}$ is continuous-time Markov process.
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $X_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $X_n$ being mutually independent. To make the construction, we will change the equidistant timing of $X_n$ by Poisson process timing. We will get the process $X_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j\in S, i\neq j} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $Y_t = X_{N(t)}$ is called continuous-time Markov process.
 
 Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
 
 \begin{equation}
 \begin{aligned}
-\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_t = j \mid X_t = i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = j \mid Y_{N(t)} = i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( Y_n = j \mid Y_0 = i )  = \\
+\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, y_t = j \mid y_t = i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_{N(t)} = j \mid X_{N(t)} = i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( X_n = j \mid X_0 = i )  = \\
 				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
 \end{aligned}
 \end{equation} 
@@ -473,41 +475,46 @@ The property \eqref{eq:l0}  asserts that $\mathrm{p_t(i,j)}$ is continuous for $
 Moreover from \eqref{eq:ckm} follows that $\mathrm{p_t(i,j)}$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
 
 \begin{equation}
-\mathrm{q}(i,j) =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \quad \text{if } i\neq j     
+q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \quad \text{if } i\neq j     
 \end{equation}
 
-We will call this derivative $\mathrm{q}(i,j)$ the jump rate from state~$i$ to some other state~$j$. The jump rate $\mathrm{q}(i,i)$ can be derived from the equation of transition probabilities summing to the one.
+We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other state~$j$. The jump rate $q_{ii}$ can be derived from the equation of transition probabilities summing to the one.
 
 \begin{equation}
-1 = \mathrm{p_t}(i,i) + \sum_{j \in C ,j \neq i} \mathrm{p_t}(i,j) 
+1 = \mathrm{p_t}(i,i) + \sum_{j \in S ,j \neq i} \mathrm{p_t}(i,j) 
 \end{equation}
 
 dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
 
 \begin{equation}\label{eq:qii}
- \mathrm{q}(i,i) =  \sum_{j \in C ,j \neq i} \mathrm{q}(i,j) 
+ q_{ii} =  \sum_{j \in S ,j \neq i} q_{ij} 
 \end{equation}
 
-(We assume the finite rates $\mathrm{q}(i,j)$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
+(We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
 
-It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $\mathrm{q}(i,j) = \lambda\mathrm{u}(i,j)$ holds. Where $\mathrm{u}(i,j)$ is the transition rate from the $i$ to $j$ in DTMC. This is why we call the $\mathrm{q}(i,j)$ the jump rate.[zdroj]  
+It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a{ij}$ is the transition probability from the $i$ to $j$ in DTMC \label{eq:tp}. This is why we call the $q{ij}$ the jump rate.[zdroj]  
 
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
 
 \subsubsection{The Infinitesimal Matrix}
 
-We can also look at $\mathrm{q}(i,i)$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the Infinitesimal matrix $\matr{Q}$ as following:
+We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the Infinitesimal matrix $\matr{Q}$ as following:
 
-\begin{equation}  
+\begin{equation}
+\begin{aligned}  
 \matr{Q}(i,j)= 
 \begin{cases}
-\mathrm{q}(i,j), \text{if } i\neq j\\
-- \sum_{k \in C ,k \neq i} \mathrm{q}(i,k), \quad \text{if } i=j
+\qquad q_{ij}, \qquad & \text{if } i\neq j\\
+- \sum\limits_{k \in S ,k \neq i} q_{ik}, \qquad & \text{if } i=j
 \end{cases}
+\end{aligned}
 \end{equation}
 
 Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
+
+
+
 
 \section{Hidden Markov Model}
 -in separate chapter
