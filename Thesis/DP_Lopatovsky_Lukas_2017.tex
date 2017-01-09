@@ -492,7 +492,7 @@ dividing by time interval $t$ and letting $t$ decrease close to zero, we will ob
 
 (We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
 
-It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a{ij}$ is the transition probability from the $i$ to $j$ in DTMC \label{eq:tp}. This is why we call the $q{ij}$ the jump rate.[zdroj]  
+It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from the $i$ to $j$ in DTMC \label{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj]  
 
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
@@ -513,7 +513,26 @@ We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the st
 
 Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
+\subsection{ Probabilities Measures }
 
+Let's have continuous time Markov chain on the state space $S$, with the jump rates in infinitesimal matrix $Q$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $Y^{'}= {y_0, y_1, \cdots, y_V^{'}} $ occurring at times $T^{'} = \{ t_0^{'}, t_1^{'}, \cdots, t_{V^{'}}^{'} \}$. Such a system, where we know, when and which the transition will happen is called fully observable and we can count its complete likelihood (CL). 
+
+\begin{equation}\label{eq:CL1}
+\begin{aligned}  
+ CL &=  \prod_{v^{'}}^{V^{'}-1} ( q_{y_{v^{'}} y_{v^{'}+1}} / q_{y_{v^{'}}} )( q_{y_{v^{'}}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }) = \\
+    &= \prod_{v^{'}}^{V^{'}-1} q_{y_{v^{'}} y_{v^{'}+1}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }
+\end{aligned}
+\end{equation}
+
+where the $q_i = \sum_{j\in S, i\neq j} q_{ij}$ is the probability of transition from the state~$i$ and   
+$\tau_{v^{'}} = t_{v^{'}+1}^{'} - t_{v^{'}}^{'}$ is the time interval among the two consecutive steps.
+
+The equation can be further rearranged in the form that group together the same state transition. The variable $n_{ij}$ marks the number of transition $q_ij$ that have occurred and the~$\tau_i$ is the total time spend in the state~$i$.
+
+\begin{equation}\label{eq:CL2}
+ CL = \prod_{i \in S} \prod_{j \in S, i \neq j} q_{ij}^{n_{ij} } e^{ - q_i \tau_i }
+\end{equation}
+  
 
 
 \section{Hidden Markov Model}
