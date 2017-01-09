@@ -21,6 +21,7 @@
 \usepackage{pseudocode}
 \usepackage{comment}
 \usepackage{enumitem}
+\usepackage{amssymb}
 
 \usepackage{dirtree} %directory tree visualisation
 
@@ -513,13 +514,17 @@ We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the st
 
 Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
-\subsection{ Probabilities Measures }
+\section{ Continuous-Time Markov Chain }
 
-Let's have continuous time Markov chain on the state space $S$, with the jump rates in infinitesimal matrix $Q$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $Y^{'}= {y_0, y_1, \cdots, y_V^{'}} $ occurring at times $T^{'} = \{ t_0^{'}, t_1^{'}, \cdots, t_{V^{'}}^{'} \}$. Such a system, where we know, when and which the transition will happen is called fully observable and we can count its complete likelihood (CL). 
+%ref Yu-Ying Liu
+
+\subsection{ Fully Observable Continuous-Time Markov Chain }
+
+Let's have continuous time Markov chain on the state space $S$, with the jump rates in infinitesimal matrix $Q$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $Y^{'}= \{y_0, y_1, \cdots, y_{V^{'}} \} $ occurring at times $T^{'} = \{ t_0^{'}, t_1^{'}, \cdots, t_{V^{'}}^{'} \}$. Such a system, where we know, when and which the transition will happen is called fully observable and we can count its complete likelihood (CL). 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}  
- CL &=  \prod_{v^{'}}^{V^{'}-1} ( q_{y_{v^{'}} y_{v^{'}+1}} / q_{y_{v^{'}}} )( q_{y_{v^{'}}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }) = \\
+ CLgi &=  \prod_{v^{'}}^{V^{'}-1} ( q_{y_{v^{'}} y_{v^{'}+1}} / q_{y_{v^{'}}} )( q_{y_{v^{'}}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }) = \\
     &= \prod_{v^{'}}^{V^{'}-1} q_{y_{v^{'}} y_{v^{'}+1}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }
 \end{aligned}
 \end{equation}
@@ -532,11 +537,41 @@ The equation can be further rearranged in the form that group together the same 
 \begin{equation}\label{eq:CL2}
  CL = \prod_{i \in S} \prod_{j \in S, i \neq j} q_{ij}^{n_{ij} } e^{ - q_i \tau_i }
 \end{equation}
-  
+
+\subsection{ General Continuous-Time Markov Chain }
+
+In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $T = \{ t_0, t_1, \cdots, t_{V} \}$ as $Y= \{y_0, y_1, \cdots, y_{V} \}$. 
+This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $n_{ij}$ as well as the time spend in the specific state $\tau_i$. 
+
+To count the likelihood of the chain, we will use earlier defined matrix $\matr{P}(t)$ [ref] for the time interval~$\tau_v = t_{v+1} - t_v$.    
+
+\begin{equation}
+ L = \prod_{v=0}^{V-1} \matr{P}_{y_v y_{v+1}}(\tau_v) 
+\end{equation}
+
+It can be alternatively extended in the form
+
+\begin{equation}
+ L = \prod_{v=0}^{V-1} \prod_{i,j \in S}  \matr{P}_{ij}(\tau_v)^{\mathbb{I}( y_v = i, y_{v+1} = j )} 
+\end{equation}
+
+where the function $\mathbb{I}(i,j)$ equal either $1$, if both condition inside are true, or $0$ if they are not. 
+If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\cdots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula
+
+\begin{equation}
+ L = \prod_{\Delta = 1}^{r} \prod_{i,j \in S}  \matr{P}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} y_v = i, y_{v+1} = j )} 
+\end{equation}
+
+where function $\mathbb{C}$ denotes the total number of intervals, for that condition is true.
+    
+%TODO P_{ij}(t) counting possibilities.    
+    
+\subsection{EM Algorithm} 
+   
+\section{Continuous-Time Hidden Markov Model}
 
 
-\section{Hidden Markov Model}
--in separate chapter
+
 
 \chapter{EM Algorithms for CT-HMM}
 
