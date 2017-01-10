@@ -568,7 +568,7 @@ where function $\mathbb{C}$ denotes the total number of intervals, for that cond
     
 \subsection{EM Algorithm} 
 
-There is no available analytic maximize of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
+There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
 For the expectation step we will use logarithms of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $Q$ in step $t$ noted as $\hat Q_t $.
 %TODO Q is not bold here \matr
 
@@ -588,7 +588,25 @@ In the maximization step we will evaluate new values for $\hat Q$, so that the p
 \end{aligned}
 \end{equation}
 
-Now, there remain the non-trivial task to evaluate $\mathbf{E}( n_{ij} \mid Y, \hat Q_t )$ and $\mathbf{E}( \tau_i \mid Y, \hat Q_t )$.
+Now, there remain the non-trivial task to evaluate $\mathbf{E}( n_{ij} \mid Y, \hat Q_t )$ and $\mathbf{E}( \tau_i \mid Y, \hat Q_t )$. They can be reformulated as sums
+
+
+\begin{equation}
+\begin{aligned}  
+\mathbf{E}(n_{ij} \mid Y, \hat Q_t ) &= \sum_{v=0}^{V-1} \mathbf{E}(n_{ij} \mid y_v, y_{v+1}, \hat Q_t ) = \\
+&= \sum_{v=0}^{V-1} \sum_{k,l \in S} \mathbb{I}( y_v = k, y_{v+1} = l ) \mathbf{E}(n_{ij} \mid y_v = k, y_{v+1} = l, \hat Q_t )
+\end{aligned}
+\end{equation}
+
+
+\begin{equation}
+\begin{aligned}  
+\mathbf{E}( \tau_i \mid Y, \hat Q_t ) &= \sum_{v=0}^{V-1} \mathbf{E}(\tau_i \mid y_v, y_{v+1}, \hat Q_t ) = \\
+&= \sum_{v=0}^{V-1} \sum_{k,l \in S} \mathbb{I}( y_v = k, y_{v+1} = l ) \mathbf{E}(\tau_i \mid y_v = k, y_{v+1} = l, \hat Q_t )
+\end{aligned}
+\end{equation}
+   
+With the use of the Markov property and from homogeneity of the Markov process, the computations may be reduced to computing of expected values, for all foursome of $i,j,k,l \in S$. It will be showed later in the text[future ref].     
    
 \section{Continuous-Time Hidden Markov Model}
 
