@@ -580,7 +580,7 @@ In the maximization step we will evaluate new values for $\hat Q$, so that the p
 
 \begin{equation}
 \begin{aligned}  
-\hat Q_(i,j)= 
+\hat Q_t(i,j)= 
 \begin{cases}
 \frac{ \mathbf{E}(n_{ij} \mid Y, \hat Q_t )}{ \mathbf{E}( \tau_i \mid Y, \hat Q_t ) } & \text{if } i\neq j\\
 - \sum\limits_{k \in S ,k \neq i} q_{ik}, \qquad & \text{if } i=j
@@ -588,7 +588,7 @@ In the maximization step we will evaluate new values for $\hat Q$, so that the p
 \end{aligned}
 \end{equation}
 
-Now, there remain the non-trivial task to evaluate $\mathbf{E}( n_{ij} \mid Y, \hat Q_t )$ and $\mathbf{E}( \tau_i \mid Y, \hat Q_t )$. They can be reformulated as sums
+Now, there remain the non-trivial task to evaluate $\mathbf{E}( n_{ij} \mid Y, \hat Q_t )$ and $\mathbf{E}( \tau_i \mid Y, \hat Q_t )$. They can be expressed as following sums.
 
 
 \begin{equation}
@@ -624,16 +624,62 @@ The likelihood of the completely observed system  $\mathcal{CL}$ will be similar
 
 %TODO Move the CT-HMM intorduction in here, and separate it in the more chapters, not the EM- chapter.
 
-\section{Posterior...}
+\section{Posterior...}\label{sec:pos}
+%intro with 3 problems ..?
 
 \section{The Model Parameters Estimation}
 %viterbi forward-backward need to be redefined with different rates matrix for different interval.
 
 For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\hat B$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
 
-However the estimation of the $\hat Q$ can't be inherited from the discrete model, because the state transitions are not dependent on observation times and there can even be more of them between two observations. The following algorithm proposed in article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
+However the estimation of the $\hat Q$ can't be inherited from the discrete model, because the state transitions are not dependent on the observation times and there can even be more of them between two observations. The following algorithm proposed in the article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
 
+The expectation step will be the log-likelihood of the model. Simply just the logarithm of the full observation probability function \eqref{eq:HMCL1}.
 
+\begin{equation}\label{eq:EMCTHMM}
+\begin{aligned}  
+ \ln(\mathcal{CL}) &= \sum_{i \in S} \sum_{j \in S, i \neq j} \big( \ln( \hat q_{ij}) \mathbf{E}( n_{ij} \mid O,T, \hat Q_t ) - \hat q_i \mathbf{E}( \tau_i \mid O,T, \hat Q_t ) \big) + \\
+    &+ \sum_{v=0}^V \mathbf{E}( ln b_{s(t_v)}(o_v) \mid, O,T,\hat Q_t )
+\end{aligned}
+\end{equation}
+
+We will maximize the previous function by recalculating the~$\hat Q_t$. 
+
+\begin{equation}
+\begin{aligned}  
+\hat Q_t(i,j)= 
+\begin{cases}
+\frac{ \mathbf{E}(n_{ij} \mid O,T, \hat Q_t )}{ \mathbf{E}( \tau_i \mid O,T, \hat Q_t ) } & \text{if } i\neq j\\
+- \sum\limits_{k \in S ,k \neq i} q_{ik}, \qquad & \text{if } i=j
+\end{cases}
+\end{aligned}
+\end{equation}
+
+The challenging step is to derive computation of expected values of $n_{ij}$ and $\tau_i$. We will start with the first $\mathbf{E}(n_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
+
+\begin{equation} 
+\sum_{s(t_1),\cdots,s(t_V)} p(s(t_1),\cdots,s(t_V) \mid O,T, \hat Q_t) \mathbf{E}(n_{ij} \mid s(t_1),\cdots,s(t_V) ,\hat Q_t )
+\end{equation}
+
+The expectation part can be rewrite in the intervals form.  
+
+\begin{equation}
+ \sum_{s(t_1),\cdots,s(t_V)} p(s(t_1),\cdots,s(t_V) \mid O,T, \hat Q_t) \sum_{v=1}^{V-1}\mathbf{E}(n_{ij} \mid s(t_v),s(t_{v+1}) ,\hat Q_t )
+\end{equation}
+
+Because the Markov condition hold, we can interval-wise divide the complex probability function and for every of the time intervals sum through all possible states $k,l$ at its edge. 
+
+\begin{equation}
+\sum_{v=0}^{V-1} \sum_{k,l \in S} p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t) \mathbf{E}(n_{ij} \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )
+\end{equation}
+
+The expected value of sojourn time $\mathbf{E}( \tau_i \mid O,T, \hat Q_t )$ can be derived equivalently.
+
+\begin{equation}
+\sum_{v=0}^{V-1} \sum_{k,l \in S} p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t) \mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )
+\end{equation}
+
+In previous section \ref{sec:pos}, we have showed, how to count $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$. The remaining part of computing $\mathbf{E}(n_{ij} \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ and $\mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ will be presented in [future ref]. 
 
 
 
