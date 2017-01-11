@@ -610,7 +610,19 @@ With the use of the Markov property and from homogeneity of the Markov process, 
    
 \section{Continuous-Time Hidden Markov Model}
 
+Continuous-time hidden Markov model is the extension of CTMC, where the states in times $T = \{ t_0, t_1, \cdots, t_{V} \}$ are not directly observed, just seen as the observation symbols $O = \{  o_0, o_1, \cdots, o_{V} \}$, emitted by the current state $i$ with the probability $b_i(o)$.
+The likelihood of the completely observed system  $\mathcal{CL}$ will be similar to the $\mathcal{CL}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
 
+\begin{equation}\label{eq:HMCL1}
+\begin{aligned}  
+ \mathcal{CL} &= \prod_{v^{'}}^{V^{'}-1} q_{y_{v^{'}} y_{v^{'}+1}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} } 
+    \prod_{v=0}^V b_{s(t_v)}(o_v) = \\
+    &= \prod_{i \in S} \prod_{j \in S, i \neq j} q_{ij}^{n_{ij} } e^{ - q_i \tau_i } \prod_{v=0}^V b_{s(t_v)}(o_v)
+\end{aligned}
+\end{equation}
+%TODO s(t_v) was not defined enywhere, it need to be unified with the notation q_t = S from discrete model!
+
+ 
 
 
 \chapter{EM Algorithms for CT-HMM}
