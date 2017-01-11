@@ -232,7 +232,7 @@ Here we can use already defined forward and backward variables and count the $\g
 \begin{aligned}
 \gamma_t(i) &= \frac{ \mathrm{P}( q_t = S_i, O \mid \lambda )}{ \mathrm{P}( O \mid \lambda )} =
                \frac{  \alpha_t(i) \beta_t(i) }{ \mathrm{P}( O \mid \lambda )} = \\
-            &= \frac{  \alpha_t(i) \beta_t(i) }{ \sum_j=1^N \alpha_t(j) \beta_t(j) } 
+            &= \frac{  \alpha_t(i) \beta_t(i) }{ \sum\limits_{j=1}^N \alpha_t(j) \beta_t(j) } 
 \end{aligned}
 \end{equation}
 
@@ -299,7 +299,7 @@ q_t^* = \psi_{t+1}(q_{t+1}^*), \qquad t = T-1, T-2, \cdots, 1
 The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can see its complexity is also $\mathcal{O}(N^2T)$.
 
 
-\subsection{Baum-Welch Algorithm}
+\subsection{Baum-Welch Algorithm}\label{sec:BWA}
 
 There doesn't exist analytic solution for the problem~3. There are more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$S_i$ in the time~$t$ and in state~$S_j$ in the time~$t+1$. 
 
@@ -338,11 +338,11 @@ If summing~$\xi_t(i,j)$ over the time, we will get expected number of transition
 
 Now we have all what is needed to define the reestimated model~$\hat\lambda=(\hat{\matr{A}},\hat{\matr{B}},\hat\pi)$.
 
-\begin{equation}
+\begin{equation}\label{eq:bwpi}
 \hat\pi_i = \gamma_1(i)  
 \end{equation}
 
-\begin{equation}
+\begin{equation}\label{eq:bwa}
 \begin{aligned}
 \hat a_{ij} &= \frac{\mathbf{E}(\text{transitions from $S_i$ to $S_j$})}
 				   {\mathbf{E}(\text{transitions from $S_i$})}  \\
@@ -350,7 +350,7 @@ Now we have all what is needed to define the reestimated model~$\hat\lambda=(\ha
 \end{aligned}
 \end{equation}
 
-\begin{equation}
+\begin{equation}\label{eq:bwb}
 \begin{aligned}
 \hat b_{i}(k) &= \frac{\mathbf{E}(\text{times of visiting $S_i$ and observing symbol $v_k$ })}
 				   {\mathbf{E}(\text{times of visiting $S_i$})} \\
@@ -622,7 +622,19 @@ The likelihood of the completely observed system  $\mathcal{CL}$ will be similar
 \end{equation}
 %TODO s(t_v) was not defined enywhere, it need to be unified with the notation q_t = S from discrete model!
 
- 
+%TODO Move the CT-HMM intorduction in here, and separate it in the more chapters, not the EM- chapter.
+
+\section{Posterior...}
+
+\section{The Model Parameters Estimation}
+%viterbi forward-backward need to be redefined with different rates matrix for different interval.
+
+For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\hat B$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
+
+However the estimation of the $\hat Q$ can't be inherited from the discrete model, because the state transitions are not dependent on observation times and there can even be more of them between two observations. The following algorithm proposed in article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
+
+
+
 
 
 \chapter{EM Algorithms for CT-HMM}
