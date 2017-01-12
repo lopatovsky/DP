@@ -175,7 +175,7 @@ $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being
 
 For the convenience we will declare parameter $\lambda = \{\matr{A},\matr{B},\pi\}$, compactly denoting the set of all parameters of the model.   
 
-\section{Three Basic Problems for HMMs}
+\section{Three Basic Problems for HMMs}\label{sec:3p}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
 When dealing with real-world application we need to deal with following problems, as proposed in [citace]. First we will describe the problems and later in the successive subsections we will explain the algorithms that can effectively solve them. 
 
@@ -624,11 +624,11 @@ The likelihood of the completely observed system  $\mathcal{CL}$ will be similar
 
 %TODO Move the CT-HMM intorduction in here, and separate it in the more chapters, not the EM- chapter.
 
-\section{Posterior...}\label{sec:pos}
-%intro with 3 problems ..?
 
 \section{The Model Parameters Estimation}
 %viterbi forward-backward need to be redefined with different rates matrix for different interval.
+
+%continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
 
 For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\hat B$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
 
@@ -639,7 +639,7 @@ The expectation step will be the log-likelihood of the model. Simply just the lo
 \begin{equation}\label{eq:EMCTHMM}
 \begin{aligned}  
  \ln(\mathcal{CL}) &= \sum_{i \in S} \sum_{j \in S, i \neq j} \big( \ln( \hat q_{ij}) \mathbf{E}( n_{ij} \mid O,T, \hat Q_t ) - \hat q_i \mathbf{E}( \tau_i \mid O,T, \hat Q_t ) \big) + \\
-    &+ \sum_{v=0}^V \mathbf{E}( ln b_{s(t_v)}(o_v) \mid, O,T,\hat Q_t )
+    &+ \sum_{v=0}^V \mathbf{E}( \ln( b_{s(t_v)}(o_v) ) \mid, O,T,\hat Q_t )
 \end{aligned}
 \end{equation}
 
@@ -679,13 +679,26 @@ The expected value of sojourn time $\mathbf{E}( \tau_i \mid O,T, \hat Q_t )$ can
 \sum_{v=0}^{V-1} \sum_{k,l \in S} p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t) \mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )
 \end{equation}
 
-In previous section \ref{sec:pos}, we have showed, how to count $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$. The remaining part of computing $\mathbf{E}(n_{ij} \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ and $\mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ will be presented in [future ref]. 
+In the following section \ref{sec:pos}, we will show, how to count $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$. The remaining part of computing $\mathbf{E}(n_{ij} \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ and $\mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ will be presented in [future ref]. 
+
+\section{The Posterior State Probabilities}\label{sec:pos}
+
+We have introduced the tree basic problems of DT-HMM in section \ref{sec:3p}. They can be likewise defined for the continuous model. We have already showed the partial solution of the third problem (model parameters adjustment) in the previous section, now we will discuss the first two problems. We will show that to solve them, it is needed only little transformation of DT-HMM algorithms.
+
+To count the probability of the CT-HMM with specified parameters, and defined states in observation points, we do not need to know about the state transition that have occurred among the observations.
+When we take this observation into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $p_{\tau}(i,j) = e^{Q \tau}$, that can play the role of transition probabilities in discrete time in-homogeneous model. Now we can define the desired probability as following.
+
+\begin{equation}
+\prod_{v=1}^{V-1} p_{\tau_v}(s(t_v),s(t_{v+1})) \prod_{v=1}^{V} b_{s(t_v)}(o_v)
+\end{equation}
+         
+    
 
 
 
-\chapter{EM Algorithms for CT-HMM}
+%\chapter{EM Algorithms for CT-HMM}
 
-%continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
+
 
 %\chapter{Realisation}
 
