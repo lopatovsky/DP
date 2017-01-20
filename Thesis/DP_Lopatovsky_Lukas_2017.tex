@@ -72,6 +72,8 @@
 
 \setsecnumdepth{all}
 
+%TODO change chapter order and section affiliation.
+
 \chapter{Expectation-Maximization Algorithm}\label{ch:EM}
 
 
@@ -301,39 +303,39 @@ The structure of the algorithm is very similar to the Forward-Backward algorithm
 
 \subsection{Baum-Welch Algorithm}\label{sec:BWA}
 
-There doesn't exist analytic solution for the problem~3. There are more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$S_i$ in the time~$t$ and in state~$S_j$ in the time~$t+1$. 
+There doesn't exist analytic solution for the problem~3. There are more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues.[ref?] We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in state~$s_j$ in the time~$t+1$. 
 
 \begin{equation}
-\xi_t(i,j) = \mathrm{P}( q_t = S_i, q_{t+1} = S_j \mid O, \lambda )  
+\xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \lambda )  
 \end{equation}
 
 The probability can be compute using forward-backward variables as follows
  
 \begin{equation}\label{eq:xi}
 \begin{aligned}
-\xi_t(i,j) &= \frac{ \alpha_t(i) a_{ij} b_j(O_{t+1}) \beta_{t+1}(j) }
-		   		   { \mathrm{P}( O \mid \lambda ) } \\
-		   &= \frac{ \alpha_t(i) a_{ij} b_j(O_{t+1}) \beta_{t+1}(j) }
-		   		   { \sum\limits_{i=1}^N \sum\limits_{j=1}^N \alpha_t(i) a_{ij} b_j(O_{t+1}) \beta_{t+1}(j) }
+\xi_t(i,j) &= \frac{ \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
+		   		   { \mathrm{P}( \matr{O} \mid \lambda ) } \\
+		   &= \frac{ \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
+		   		   { \sum\limits_{i=1}^n \sum\limits_{j=1}^n \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
 \end{aligned}
 \end{equation}
 
-Obviously it is in relation with already defined variable~$\gamma_t(i)$ - the probability of being in the state~$S_i$ in the time~$t$.
+Obviously it is in relation with already defined variable~$\gamma_t(i)$ - the probability of being in the state~$s_i$ in the time~$t$.
 
 \begin{equation}
-\gamma_t(i) = \sum_{j=1}^N \xi_t(i,j)  
+\gamma_t(i) = \sum_{j=1}^n \xi_t(i,j)  
 \end{equation}
 
-We can get the expected number of transitions from~$S_i$, when summing~$\gamma_t(i)$ over the time till~$T-1$. Similarly we would get expected number of times in~$S_i$, by summing over~$t$ from~$t=1$ till~$t=T$. 
+We can get the expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$T-1$. Similarly we would get expected number of times in~$s_i$, by summing over~$t$ from~$t=1$ till~$t=T$. 
 
 \begin{equation}
-\mathbf{E}(\text{transitions from $S_i$}) = \sum_{t=1}^{T-1} \gamma_t(i)  
+\mathbf{E}(\text{transitions from $s_i$}) = \sum_{t=1}^{T-1} \gamma_t(i)  
 \end{equation}
 
-If summing~$\xi_t(i,j)$ over the time, we will get expected number of transitions from $S_i$ to $S_j$, . 
+If summing~$\xi_t(i,j)$ over the time, we will get expected number of transitions from $s_i$ to $s_j$, . 
 
 \begin{equation}
-\mathbf{E}(\text{transitions from $S_i$ to $S_j$}) = \sum_{t=1}^{T-1} \xi_t(i,j)  
+\mathbf{E}(\text{transitions from $s_i$ to $s_j$}) = \sum_{t=1}^{T-1} \xi_t(i,j)  
 \end{equation}
 
 Now we have all what is needed to define the reestimated model~$\hat\lambda=(\hat{\matr{A}},\hat{\matr{B}},\hat\pi)$.
@@ -344,27 +346,29 @@ Now we have all what is needed to define the reestimated model~$\hat\lambda=(\ha
 
 \begin{equation}\label{eq:bwa}
 \begin{aligned}
-\hat a_{ij} &= \frac{\mathbf{E}(\text{transitions from $S_i$ to $S_j$})}
-				   {\mathbf{E}(\text{transitions from $S_i$})}  \\
+\hat a_{ij} &= \frac{\mathbf{E}(\text{transitions from $s_i$ to $s_j$})}
+				   {\mathbf{E}(\text{transitions from $s_i$})}  \\
 		    &= \frac{\sum\limits_{t=1}^{T-1} \xi_t(i,j)}{\sum\limits_{t=1}^{T-1} \gamma_t(i) }
 \end{aligned}
 \end{equation}
 
 \begin{equation}\label{eq:bwb}
 \begin{aligned}
-\hat b_{i}(k) &= \frac{\mathbf{E}(\text{times of visiting $S_i$ and observing symbol $v_k$ })}
-				   {\mathbf{E}(\text{times of visiting $S_i$})} \\
+\hat b_{i}(k) &= \frac{\mathbf{E}(\text{times of visiting $s_i$ and observing symbol $v_k$ })}
+				   {\mathbf{E}(\text{times of visiting $s_i$})} \\
 			  &= \frac{\sum\limits_{t=1, \text{if } O_t = v_k  }^{T} \gamma_t(i)}{\sum\limits_{t=1}^{T} \gamma_t(i) } 
 \end{aligned}
 \end{equation}
 
-The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\lambda,\hat\lambda)$ and maximization step, the maximization over parameter~$\hat\lambda$. The algorithm will stop ones it is no longer improving. It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can helpful to start the algorithm more times with different parameter initialization.  
+%TODO O_t = v_k, ok?
+
+The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\lambda,\hat\lambda)$ and maximization step, the maximization over parameter~$\hat\lambda$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can helpful to start the algorithm more times with different parameter initialization.  
 
 %proof it is growing { was mentioned in EM }
 
 \chapter{Continuous-Time Hidden Markov Model}
 
-When mentioning continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
+All the time we will mention continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
 
 In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
 
@@ -379,7 +383,6 @@ Now we will continue by formally defining Continuous time Markov process, after 
 
 %relationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
 %construction from discrete HMM is probably important, heterogenous MM.
-\subsection{Definition}
 %cit:[S.Karlin]
 A finite state continuous time Markov process (later as CTMC) is a~stochastic process $Y_t (t > 0)$ on the states $i_0, i_1, \cdots, i_N, i, j \in S$ (for $N>0$ and $S$ being the finite state space), that in any time $t$  occurs in the corresponding state $y_t$. 
 
@@ -406,9 +409,7 @@ The equation describes that the stochastic process is memoryless.
 \end{equation}
 
 \end{itemize}
-
-
-\subsection{Properties} 
+ 
 
 The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), i,j \in S$ satisfies following conditions:%cit:[S.Karlin]
 
@@ -444,30 +445,7 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t
 
 %construction from Discrete time with poisson timing
 
-\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
-
-The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
-
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $X_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $X_n$ being mutually independent. To make the construction, we will change the equidistant timing of $X_n$ by Poisson process timing. We will get the process $X_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j\in S, i\neq j} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $Y_t = X_{N(t)}$ is called continuous-time Markov process.
-
-Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
-
-\begin{equation}
-\begin{aligned}
-\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, y_t = j \mid y_t = i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_{N(t)} = j \mid X_{N(t)} = i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( X_n = j \mid X_0 = i )  = \\
-				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
-\end{aligned}
-\end{equation} 
-
-
-  
-
-
-
-
-\subsubsection{ Jump Rates }
+\subsection{ Jump Rates }
 
 Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_t(i,j)}$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
 %cit[vytistena st. kniha]
@@ -498,8 +476,6 @@ It can be shown that by construction of the CTMC from discrete time Markov chain
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
 
-\subsubsection{The Infinitesimal Matrix}
-
 We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the Infinitesimal matrix $\matr{Q}$ as following:
 
 \begin{equation}
@@ -514,11 +490,27 @@ We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the st
 
 Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
-\section{ Continuous-Time Markov Chain }
+\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
+
+The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
+
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $X_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $X_n$ being mutually independent. To make the construction, we will change the equidistant timing of $X_n$ by Poisson process timing. We will get the process $X_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j\in S, i\neq j} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $Y_t = X_{N(t)}$ is called continuous-time Markov process.
+
+Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
+
+\begin{equation}
+\begin{aligned}
+\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, y_t = j \mid y_t = i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_{N(t)} = j \mid X_{N(t)} = i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( X_n = j \mid X_0 = i )  = \\
+				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
+\end{aligned}
+\end{equation} 
+
 
 %ref Yu-Ying Liu
 
-\subsection{ Fully Observable Continuous-Time Markov Chain }
+\subsection{ Fully Observable Continuous-Time Markov Process }
 
 Let's have continuous time Markov chain on the state space $S$, with the jump rates in infinitesimal matrix $Q$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $Y^{'}= \{y_0, y_1, \cdots, y_{V^{'}} \} $ occurring at times $T^{'} = \{ t_0^{'}, t_1^{'}, \cdots, t_{V^{'}}^{'} \}$. Such a system, where we know, when and which the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{CL}$). 
 
@@ -538,7 +530,7 @@ The equation can be further rearranged in the form that group together the same 
  \mathcal{CL} = \prod_{i \in S} \prod_{j \in S, i \neq j} q_{ij}^{n_{ij} } e^{ - q_i \tau_i }
 \end{equation}
 
-\subsection{ General Continuous-Time Markov Chain }
+\subsection{ General Continuous-Time Markov Process }
 
 In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $T = \{ t_0, t_1, \cdots, t_{V} \}$ as $Y= \{y_0, y_1, \cdots, y_{V} \}$. 
 This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $n_{ij}$ as well as the time spend in the specific state $\tau_i$. 
