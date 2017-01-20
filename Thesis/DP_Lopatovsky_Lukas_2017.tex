@@ -114,9 +114,9 @@ We have decided to write this chapter, because Continuous-time HMM is its direct
 
 \section{Discrete Markov Process}
     
-Discrete Markov Process is the stochastic process in discrete equidistant time $t= 1,2,\cdots$, that in every time is in some state from the set of $N$ distinct states $S_1,S_2, \cdots, S_N $. The change of the state can occur in every $t$, with some given probability $a_{ij}$, what is the probability that the system will move from the state $S_i$ to the state $S_j$ in any time step, or possibly it can remain in the same state with probability $a_{ii}$. Then we denote the actual state at time $t$ as $q_t$.
+Discrete Markov Process is the stochastic process $X_t$ in discrete equidistant time $\matr{t} = \{ t_1,t_2,\cdots \}$, that in every time occupies some state from the finite state set $\mathcal{S} = \{ s_1, s_2, \cdots, s_n\}$. We will denote as $X_i = s_j$, if the process in time $t$ is in the state $s_j$. The state transition probability will be given in matrix $\matr{A}$, where its elements $a_{ij}, 1\leq i,j \leq n$ represents the probability of the process to move from the state $s_i$ to the $s_j$ in any time step $t$.  Note that $i$ can equal $j$, in that case the process will not move, but it  will remain in the same state. The probability of it is $a_{ii}$.
 
-To tell about the system to be Markov, it should hold so called Markov property. It can be expressed by equation \eqref{eq:mp}, it means that the probability of transition to another state depends only on the current state and doesn't use the information about any past states - the system is memory-less.
+To tell about the system to be Markov, it should hold so called Markov property. It can be expressed by equation \eqref{eq:mp}. It means that the probability of transition to another state depends only on the current state and doesn't use the information about any past states - the system is memory-less.
 
 \begin{equation}\label{eq:mp}
 \begin{aligned}
@@ -556,7 +556,7 @@ It can be alternatively extended in the form
 \end{equation}
 
 where the function $\mathbb{I}(i,j)$ equal either $1$, if both condition inside are true, or $0$ if they are not. 
-If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\cdots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula
+If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\cdots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula,
 
 \begin{equation}\label{eq:CTL}
  \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i,j \in S}  \matr{P}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} y_v = i, y_{v+1} = j )} 
@@ -692,10 +692,10 @@ When we take this observation into the account, we can look on the model as it w
 \prod_{v=1}^{V-1} p_{\tau_v}(s(t_v),s(t_{v+1})) \prod_{v=1}^{V} b_{s(t_v)}(o_v)
 \end{equation}
 
-It should obvious that for the continuous variant of Viterbi and Forward-backward algorithm, it is only needed to change the state transition $a_{ij}$ to time variable $p_{\tau_v}(i,j)$.   
-Now, we have all what we need to for counting of posterior state distribution $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$, using the forward and backward variables as we hove done, while defining variable $\xi_t(i,j)$ in the discrete model \eqref{eq:xi}.
+It should obvious that for the continuous variant of Viterbi and Forward-backward algorithm, it is only needed to change the state transition $a_{ij}$ to time variable~$p_{\tau_v}(i,j)$.   
+Now, we have all what we need to for counting of posterior state distribution $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$, using the forward and backward variables as we hove done, while defining the variable~$\xi_t(i,j)$ in the discrete model \eqref{eq:xi}.
 
-The described way for computing the posterior distribution of hidden states is referred to as the "Soft" method. Supplementary there is the "Hard" method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??           
+The described way for computing the posterior distribution of hidden states is referred to as the "Soft"~method. Supplementary, there is the "Hard"~method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??           
     
 
 
