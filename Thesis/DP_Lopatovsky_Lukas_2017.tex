@@ -411,7 +411,7 @@ The equation describes that the stochastic process is memoryless.
 \end{itemize}
  
 
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), i,j \in S$ satisfies following conditions:%cit:[S.Karlin]
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), 1 \leq i,j \leq S$ satisfies following conditions:%cit:[S.Karlin]
 
 
 \begin{equation}
@@ -419,7 +419,7 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \end{equation}
 
 \begin{equation}
-\sum_{j \in S} \mathrm{p_t}(i,j) = 1
+\sum_{j = 1}^n \mathrm{p_t}(i,j) = 1
 \end{equation}
 
 \begin{equation}\label{eq:l0}  
@@ -431,14 +431,14 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \end{equation}
 
 \begin{equation}\label{eq:ckeq}
-\sum_{k \in S}\mathrm{p_s}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{s+t}}(i,j)     
+\sum_{k = 1}^n\mathrm{p_u}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{u+s}}(i,j)     
 \end{equation}
 
 Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
-We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{P_t(i,j)}$ to get the equation in following form:
+We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_t(i,j)}$ to get the equation in following form:
 
 \begin{equation}\label{eq:ckm}
-\matr{P_s} \matr{P_t} = \matr{P_{s+t}},   \qquad t,s > 0  
+\matr{P_u} \matr{P_t} = \matr{P_{u+t}},   \qquad t,u > 0  
 \end{equation}
 
 ?proof of Chapman-kolmogorov?
@@ -460,13 +460,13 @@ q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} 
 We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other state~$j$. The jump rate $q_{ii}$ can be derived from the equation of transition probabilities summing to the one.
 
 \begin{equation}
-1 = \mathrm{p_t}(i,i) + \sum_{j \in S ,j \neq i} \mathrm{p_t}(i,j) 
+1 = \mathrm{p_t}(i,i) + \sum_{j = 1}^{ n ,j \neq i} \mathrm{p_t}(i,j) 
 \end{equation}
 
 dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
 
 \begin{equation}\label{eq:qii}
- q_{ii} =  \sum_{j \in S ,j \neq i} q_{ij} 
+ q_{ii} =  \sum_{j = 1}^{ n ,j \neq i} q_{ij} 
 \end{equation}
 
 (We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
@@ -483,7 +483,7 @@ We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the st
 \matr{Q}(i,j)= 
 \begin{cases}
 \qquad q_{ij}, \qquad & \text{if } i\neq j\\
-- \sum\limits_{k \in S ,k \neq i} q_{ik}, \qquad & \text{if } i=j
+\sum\limits_{k = 1}^{ n ,k \neq i} q_{ik}, \qquad & \text{if } i=j
 \end{cases}
 \end{aligned}
 \end{equation}
@@ -494,15 +494,15 @@ Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\
 
 The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
 
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $X_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $X_n$ being mutually independent. To make the construction, we will change the equidistant timing of $X_n$ by Poisson process timing. We will get the process $X_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j\in S, i\neq j} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $Y_t = X_{N(t)}$ is called continuous-time Markov process.
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $Y_n$ being mutually independent. To make the construction, we will change the equidistant timing of $Y_n$ by Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $X_t = Y_{N(t)}$ is called continuous-time Markov process.
 
 Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
 
 \begin{equation}
 \begin{aligned}
-\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, y_t = j \mid y_t = i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_{N(t)} = j \mid X_{N(t)} = i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( X_n = j \mid X_0 = i )  = \\
+\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_t = s_j \mid Y_t = s_i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = s_j \mid Y_{N(t)} = s_i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( Y_n = j \mid Y_0 = i )  = \\
 				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
 \end{aligned}
 \end{equation} 
