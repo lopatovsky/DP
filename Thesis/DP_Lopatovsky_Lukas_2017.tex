@@ -512,22 +512,22 @@ Now we can derive the equation for probability of transition from the state $i$ 
 
 \subsection{ Fully Observable Continuous-Time Markov Process }
 
-Let's have continuous time Markov chain on the state space $S$, with the jump rates in infinitesimal matrix $Q$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $Y^{'}= \{y_0, y_1, \cdots, y_{V^{'}} \} $ occurring at times $T^{'} = \{ t_0^{'}, t_1^{'}, \cdots, t_{V^{'}}^{'} \}$. Such a system, where we know, when and which the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{CL}$). 
+Let's have continuous time Markov chain on the state space $\mathcal{S}$, with the jump rates in the infinitesimal matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $\matr{X^{'}}= ( x_0, x_1, \cdots, x_{v^{'}} ) $ occurring at times $\matr{T^{'}} = \{ t_0^{'}, t_1^{'}, \cdots, t_{v^{'}}^{'} \}$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}  
- \mathcal{CL} &=  \prod_{v^{'}}^{V^{'}-1} ( q_{y_{v^{'}} y_{v^{'}+1}} / q_{y_{v^{'}}} )( q_{y_{v^{'}}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }) = \\
-    &= \prod_{v^{'}}^{V^{'}-1} q_{y_{v^{'}} y_{v^{'}+1}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} }
+ \mathcal{L}_{FO} &=  \prod_{u=0}^{v^{'}-1} ( q_{x_u x_{u+1}} / q_{x_u} )( q_{x_u} e^{ - q_{x_u} \tau_{u }^{'}}) = \\
+    &= \prod_{u=0}^{v^{'}-1} q_{x_u x_{u+1}} e^{ - q_{x_u} \tau_{u}^{'}}
 \end{aligned}
 \end{equation}
 
-where the $q_i = \sum_{j\in S, i\neq j} q_{ij}$ is the probability of transition from the state~$i$ and   
-$\tau_{v^{'}} = t_{v^{'}+1}^{'} - t_{v^{'}}^{'}$ is the time interval among the two consecutive steps.
+where the $q_i = \sum_{j=1}^{n,i\neq j} q_{ij}$ is the probability of transition from the state~$i$ and   
+$\tau_{u}^{'} = t_{u+1}^{'} - t_{u}^{'}$ is the time interval among the two consecutive steps.
 
-The equation can be further rearranged in the form that group together the same state transition. The variable $n_{ij}$ marks the number of transition $q_ij$ that have occurred and the~$\tau_i$ is the total time spend in the state~$i$.
+The equation can be further rearranged in the form that group together the same state transition. The variable $\eta_{ij}$ marks the number of transition $q_{ij}$ that have occurred and the~$\tau_i$ is the total time spend in the state~$s_i$.
 
 \begin{equation}\label{eq:CL2}
- \mathcal{CL} = \prod_{i \in S} \prod_{j \in S, i \neq j} q_{ij}^{n_{ij} } e^{ - q_i \tau_i }
+ \mathcal{L}_{FO} = \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i }
 \end{equation}
 
 \subsection{ General Continuous-Time Markov Process }
