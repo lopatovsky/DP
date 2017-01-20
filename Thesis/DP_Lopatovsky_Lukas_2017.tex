@@ -404,26 +404,26 @@ The equation describes that the stochastic process is memoryless.
 \begin{equation}
 \begin{aligned}
 & \mathrm{P}( y_{t+s} = j \mid y_s = i ) = \mathrm{P}( y_t = j \mid y_0 = i ) = \\
-& = \mathrm{p_t}(i,j)
+& = \mathrm{p_{ij}}(t)
 \end{aligned}
 \end{equation}
 
 \end{itemize}
  
 
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_t}(i,j), 1 \leq i,j \leq S$ satisfies following conditions:%cit:[S.Karlin]
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), 1 \leq i,j \leq S$ satisfies following conditions:%cit:[S.Karlin]
 
 
 \begin{equation}
-\mathrm{p_t}(i,j) \geq 0
+\mathrm{p_{ij}}(t) \geq 0
 \end{equation}
 
 \begin{equation}
-\sum_{j = 1}^n \mathrm{p_t}(i,j) = 1
+\sum_{j = 1}^n \mathrm{p_{ij}}(t) = 1
 \end{equation}
 
 \begin{equation}\label{eq:l0}  
-\lim_{t \to 0^+} \mathrm{p_t}(i,j)= 
+\lim_{t \to 0^+} \mathrm{p_{ij}}(t)= 
 \begin{cases}
 1, i = j\\
 0, i \neq j
@@ -431,11 +431,11 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \end{equation}
 
 \begin{equation}\label{eq:ckeq}
-\sum_{k = 1}^n\mathrm{p_u}(i,k)\mathrm{p_t}(k,j) = \mathrm{p_{u+s}}(i,j)     
+\sum_{k = 1}^n\mathrm{p_{ik}}(u)\mathrm{p_{kj}}(t) = \mathrm{p_{ij}}(u+s)     
 \end{equation}
 
 Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
-We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_t(i,j)}$ to get the equation in following form:
+We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij}}(t)$ to get the equation in following form:
 
 \begin{equation}\label{eq:ckm}
 \matr{P_u} \matr{P_t} = \matr{P_{u+t}},   \qquad t,u > 0  
@@ -447,20 +447,20 @@ We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_t
 
 \subsection{ Jump Rates }
 
-Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_t(i,j)}$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
+Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
 %cit[vytistena st. kniha]
 
-The property \eqref{eq:l0}  asserts that $\mathrm{p_t(i,j)}$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
-Moreover from \eqref{eq:ckm} follows that $\mathrm{p_t(i,j)}$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_t(i,j)}$ for any given time $t>0$.   
+The property \eqref{eq:l0}  asserts that $\mathrm{p_{ij}}(t)$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
+Moreover from \eqref{eq:ckm} follows that $\mathrm{p_{ij}}(t)$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_{ij}}(t)$ for any given time $t>0$.   
 
 \begin{equation}
-q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_t}(i,j)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_t}(i,j)}{t}, \quad \text{if } i\neq j     
+q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_{ij}}(t)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_{ij}}(t)}{t}, \quad \text{if } i\neq j     
 \end{equation}
 
 We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other state~$j$. The jump rate $q_{ii}$ can be derived from the equation of transition probabilities summing to the one.
 
 \begin{equation}
-1 = \mathrm{p_t}(i,i) + \sum_{j = 1}^{ n ,j \neq i} \mathrm{p_t}(i,j) 
+1 = \mathrm{p_{ii}}(t) + \sum_{j = 1}^{ n ,j \neq i} \mathrm{p_{ij}}(t) 
 \end{equation}
 
 dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
@@ -532,26 +532,26 @@ The equation can be further rearranged in the form that group together the same 
 
 \subsection{ General Continuous-Time Markov Process }
 
-In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $T = \{ t_0, t_1, \cdots, t_{V} \}$ as $Y= \{y_0, y_1, \cdots, y_{V} \}$. 
-This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $n_{ij}$ as well as the time spend in the specific state $\tau_i$. 
+In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $\matr{T} = ( t_0, t_1, \cdots, t_{v} )$ as $\matr{X}= (x_0, x_1, \cdots, x_{v} )$. 
+This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $\eta_{ij}$ as well as the time spend in the specific state $\tau_i$. 
 
-To count the likelihood of the chain, we will use earlier defined matrix $\matr{P}(t)$ [ref] for the time interval~$\tau_v = t_{v+1} - t_v$.    
+To count the likelihood of the chain, we will use earlier defined matrix $\matr{P}(t)$ and its elements $\mathrm{p_{ij}}(t)$ [ref] for the time interval~$\tau_u = t_{u+1} - t_u$.    
 
 \begin{equation}
- \mathcal{L} = \prod_{v=0}^{V-1} \matr{P}_{y_v y_{v+1}}(\tau_v) 
+ \mathcal{L} = \prod_{u=0}^{v-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
 \end{equation}
 
 It can be alternatively extended in the form
 
 \begin{equation}
- \mathcal{L} = \prod_{v=0}^{V-1} \prod_{i,j \in S}  \matr{P}_{ij}(\tau_v)^{\mathbb{I}( y_v = i, y_{v+1} = j )} 
+ \mathcal{L} = \prod_{u=0}^{v-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathbb{I}( x_u = i, x_{u+1} = j )} 
 \end{equation}
 
 where the function $\mathbb{I}(i,j)$ equal either $1$, if both condition inside are true, or $0$ if they are not. 
 If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\cdots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula,
 
 \begin{equation}\label{eq:CTL}
- \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i,j \in S}  \matr{P}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} y_v = i, y_{v+1} = j )} 
+ \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} x_u = i, x_{u+1} = j )} 
 \end{equation}
 
 where function $\mathbb{C}$ denotes the total number of intervals, for that condition is true.
@@ -561,40 +561,39 @@ where function $\mathbb{C}$ denotes the total number of intervals, for that cond
 \subsection{EM Algorithm} 
 
 There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
-For the expectation step we will use logarithms of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $Q$ in step $t$ noted as $\hat Q_t $.
-%TODO Q is not bold here \matr
+For the expectation step we will use logarithms of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $\matr{Q}$ in step $t$ noted as $\matr{ \hat Q_t } $.
 
 \begin{equation}\label{eq:EMCL}
- \ln( \mathcal{CL} ) = \sum_{i \in S} \sum_{j \in S, i \neq j} \ln( \hat q_{ij}) \mathbf{E}( n_{ij} \mid Y, \hat Q_t ) - \hat q_i \mathbf{E}( \tau_i \mid Y, \hat Q_t )
+ \ln( \mathcal{L}_{FO} ) = \sum_{i=0}^n \sum_{j=0}^{n, i \neq j} \ln( \hat q_{ij}) \mathbf{E}( \eta_{ij} \mid \matr{X}, \matr{ \hat Q_t } ) - \hat q_i \mathbf{E}( \tau_i \mid \matr{X}, \matr{ \hat Q_t } )
 \end{equation}
 
-In the maximization step we will evaluate new values for $\hat Q$, so that the previous equation was maximized. 
+In the maximization step we will evaluate new values for $\matr{ \hat Q }$, so that the previous equation was maximized. 
 
 \begin{equation}
 \begin{aligned}  
-\hat Q_t(i,j)= 
+\matr{ \hat Q_t }(i,j)= 
 \begin{cases}
-\frac{ \mathbf{E}(n_{ij} \mid Y, \hat Q_t )}{ \mathbf{E}( \tau_i \mid Y, \hat Q_t ) } & \text{if } i\neq j\\
-- \sum\limits_{k \in S ,k \neq i} q_{ik}, \qquad & \text{if } i=j
+\frac{ \mathbf{E}(\eta_{ij} \mid \matr{X}, \matr{ \hat Q_t } )}{ \mathbf{E}( \tau_i \mid \matr{X}, \matr{\hat Q_t} ) } & \text{if } i\neq j\\
+- \sum\limits_{k=1}^{n,k \neq i} q_{ik}, \qquad & \text{if } i=j
 \end{cases}
 \end{aligned}
 \end{equation}
 
-Now, there remain the non-trivial task to evaluate $\mathbf{E}( n_{ij} \mid Y, \hat Q_t )$ and $\mathbf{E}( \tau_i \mid Y, \hat Q_t )$. They can be expressed as following sums.
+Now, there remain the non-trivial task to evaluate $\mathbf{E}( \eta_{ij} \mid \matr{X}, \matr{\hat Q_t} )$ and $\mathbf{E}( \tau_i \mid \matr{X}, \matr{ \hat Q_t } )$. They can be expressed as following sums.
 
 
 \begin{equation}
 \begin{aligned}  
-\mathbf{E}(n_{ij} \mid Y, \hat Q_t ) &= \sum_{v=0}^{V-1} \mathbf{E}(n_{ij} \mid y_v, y_{v+1}, \hat Q_t ) = \\
-&= \sum_{v=0}^{V-1} \sum_{k,l \in S} \mathbb{I}( y_v = k, y_{v+1} = l ) \mathbf{E}(n_{ij} \mid y_v = k, y_{v+1} = l, \hat Q_t )
+\mathbf{E}(\eta_{ij} \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{v-1} \mathbf{E}(\eta_{ij} \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
+&= \sum_{u=0}^{v-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
 
 
 \begin{equation}
 \begin{aligned}  
-\mathbf{E}( \tau_i \mid Y, \hat Q_t ) &= \sum_{v=0}^{V-1} \mathbf{E}(\tau_i \mid y_v, y_{v+1}, \hat Q_t ) = \\
-&= \sum_{v=0}^{V-1} \sum_{k,l \in S} \mathbb{I}( y_v = k, y_{v+1} = l ) \mathbf{E}(\tau_i \mid y_v = k, y_{v+1} = l, \hat Q_t )
+\mathbf{E}( \tau_i \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{v-1} \mathbf{E}(\tau_i \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
+&= \sum_{u=0}^{v-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
    
@@ -602,14 +601,14 @@ With the use of the Markov property and from homogeneity of the Markov process, 
    
 \section{Continuous-Time Hidden Markov Model}
 
-Continuous-time hidden Markov model is the extension of CTMC, where the states in times $T = \{ t_0, t_1, \cdots, t_{V} \}$ are not directly observed, just seen as the observation symbols $O = \{  o_0, o_1, \cdots, o_{V} \}$, emitted by the current state $i$ with the probability $b_i(o)$.
-The likelihood of the completely observed system  $\mathcal{CL}$ will be similar to the $\mathcal{CL}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
+Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \cdots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = \{  o_0, o_1, \cdots, o_{v} \}$, emitted by the current state $s_i$ with the probability $b_i(o)$.
+The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
 
 \begin{equation}\label{eq:HMCL1}
 \begin{aligned}  
- \mathcal{CL} &= \prod_{v^{'}}^{V^{'}-1} q_{y_{v^{'}} y_{v^{'}+1}} e^{ - q_{y_{v^{'}}} \tau_{v^{'}} } 
-    \prod_{v=0}^V b_{s(t_v)}(o_v) = \\
-    &= \prod_{i \in S} \prod_{j \in S, i \neq j} q_{ij}^{n_{ij} } e^{ - q_i \tau_i } \prod_{v=0}^V b_{s(t_v)}(o_v)
+ \mathcal{L}_{FO} &= \prod_{u^{'}}^{u^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
+    \prod_{u=0}^v b_{ x_u }(o_u) = \\
+    &= \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i } \prod_{u=0}^v b_{x_u}(o_u)
 \end{aligned}
 \end{equation}
 %TODO s(t_v) was not defined enywhere, it need to be unified with the notation q_t = S from discrete model!
@@ -622,70 +621,71 @@ The likelihood of the completely observed system  $\mathcal{CL}$ will be similar
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
 
-For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\hat B$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
+For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
 
-However the estimation of the $\hat Q$ can't be inherited from the discrete model, because the state transitions are not dependent on the observation times and there can even be more of them between two observations. The following algorithm proposed in the article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
+However the estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model, because the state transitions are not dependent on the observation times and there can even be more of them between two observations. The following algorithm proposed in the article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
 
 The expectation step will be the log-likelihood of the model. Simply just the logarithm of the full observation probability function \eqref{eq:HMCL1}.
 
 \begin{equation}\label{eq:EMCTHMM}
 \begin{aligned}  
- \ln(\mathcal{CL}) &= \sum_{i \in S} \sum_{j \in S, i \neq j} \big( \ln( \hat q_{ij}) \mathbf{E}( n_{ij} \mid O,T, \hat Q_t ) - \hat q_i \mathbf{E}( \tau_i \mid O,T, \hat Q_t ) \big) + \\
-    &+ \sum_{v=0}^V \mathbf{E}( \ln( b_{s(t_v)}(o_v) ) \mid, O,T,\hat Q_t )
+ \ln(\mathcal{L}_{FO}) &= \sum_{i=1}^{n} \sum_{j=1}^{n, i \neq j} \big( \ln( \hat q_{ij}) \mathbf{E}( \eta_{ij} \mid \matr{O},\matr{T}, \matr{ \hat Q_t } ) - \hat q_i \mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } ) \big) + \\
+    &+ \sum_{u=0}^v \mathbf{E}( \ln( b_{ x_u }(o_u) ) \mid, \matr{O},\matr{T},\matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
 
-We will maximize the previous function by recalculating the~$\hat Q_t$. 
+We will maximize the previous function by recalculating the~$\matr{ \hat Q_t }$. 
 
 \begin{equation}
 \begin{aligned}  
-\hat Q_t(i,j)= 
+\matr{ \hat Q_t }(i,j)= 
 \begin{cases}
-\frac{ \mathbf{E}(n_{ij} \mid O,T, \hat Q_t )}{ \mathbf{E}( \tau_i \mid O,T, \hat Q_t ) } & \text{if } i\neq j\\
-- \sum\limits_{k \in S ,k \neq i} q_{ik}, \qquad & \text{if } i=j
+\frac{ \mathbf{E}(\eta_{ij} \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )}{ \mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{\hat Q_t} ) } & \text{if } i\neq j\\
+- \sum\limits_{k=1}^{n,k \neq i} q_{ik}, \qquad & \text{if } i=j
 \end{cases}
 \end{aligned}
 \end{equation}
 
-The challenging step is to derive computation of expected values of $n_{ij}$ and $\tau_i$. We will start with the first $\mathbf{E}(n_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
+
+The challenging step is to derive computation of expected values of $\eta_{ij}$ and $\tau_i$. We will start with the first $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
 
 \begin{equation} 
-\sum_{s(t_1),\cdots,s(t_V)} p(s(t_1),\cdots,s(t_V) \mid O,T, \hat Q_t) \mathbf{E}(n_{ij} \mid s(t_1),\cdots,s(t_V) ,\hat Q_t )
+\sum_{s(t_1),\cdots,s(t_V)} p(s(t_1),\cdots,s(t_V) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid s(t_1),\cdots,s(t_V) ,\hat Q_t )
 \end{equation}
 
 The expectation part can be rewrite in the intervals form.  
 
 \begin{equation}
- \sum_{s(t_1),\cdots,s(t_V)} p(s(t_1),\cdots,s(t_V) \mid O,T, \hat Q_t) \sum_{v=1}^{V-1}\mathbf{E}(n_{ij} \mid s(t_v),s(t_{v+1}) ,\hat Q_t )
+ \sum_{x_1,\cdots,x_v)} p(x_1,\cdots,x_v \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{v-1}\mathbf{E}(\eta_{ij} \mid x_v, x_{v+1}) ,\matr{\hat Q_t} )
 \end{equation}
 
 Because the Markov condition hold, we can interval-wise divide the complex probability function and for every of the time intervals sum through all possible states $k,l$ at its edge. 
 
 \begin{equation}
-\sum_{v=0}^{V-1} \sum_{k,l \in S} p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t) \mathbf{E}(n_{ij} \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )
+\sum_{u=0}^{v-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{ \hat Q_t } )
 \end{equation}
 
-The expected value of sojourn time $\mathbf{E}( \tau_i \mid O,T, \hat Q_t )$ can be derived equivalently.
+The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$ can be derived equivalently.
 
 \begin{equation}
-\sum_{v=0}^{V-1} \sum_{k,l \in S} p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t) \mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )
+\sum_{u=0}^{v-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
 \end{equation}
 
-In the following section \ref{sec:pos}, we will show, how to count $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$. The remaining part of computing $\mathbf{E}(n_{ij} \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ and $\mathbf{E}(\tau_i \mid s(t_v) = k,s(t_{v+1}) = l,\hat Q_t )$ will be presented in [future ref]. 
+In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in [future ref]. 
 
 \section{The Posterior State Probabilities}\label{sec:pos}
 
 We have introduced the tree basic problems of DT-HMM in section \ref{sec:3p}. They can be likewise defined for the continuous model. We have already showed the partial solution of the third problem (model parameters adjustment) in the previous section, now we will discuss the first two problems. We will show that to solve them, it is needed only little transformation of DT-HMM algorithms.
 
 To count the probability of the CT-HMM with specified parameters, and defined states in observation points, we do not need to know about the state transition that have occurred among the observations.
-When we take this observation into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $p_{\tau}(i,j) = e^{Q \tau}$, that can play the role of transition probabilities in discrete time in-homogeneous model. Now we can define the desired probability as following.
+When we take this observation into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $p_{i,j}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of transition probabilities in discrete time in-homogeneous model. Now we can define the desired probability as following.
 
 \begin{equation}
-\prod_{v=1}^{V-1} p_{\tau_v}(s(t_v),s(t_{v+1})) \prod_{v=1}^{V} b_{s(t_v)}(o_v)
+\prod_{u=1}^{v-1} p_{x_u, x_{u+1}}(\tau_u) \prod_{u=1}^{v} b_{ x_u }(o_u)
 \end{equation}
 
-It should obvious that for the continuous variant of Viterbi and Forward-backward algorithm, it is only needed to change the state transition $a_{ij}$ to time variable~$p_{\tau_v}(i,j)$.   
-Now, we have all what we need to for counting of posterior state distribution $p(s(t_v) = k,s(t_{v+1}) = l \mid O,T, \hat Q_t)$, using the forward and backward variables as we hove done, while defining the variable~$\xi_t(i,j)$ in the discrete model \eqref{eq:xi}.
+It should obvious that for the continuous variant of Viterbi and Forward-backward algorithm, it is only needed to change the state transition $a_{ij}$ to time variable~$p_{i,j}( \tau_u )$.   
+Now, we have all what we need to for counting of posterior state distribution $p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$, using the forward and backward variables as we hove done, while defining the variable~$\xi_t(i,j)$ in the discrete model \eqref{eq:xi}.
 
 The described way for computing the posterior distribution of hidden states is referred to as the "Soft"~method. Supplementary, there is the "Hard"~method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??           
     
