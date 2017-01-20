@@ -112,7 +112,7 @@ This chapter will briefly discuss Discrete-time Hidden Markov Model (later just 
 
 We have decided to write this chapter, because Continuous-time HMM is its direct logical extension and also it is using some of the subroutines that are the same as if defined for discrete time model.
 
-\section{Discrete Markov Process}
+\section{Discrete Markov Process}\label{sec:DMP}
     
 Discrete Markov Process is the stochastic process $X_t$ in discrete equidistant time $\matr{t} = \{ t_1,t_2,\cdots \}$, that in every time occupies some state from the finite state set $\mathcal{S} = \{ s_1, s_2, \cdots, s_n\}$. We will denote as $X_i = s_j$, if the process in time $t$ is in the state $s_j$. The state transition probability will be given in matrix $\matr{A}$, where its elements $a_{ij}, 1\leq i,j \leq n$ represents the probability of the process to move from the state $s_i$ to the $s_j$ in any time step $t$.  Note that $i$ can equal $j$, in that case the process will not move, but it  will remain in the same state. The probability of it is $a_{ii}$.
 
@@ -120,15 +120,15 @@ To tell about the system to be Markov, it should hold so called Markov property.
 
 \begin{equation}\label{eq:mp}
 \begin{aligned}
-\mathrm{P}(q_t & = S_j \mid q_{t-1} = S_{j-1}, q_{t-2} = S_{j-2}, \cdots)  \\   
-               & = \mathrm{P}(q_t = S_j \mid q_{t-1} = S_{j-1} )
+\mathrm{P}(X_t & = s_j \mid X_{t-1} = s_{j-1}, X_{t-2} = s_{j-2}, \cdots)  \\   
+               & = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_{j-1} )
 \end{aligned}
 \end{equation}
 
 The other important property is Homogeneity. The probability of transition from one state to another is constant throughout the time. 
 
 \begin{equation}\label{eq:homo}
-   a_{ij} = \mathrm{P}(q_t = S_j \mid q_{t-1} = S_{j-1} ),\qquad 1 \leq i,j \leq N, \forall t
+   a_{ij} = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_{j-1} ),\qquad 1 \leq i,j \leq n, \forall t
 \end{equation}
 
 For the transition probabilities are applied classical stochastic constrains.
@@ -138,33 +138,33 @@ For the transition probabilities are applied classical stochastic constrains.
 \end{equation}
 
 \begin{equation}
-   \sum_{j=1}^N a_{ij} = 1
+   \sum_{j=1}^n a_{ij} = 1
 \end{equation}
 
 \section{Discrete-time Hidden Markov Model}
 
-Discrete-time Hidden Markov Model is the extension of the previous model. In the classic Markov Model we can directly see the states we are currently in as observations. Such a model is of restricted use and doesn't fit well to many problems. In HMM are the states observable by another probabilistic function that for each of the states assign the probabilities that the observation $O = O_1,O_2,\cdots,O_T$ will occur. It forms the doubly embedded stochastic process, where the underlying one is hidden and observable only by the statistical properties of another process dependable upon it.
-
-An HMM can be described by its:
+Discrete-time Hidden Markov Model (HMM) is the extension of the previously defined model~\ref{sec:DMP}. In the classic Markov process are the states directly observable. Such a model is often too simplistic to fit well real life problems. The HMM forms the doubly embedded stochastic process, in which the states are not directly observable, but only through the another dependable process, that to every state $s_i$ assign the probability, that it will emit the variable from the set $\mathcal{O}=\{  o_1,o_2,\cdots,o_m\}$. The $\mathcal{O}$ is the set of observable variables. It forms the part of the model, which is known and can be used to guess the possible underlying states chain. The probability of emission of variable $o_j$ by the state $s_i$ will be denoted as $b_i(j)$ and form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns.
+  
+To summarize the HMM can be described by its:
 
 \begin{enumerate}[resume]
 \setcounter{enumi}{0}
 \item \textbf{Hidden States}
 \begin{equation}
-S = \{ S_1,S_2, \cdots, S_N \}
+\mathcal{S} = \{ s_1,s_2, \cdots, s_n \}
 \end{equation} 
 \item \textbf{State Transition Probability Distribution}
 \begin{equation}\label{eq:tp}
-\matr{A} = \{ a_{ij} \}, \quad 1 \leq i,j \leq N
+\matr{A} = \{ a_{ij} \}, \quad 1 \leq i,j \leq n
 \end{equation} 
 \item \textbf{Observation Symbols}
 \begin{equation}
-V = \{ v_1,v_2, \cdots, v_M \} 
+\mathcal{O} = \{ o_1,o_2, \cdots, o_m \} 
 \end{equation}
 \item \textbf{Observation Symbols Probability Distribution} \\
 $\matr{B} = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observation $k$ will occur, if the system is currently in state $i$. 
 \begin{equation}
-b_i(k) = \mathrm{P}(v_k \text{ at t } \mid q_t = S_i), \qquad 1 \leq i \leq N, \quad 1 \leq k \leq M
+b_i(k) = \mathrm{P}(o_k \text{ at t } \mid q_t = S_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
 \end{equation}
 \item \textbf{Initial state distribution} \\
 $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $S_i$.
