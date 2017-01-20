@@ -384,16 +384,16 @@ Now we will continue by formally defining Continuous time Markov process, after 
 %relationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
 %construction from discrete HMM is probably important, heterogenous MM.
 %cit:[S.Karlin]
-A finite state continuous time Markov process (later as CTMC) is a~stochastic process $Y_t (t > 0)$ on the states $i_0, i_1, \cdots, i_N, i, j \in S$ (for $N>0$ and $S$ being the finite state space), that in any time $t$  occurs in the corresponding state $y_t$. 
+A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $\mathcal{S} = \{ s_1, s_2, \cdots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
 
-For the times $0 \leq s_0 < s_1 < \cdots < s_V < s$ it satisfies the following equations: 
+For the times $0 \leq u_0 < u_1 < \cdots < u_r < u$ it satisfies the following equations: 
 \begin{itemize}
-\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< s$.  
+\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< u$.  
     
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( y_{t+s} = j \mid y_s = i, y_{s_n} = i_n, \cdots , y_{s_0} ) = \\ 
-& = \mathrm{P}( y_{t+s} = j \mid y_s = i )
+& \mathrm{P}( x_{t+u} = j \mid x_u = i, x_{u_r} = i_r, \cdots , x_{u_0} = i_0 ) = \\ 
+& = \mathrm{P}( x_{t+u} = j \mid x_u = i ), \qquad 1 \leq i,j,i_{0,\cdots,r} \leq n 
 \end{aligned}
 \end{equation}
 
