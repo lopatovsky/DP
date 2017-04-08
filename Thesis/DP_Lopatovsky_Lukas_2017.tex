@@ -1,3 +1,4 @@
+
 % options:
 % thesis=B bachelor's thesis
 % thesis=M master's thesis
@@ -399,11 +400,11 @@ For the times $0 \leq u_0 < u_1 < \cdots < u_r < u$ it satisfies the following e
 
 The equation describes that the stochastic process is memoryless.
 
-\item \textbf{Homogeneity:} Probability of transition from the state $i$ to $j$ in any given time $s \geq 0$ depends only at the length of the time interval $t \geq 0$. 
+\item \textbf{Homogeneity:} Probability of transition from the state $i$ to $j$ in any given time $s \geq 0$ depends only on the length of the time interval $t \geq 0$. 
 
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( y_{t+s} = j \mid y_s = i ) = \mathrm{P}( y_t = j \mid y_0 = i ) = \\
+& \mathrm{P}( x_{t+s} = j \mid x_s = i ) = \mathrm{P}( x_t = j \mid x_0 = i ) = \\
 & = \mathrm{p_{ij}}(t)
 \end{aligned}
 \end{equation}
@@ -476,7 +477,7 @@ It can be shown that by construction of the CTMC from discrete time Markov chain
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
 
-We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the Infinitesimal matrix $\matr{Q}$ as following:
+We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the jump rates matrix $\matr{Q}$ as following:
 
 \begin{equation}
 \begin{aligned}  
@@ -512,7 +513,7 @@ Now we can derive the equation for probability of transition from the state $i$ 
 
 \subsection{ Fully Observable Continuous-Time Markov Process }
 
-Let's have continuous time Markov chain on the state space $\mathcal{S}$, with the jump rates in the infinitesimal matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $\matr{X^{'}}= ( x_0, x_1, \cdots, x_{v^{'}} ) $ occurring at times $\matr{T^{'}} = \{ t_0^{'}, t_1^{'}, \cdots, t_{v^{'}}^{'} \}$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
+Let's have continuous time Markov chain on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $\matr{X^{'}}= ( x_0, x_1, \cdots, x_{v^{'}} ) $ occurring at times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \cdots, t_{v^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}  
@@ -650,13 +651,13 @@ We will maximize the previous function by recalculating the~$\matr{ \hat Q_t }$.
 The challenging step is to derive computation of expected values of $\eta_{ij}$ and $\tau_i$. We will start with the first $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
 
 \begin{equation} 
-\sum_{s(t_1),\cdots,s(t_V)} p(s(t_1),\cdots,s(t_V) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid s(t_1),\cdots,s(t_V) ,\hat Q_t )
+\sum_{x_1,\cdots,x_v)} p(x_1,\cdots,x_v) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_1,\cdots,x_v) ,\hat Q_t )
 \end{equation}
 
 The expectation part can be rewrite in the intervals form.  
 
 \begin{equation}
- \sum_{x_1,\cdots,x_v)} p(x_1,\cdots,x_v \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{v-1}\mathbf{E}(\eta_{ij} \mid x_v, x_{v+1}) ,\matr{\hat Q_t} )
+ \sum_{x_1,\cdots,x_v)} p(x_1,\cdots,x_v \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{v-1}\mathbf{E}(\eta_{ij} \mid x_u, x_{u+1} ,\matr{\hat Q_t} )
 \end{equation}
 
 Because the Markov condition hold, we can interval-wise divide the complex probability function and for every of the time intervals sum through all possible states $k,l$ at its edge. 
@@ -671,7 +672,7 @@ The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \
 \sum_{u=0}^{v-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
 \end{equation}
 
-In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in [future ref]. 
+In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in \ref{sec:endexp}. 
 
 \section{The Posterior State Probabilities}\label{sec:pos}
 
@@ -689,7 +690,7 @@ Now, we have everything what we need for counting the posterior state distributi
 
 The described way for computing the posterior distribution of hidden states is referred to as the "Soft"~method. Supplementary, there is the "Hard"~method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??           
 
-\section{The End-State Conditioned Expectations}
+\section{The End-State Conditioned Expectations}\label{sec:endexp}
 
 We have previously described, how to use end-state conditioned expectations $\eta_{ij}$ and $\tau_i$ to compute jump rate matrix, maximizing the resulting probability \eqref{eq:Qmax}. In this section we will watch at them more deeply and discuss the possible ways how to compute their values.
 
@@ -704,8 +705,10 @@ The expectations can be expressed as following integrals [cit: 14 Hobolth].
 
 \begin{equation}
 \mathbf{E}( \tau_i \mid x_0 = k, x_t = l, \matr{ Q } ) = \frac{ 1 }{ \mathrm{p_{kl}}(t) } 
-\int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{jl}}(t-x) dx
+\int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{il}}(t-x) dx
 \end{equation}
+
+
 
 \chapter{Implementation}
 
