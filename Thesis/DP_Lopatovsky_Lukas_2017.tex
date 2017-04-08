@@ -636,7 +636,7 @@ The expectation step will be the log-likelihood of the model. Simply just the lo
 
 We will maximize the previous function by recalculating the~$\matr{ \hat Q_t }$. 
 
-\begin{equation}
+\begin{equation}\label{eq:Qmax}
 \begin{aligned}  
 \matr{ \hat Q_t }(i,j)= 
 \begin{cases}
@@ -675,31 +675,67 @@ In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_
 
 \section{The Posterior State Probabilities}\label{sec:pos}
 
-We have introduced the tree basic problems of DT-HMM in section \ref{sec:3p}. They can be likewise defined for the continuous model. We have already showed the partial solution of the third problem (model parameters adjustment) in the previous section, now we will discuss the first two problems. We will show that to solve them, it is needed only little transformation of DT-HMM algorithms.
+We have introduced the tree basic problems of DT-HMM in section \ref{sec:3p}. They can be likewise defined for the continuous model. We have already shown the partial solution of the third problem (model parameters adjustment) in the previous section, now we will discuss the first two problems. We will show that to solve them, we need only little transformation of DT-HMM algorithms.
 
 To count the probability of the CT-HMM with specified parameters, and defined states in observation points, we do not need to know about the state transition that have occurred among the observations.
-When we take this observation into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $p_{i,j}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of transition probabilities in discrete time in-homogeneous model. Now we can define the desired probability as following.
+If we take this observation into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $p_{i,j}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of the transition probabilities in discrete time in-homogeneous model. Now we can define the desired probability as following:
 
 \begin{equation}
 \prod_{u=1}^{v-1} p_{x_u, x_{u+1}}(\tau_u) \prod_{u=1}^{v} b_{ x_u }(o_u)
 \end{equation}
 
-It should obvious that for the continuous variant of Viterbi and Forward-backward algorithm, it is only needed to change the state transition $a_{ij}$ to time variable~$p_{i,j}( \tau_u )$.   
-Now, we have all what we need to for counting of posterior state distribution $p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$, using the forward and backward variables as we hove done, while defining the variable~$\xi_t(i,j)$ in the discrete model \eqref{eq:xi}.
+It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transition $a_{ij}$ to time variable~$p_{i,j}( \tau_u )$.   
+Now, we have everything what we need for counting the posterior state distribution $p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$, using the forward and backward variables and define the variable~$\xi_t(i,j)$ as we have done in the discrete model \eqref{eq:xi}.
 
 The described way for computing the posterior distribution of hidden states is referred to as the "Soft"~method. Supplementary, there is the "Hard"~method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??           
-    
+
+\section{The End-State Conditioned Expectations}
+
+We have previously described, how to use end-state conditioned expectations $\eta_{ij}$ and $\tau_i$ to compute jump rate matrix, maximizing the resulting probability \eqref{eq:Qmax}. In this section we will watch at them more deeply and discuss the possible ways how to compute their values.
+
+The Markov chain, we are describing, is time-homogeneous. So the time offset at the beginning of the interval is not important and we can anchor it toward zero. The two following expectations are equivalent: $\mathbf{E}(\eta_{ij} \mid x_{t_1} = k, x_{t_2} = l, \matr{ Q } ) = \mathbf{E}(\eta_{ij} \mid x_0 = k, x_{t_\Delta} = l, \matr{ Q } )$, where $x_{t_\Delta} = x_{t_2} - x_{t_1}$. It can help us to save some computations, as we can store the values and reuse them, if needed.
+
+The expectations can be expressed as following integrals [cit: 14 Hobolth].   
+
+\begin{equation}
+\mathbf{E}(\eta_{ij} \mid x_0 = k, x_t = l, \matr{ Q } ) = \frac{ q_{ij} }{ \mathrm{p_{kl}}(t) } 
+\int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{jl}}(t-x) dx
+\end{equation}
+
+\begin{equation}
+\mathbf{E}( \tau_i \mid x_0 = k, x_t = l, \matr{ Q } ) = \frac{ 1 }{ \mathrm{p_{kl}}(t) } 
+\int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{jl}}(t-x) dx
+\end{equation}
+
+\chapter{Implementation}
+
+
+
+
+\chapter{Experiments}
+
+
+   
+
+
 
 
 
 %\chapter{EM Algorithms for CT-HMM}
 
 
+% expm reference form scipy: The Scaling and Squaring Method for the Matrix Exponential Revisited",
+%    SIAM. J. Matrix Anal. & Appl. 26, 1179 (2005).
+
+%http://mathoverflow.net/questions/239073/what-is-the-time-complexity-of-the-matrix-exponential/239083
+
 
 %\chapter{Realisation}
 
 \setsecnumdepth{part}
 \chapter{Conclusion}
+
+\section{Future Work}
 
 
 \bibliographystyle{iso690}

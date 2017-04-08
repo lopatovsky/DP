@@ -3,6 +3,7 @@ all: DP_Lopatovsky_Lukas_2017.pdf
 
 DP_Lopatovsky_Lukas_2017.pdf: DP_Lopatovsky_Lukas_2017.tex
 	pdflatex DP_Lopatovsky_Lukas_2017.tex
+	pdflatex DP_Lopatovsky_Lukas_2017.tex
 
 clean:
 	rm DP_Lopatovsky_Lukas_2017.pdf
