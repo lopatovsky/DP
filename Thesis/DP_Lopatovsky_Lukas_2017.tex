@@ -698,17 +698,33 @@ The Markov chain, we are describing, is time-homogeneous. So the time offset at 
 
 The expectations can be expressed as following integrals [cit: 14 Hobolth].   
 
-\begin{equation}
+\begin{equation}\label{eq:exp1}
 \mathbf{E}(\eta_{ij} \mid x_0 = k, x_t = l, \matr{ Q } ) = \frac{ q_{ij} }{ \mathrm{p_{kl}}(t) } 
 \int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{jl}}(t-x) dx
 \end{equation}
 
-\begin{equation}
+\begin{equation}\label{eq:exp2}
 \mathbf{E}( \tau_i \mid x_0 = k, x_t = l, \matr{ Q } ) = \frac{ 1 }{ \mathrm{p_{kl}}(t) } 
 \int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{il}}(t-x) dx
 \end{equation}
 
+We already know the solution of differential equation for counting of jump probabilities $\mathrm{p}(t)$. So we can transform the previously stated integrals in the following form. We will denote them as $\tau^{ij}_{kl}$. For the equation \eqref{eq:exp2} $i = j$. 
 
+\begin{equation}\label{eq:int}
+\tau^{ij}_{kl} = \int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{jl}}(t-x) dx = 
+\int_{0}^{t} e^{\matr{Q}x}(k,i) e^{\matr{Q}(t-x)}(j,l) dx
+\end{equation} 
+
+There exist more ways how to solve proposed integral \eqref{eq:int}. 
+
+If the matrix is diagonalizable, the closed form can be obtained as describe in [yu-ying 8]. However as claimed in [yu-ying], the matrices are not diagonalizable in general. That makes the method often inappropriate for use in Baum-Welch algorithm, as the jump-rate matrices during the computation process can take general form.
+
+The other method of Uniformization is based on truncating of infinite sum as described in [yu-ying 9]. 
+
+expm. 
+
+       
+ 
 
 \chapter{Implementation}
 
