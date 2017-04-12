@@ -75,42 +75,8 @@
 
 %TODO change chapter order and section affiliation.
 
-\chapter{Expectation-Maximization Algorithm}\label{ch:EM}
+\chapter{Probability Theory}
 
-
-%(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
-
-Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
-hood estimation, however the latent variables makes finding of the MLE more difficult. To count it directly can be very computationally expensive, so the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
-
-Let's have vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
-%[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
-
-Look at [st] for more detailed, easily understandable tutorial with examples.    
-
-\begin{enumerate}
-\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta^{(0)} $.
-\end{enumerate} 
-
-We will continue by iterating through two following steps: 
-
-\begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$.
-
-\begin{equation}\label{eq:exp}
- \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})
-\end{equation}
-
-\item \textbf{Maximization:} Find the value $\hat\theta^{(t+1)}$ that maximize $\mathrm{Q}(\hat\theta^{(t)})$.  
-\end{enumerate}  
-
-As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
-
-It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?]. 
-
-
-
-\chapter{Discrete-time Hidden Markov Model}
 This chapter will briefly discuss Discrete-time Hidden Markov Model (later just HMM) as defined in [Rabiner], where you can also look for the more comprehensive explanation with examples.
 
 We have decided to write this chapter, because Continuous-time HMM is its direct logical extension and also it is using some of the subroutines that are the same as if defined for discrete time model.
@@ -144,7 +110,7 @@ For the transition probabilities are applied classical stochastic constrains.
    \sum_{j=1}^n a_{ij} = 1
 \end{equation}
 
-\section{Discrete-time Hidden Markov Model}
+\subsection{Discrete-time Hidden Markov Model}
 
 Discrete-time Hidden Markov Model (HMM) is the extension of the previously defined model~\ref{sec:DMP}. In the classic Markov process are the states directly observable. Such a model is often too simplistic to fit well real life problems. The HMM forms the doubly embedded stochastic process, in which the states are not directly observable, but only through the another dependable process, that to every state $s_i$ assign the probability, that it will emit the variable from the set $\mathcal{V}=\{  v_1,v_2,\cdots,v_m\}$. The $\mathcal{V}$ is the set of observable variables. It forms the part of the model, which is known and can be used to guess the possible underlying states chain. The probability of emission of variable $o_j$ by the state $s_i$ will be denoted as $b_i(j)$ and form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns.
   
@@ -176,7 +142,252 @@ $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being
 \end{equation}
 \end{enumerate}
 
-For the convenience we will declare parameter $\lambda = \{\matr{A},\matr{B},\pi\}$, compactly denoting the set of all parameters of the model.   
+For the convenience we will declare parameter $\lambda = \{\matr{A},\matr{B},\pi\}$, compactly denoting the set of all parameters of the model. 
+
+\section{Continuous-Time Hidden Markov Model}
+
+All the time we will mention continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
+
+In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
+
+Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential distribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
+
+There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
+Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
+
+Now we will continue by formally defining Continuous time Markov process, after which we will extend it to the hidden model.
+
+\section{Continuous-Time Markov Process} 
+
+%relationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
+%construction from discrete HMM is probably important, heterogenous MM.
+%cit:[S.Karlin]
+A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $\mathcal{S} = \{ s_1, s_2, \cdots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
+
+For the times $0 \leq u_0 < u_1 < \cdots < u_r < u$ it satisfies the following equations: 
+\begin{itemize}
+\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< u$.  
+    
+\begin{equation}
+\begin{aligned}
+& \mathrm{P}( x_{t+u} = j \mid x_u = i, x_{u_r} = i_r, \cdots , x_{u_0} = i_0 ) = \\ 
+& = \mathrm{P}( x_{t+u} = j \mid x_u = i ), \qquad 1 \leq i,j,i_{0,\cdots,r} \leq n 
+\end{aligned}
+\end{equation}
+
+The equation describes that the stochastic process is memoryless.
+
+\item \textbf{Homogeneity:} Probability of transition from the state $i$ to $j$ in any given time $s \geq 0$ depends only on the length of the time interval $t \geq 0$. 
+
+\begin{equation}
+\begin{aligned}
+& \mathrm{P}( x_{t+s} = j \mid x_s = i ) = \mathrm{P}( x_t = j \mid x_0 = i ) = \\
+& = \mathrm{p_{ij}}(t)
+\end{aligned}
+\end{equation}
+
+\end{itemize}
+ 
+
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), 1 \leq i,j \leq S$ satisfies following conditions:%cit:[S.Karlin]
+
+
+\begin{equation}
+\mathrm{p_{ij}}(t) \geq 0
+\end{equation}
+
+\begin{equation}
+\sum_{j = 1}^n \mathrm{p_{ij}}(t) = 1
+\end{equation}
+
+\begin{equation}\label{eq:l0}  
+\lim_{t \to 0^+} \mathrm{p_{ij}}(t)= 
+\begin{cases}
+1, i = j\\
+0, i \neq j
+\end{cases}
+\end{equation}
+
+\begin{equation}\label{eq:ckeq}
+\sum_{k = 1}^n\mathrm{p_{ik}}(u)\mathrm{p_{kj}}(t) = \mathrm{p_{ij}}(u+s)     
+\end{equation}
+
+Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
+We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij}}(t)$ to get the equation in following form:
+
+\begin{equation}\label{eq:ckm}
+\matr{P_u} \matr{P_t} = \matr{P_{u+t}},   \qquad t,u > 0  
+\end{equation}
+
+?proof of Chapman-kolmogorov?
+
+%construction from Discrete time with poisson timing
+
+\subsection{ Jump Rates }
+
+Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
+%cit[vytistena st. kniha]
+
+The property \eqref{eq:l0}  asserts that $\mathrm{p_{ij}}(t)$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
+Moreover from \eqref{eq:ckm} follows that $\mathrm{p_{ij}}(t)$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_{ij}}(t)$ for any given time $t>0$.   
+
+\begin{equation}
+q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_{ij}}(t)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_{ij}}(t)}{t}, \quad \text{if } i\neq j     
+\end{equation}
+
+We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other state~$j$. The jump rate $q_{ii}$ can be derived from the equation of transition probabilities summing to the one.
+
+\begin{equation}
+1 = \mathrm{p_{ii}}(t) + \sum_{j = 1}^{ n ,j \neq i} \mathrm{p_{ij}}(t) 
+\end{equation}
+
+dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
+
+\begin{equation}\label{eq:qii}
+ q_{ii} =  \sum_{j = 1}^{ n ,j \neq i} q_{ij} 
+\end{equation}
+
+(We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
+
+It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from the $i$ to $j$ in DTMC \label{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj]  
+
+%ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
+%u(i, i) = 1 - sum_j u(i, j)
+
+We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the jump rates matrix $\matr{Q}$ as following:
+
+\begin{equation}
+\begin{aligned}  
+\matr{Q}(i,j)= 
+\begin{cases}
+\qquad q_{ij}, \qquad & \text{if } i\neq j\\
+\sum\limits_{k = 1}^{ n ,k \neq i} q_{ik}, \qquad & \text{if } i=j
+\end{cases}
+\end{aligned}
+\end{equation}
+
+Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
+
+\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
+
+The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
+
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $Y_n$ being mutually independent. To make the construction, we will change the equidistant timing of $Y_n$ by Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $X_t = Y_{N(t)}$ is called continuous-time Markov process.
+
+Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
+
+\begin{equation}
+\begin{aligned}
+\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_t = s_j \mid Y_t = s_i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = s_j \mid Y_{N(t)} = s_i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( Y_n = j \mid Y_0 = i )  = \\
+				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
+\end{aligned}
+\end{equation} 
+
+
+%ref Yu-Ying Liu
+
+\subsection{ Fully Observable Continuous-Time Markov Process }
+
+Let's have continuous time Markov chain on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $\matr{X^{'}}= ( x_0, x_1, \cdots, x_{v^{'}} ) $ occurring at times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \cdots, t_{v^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
+
+\begin{equation}\label{eq:CL1}
+\begin{aligned}  
+ \mathcal{L}_{FO} &=  \prod_{u=0}^{v^{'}-1} ( q_{x_u x_{u+1}} / q_{x_u} )( q_{x_u} e^{ - q_{x_u} \tau_{u }^{'}}) = \\
+    &= \prod_{u=0}^{v^{'}-1} q_{x_u x_{u+1}} e^{ - q_{x_u} \tau_{u}^{'}}
+\end{aligned}
+\end{equation}
+
+where the $q_i = \sum_{j=1}^{n,i\neq j} q_{ij}$ is the probability of transition from the state~$i$ and   
+$\tau_{u}^{'} = t_{u+1}^{'} - t_{u}^{'}$ is the time interval among the two consecutive steps.
+
+The equation can be further rearranged in the form that group together the same state transition. The variable $\eta_{ij}$ marks the number of transition $q_{ij}$ that have occurred and the~$\tau_i$ is the total time spend in the state~$s_i$.
+
+\begin{equation}\label{eq:CL2}
+ \mathcal{L}_{FO} = \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i }
+\end{equation}
+
+\subsection{ General Continuous-Time Markov Process }
+
+In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $\matr{T} = ( t_0, t_1, \cdots, t_{v} )$ as $\matr{X}= (x_0, x_1, \cdots, x_{v} )$. 
+This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $\eta_{ij}$ as well as the time spend in the specific state $\tau_i$. 
+
+To count the likelihood of the chain, we will use earlier defined matrix $\matr{P}(t)$ and its elements $\mathrm{p_{ij}}(t)$ [ref] for the time interval~$\tau_u = t_{u+1} - t_u$.    
+
+\begin{equation}
+ \mathcal{L} = \prod_{u=0}^{v-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
+\end{equation}
+
+It can be alternatively extended in the form
+
+\begin{equation}
+ \mathcal{L} = \prod_{u=0}^{v-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathbb{I}( x_u = i, x_{u+1} = j )} 
+\end{equation}
+
+where the function $\mathbb{I}(i,j)$ equal either $1$, if both condition inside are true, or $0$ if they are not. 
+If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\cdots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula,
+
+\begin{equation}\label{eq:CTL}
+ \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} x_u = i, x_{u+1} = j )} 
+\end{equation}
+
+where function $\mathbb{C}$ denotes the total number of intervals, for that condition is true.
+    
+%TODO P_{ij}(t) counting possibilities.
+
+\section{Continuous-Time Hidden Markov Model}
+
+Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \cdots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = \{  o_0, o_1, \cdots, o_{v} \}$, emitted by the current state $s_i$ with the probability $b_i(o)$.
+The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
+
+\begin{equation}\label{eq:HMCL1}
+\begin{aligned}  
+ \mathcal{L}_{FO} &= \prod_{u^{'}}^{u^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
+    \prod_{u=0}^v b_{ x_u }(o_u) = \\
+    &= \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i } \prod_{u=0}^v b_{x_u}(o_u)
+\end{aligned}
+\end{equation}
+%TODO s(t_v) was not defined enywhere, it need to be unified with the notation q_t = S from discrete model!
+
+%TODO Move the CT-HMM intorduction in here, and separate it in the more chapters, not the EM- chapter. 
+ 
+
+\chapter{Statistic Theory}
+
+
+\section{Expectation-Maximization Algorithm}\label{ch:EM}
+
+
+%(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
+
+Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
+hood estimation, however the latent variables makes finding of the MLE more difficult. To count it directly can be very computationally expensive, so the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
+
+Let's have vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
+%[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
+
+Look at [st] for more detailed, easily understandable tutorial with examples.    
+
+\begin{enumerate}
+\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta^{(0)} $.
+\end{enumerate} 
+
+We will continue by iterating through two following steps: 
+
+\begin{enumerate}[resume]
+\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$.
+
+\begin{equation}\label{eq:exp}
+ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})
+\end{equation}
+
+\item \textbf{Maximization:} Find the value $\hat\theta^{(t+1)}$ that maximize $\mathrm{Q}(\hat\theta^{(t)})$.  
+\end{enumerate}  
+
+As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
+
+It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?]. 
 
 \section{Three Basic Problems for HMMs}\label{sec:3p}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
@@ -367,198 +578,6 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 %proof it is growing { was mentioned in EM }
 
-\chapter{Continuous-Time Hidden Markov Model}
-
-All the time we will mention continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
-
-In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
-
-Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential distribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
-
-There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
-Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
-
-Now we will continue by formally defining Continuous time Markov process, after which we will extend it to the hidden model.
-
-\section{Continuous-Time Markov Process} 
-
-%relationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
-%construction from discrete HMM is probably important, heterogenous MM.
-%cit:[S.Karlin]
-A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $\mathcal{S} = \{ s_1, s_2, \cdots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
-
-For the times $0 \leq u_0 < u_1 < \cdots < u_r < u$ it satisfies the following equations: 
-\begin{itemize}
-\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< u$.  
-    
-\begin{equation}
-\begin{aligned}
-& \mathrm{P}( x_{t+u} = j \mid x_u = i, x_{u_r} = i_r, \cdots , x_{u_0} = i_0 ) = \\ 
-& = \mathrm{P}( x_{t+u} = j \mid x_u = i ), \qquad 1 \leq i,j,i_{0,\cdots,r} \leq n 
-\end{aligned}
-\end{equation}
-
-The equation describes that the stochastic process is memoryless.
-
-\item \textbf{Homogeneity:} Probability of transition from the state $i$ to $j$ in any given time $s \geq 0$ depends only on the length of the time interval $t \geq 0$. 
-
-\begin{equation}
-\begin{aligned}
-& \mathrm{P}( x_{t+s} = j \mid x_s = i ) = \mathrm{P}( x_t = j \mid x_0 = i ) = \\
-& = \mathrm{p_{ij}}(t)
-\end{aligned}
-\end{equation}
-
-\end{itemize}
- 
-
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), 1 \leq i,j \leq S$ satisfies following conditions:%cit:[S.Karlin]
-
-
-\begin{equation}
-\mathrm{p_{ij}}(t) \geq 0
-\end{equation}
-
-\begin{equation}
-\sum_{j = 1}^n \mathrm{p_{ij}}(t) = 1
-\end{equation}
-
-\begin{equation}\label{eq:l0}  
-\lim_{t \to 0^+} \mathrm{p_{ij}}(t)= 
-\begin{cases}
-1, i = j\\
-0, i \neq j
-\end{cases}
-\end{equation}
-
-\begin{equation}\label{eq:ckeq}
-\sum_{k = 1}^n\mathrm{p_{ik}}(u)\mathrm{p_{kj}}(t) = \mathrm{p_{ij}}(u+s)     
-\end{equation}
-
-Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
-We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij}}(t)$ to get the equation in following form:
-
-\begin{equation}\label{eq:ckm}
-\matr{P_u} \matr{P_t} = \matr{P_{u+t}},   \qquad t,u > 0  
-\end{equation}
-
-?proof of Chapman-kolmogorov?
-
-%construction from Discrete time with poisson timing
-
-\subsection{ Jump Rates }
-
-Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
-%cit[vytistena st. kniha]
-
-The property \eqref{eq:l0}  asserts that $\mathrm{p_{ij}}(t)$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
-Moreover from \eqref{eq:ckm} follows that $\mathrm{p_{ij}}(t)$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_{ij}}(t)$ for any given time $t>0$.   
-
-\begin{equation}
-q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_{ij}}(t)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_{ij}}(t)}{t}, \quad \text{if } i\neq j     
-\end{equation}
-
-We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other state~$j$. The jump rate $q_{ii}$ can be derived from the equation of transition probabilities summing to the one.
-
-\begin{equation}
-1 = \mathrm{p_{ii}}(t) + \sum_{j = 1}^{ n ,j \neq i} \mathrm{p_{ij}}(t) 
-\end{equation}
-
-dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
-
-\begin{equation}\label{eq:qii}
- q_{ii} =  \sum_{j = 1}^{ n ,j \neq i} q_{ij} 
-\end{equation}
-
-(We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
-
-It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from the $i$ to $j$ in DTMC \label{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj]  
-
-%ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
-%u(i, i) = 1 - sum_j u(i, j)
-
-We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $i$ \eqref{eq:ckeq}. Then we can define the jump rates matrix $\matr{Q}$ as following:
-
-\begin{equation}
-\begin{aligned}  
-\matr{Q}(i,j)= 
-\begin{cases}
-\qquad q_{ij}, \qquad & \text{if } i\neq j\\
-\sum\limits_{k = 1}^{ n ,k \neq i} q_{ik}, \qquad & \text{if } i=j
-\end{cases}
-\end{aligned}
-\end{equation}
-
-Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
-
-\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
-
-The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
-
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $Y_n$ being mutually independent. To make the construction, we will change the equidistant timing of $Y_n$ by Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $X_t = Y_{N(t)}$ is called continuous-time Markov process.
-
-Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
-
-\begin{equation}
-\begin{aligned}
-\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_t = s_j \mid Y_t = s_i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = s_j \mid Y_{N(t)} = s_i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( Y_n = j \mid Y_0 = i )  = \\
-				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
-\end{aligned}
-\end{equation} 
-
-
-%ref Yu-Ying Liu
-
-\subsection{ Fully Observable Continuous-Time Markov Process }
-
-Let's have continuous time Markov chain on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $\matr{X^{'}}= ( x_0, x_1, \cdots, x_{v^{'}} ) $ occurring at times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \cdots, t_{v^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
-
-\begin{equation}\label{eq:CL1}
-\begin{aligned}  
- \mathcal{L}_{FO} &=  \prod_{u=0}^{v^{'}-1} ( q_{x_u x_{u+1}} / q_{x_u} )( q_{x_u} e^{ - q_{x_u} \tau_{u }^{'}}) = \\
-    &= \prod_{u=0}^{v^{'}-1} q_{x_u x_{u+1}} e^{ - q_{x_u} \tau_{u}^{'}}
-\end{aligned}
-\end{equation}
-
-where the $q_i = \sum_{j=1}^{n,i\neq j} q_{ij}$ is the probability of transition from the state~$i$ and   
-$\tau_{u}^{'} = t_{u+1}^{'} - t_{u}^{'}$ is the time interval among the two consecutive steps.
-
-The equation can be further rearranged in the form that group together the same state transition. The variable $\eta_{ij}$ marks the number of transition $q_{ij}$ that have occurred and the~$\tau_i$ is the total time spend in the state~$s_i$.
-
-\begin{equation}\label{eq:CL2}
- \mathcal{L}_{FO} = \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i }
-\end{equation}
-
-\subsection{ General Continuous-Time Markov Process }
-
-In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $\matr{T} = ( t_0, t_1, \cdots, t_{v} )$ as $\matr{X}= (x_0, x_1, \cdots, x_{v} )$. 
-This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $\eta_{ij}$ as well as the time spend in the specific state $\tau_i$. 
-
-To count the likelihood of the chain, we will use earlier defined matrix $\matr{P}(t)$ and its elements $\mathrm{p_{ij}}(t)$ [ref] for the time interval~$\tau_u = t_{u+1} - t_u$.    
-
-\begin{equation}
- \mathcal{L} = \prod_{u=0}^{v-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
-\end{equation}
-
-It can be alternatively extended in the form
-
-\begin{equation}
- \mathcal{L} = \prod_{u=0}^{v-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathbb{I}( x_u = i, x_{u+1} = j )} 
-\end{equation}
-
-where the function $\mathbb{I}(i,j)$ equal either $1$, if both condition inside are true, or $0$ if they are not. 
-If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\cdots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula,
-
-\begin{equation}\label{eq:CTL}
- \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} x_u = i, x_{u+1} = j )} 
-\end{equation}
-
-where function $\mathbb{C}$ denotes the total number of intervals, for that condition is true.
-    
-%TODO P_{ij}(t) counting possibilities.    
-    
 \subsection{EM Algorithm} 
 
 There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
@@ -600,23 +619,6 @@ Now, there remain the non-trivial task to evaluate $\mathbf{E}( \eta_{ij} \mid \
    
 With the use of the Markov property and from homogeneity of the Markov process, the computations may be reduced to computing of expected values, for all foursome of $i,j,k,l \in S$. It will be showed later in the text[future ref].     
    
-\section{Continuous-Time Hidden Markov Model}
-
-Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \cdots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = \{  o_0, o_1, \cdots, o_{v} \}$, emitted by the current state $s_i$ with the probability $b_i(o)$.
-The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
-
-\begin{equation}\label{eq:HMCL1}
-\begin{aligned}  
- \mathcal{L}_{FO} &= \prod_{u^{'}}^{u^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
-    \prod_{u=0}^v b_{ x_u }(o_u) = \\
-    &= \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i } \prod_{u=0}^v b_{x_u}(o_u)
-\end{aligned}
-\end{equation}
-%TODO s(t_v) was not defined enywhere, it need to be unified with the notation q_t = S from discrete model!
-
-%TODO Move the CT-HMM intorduction in here, and separate it in the more chapters, not the EM- chapter.
-
-
 \section{The Model Parameters Estimation}
 %viterbi forward-backward need to be redefined with different rates matrix for different interval.
 
@@ -723,21 +725,11 @@ The other method of Uniformization is based on truncating of infinite sum as des
 
 expm. 
 
-       
- 
+
 
 \chapter{Implementation}
 
-
-
-
 \chapter{Experiments}
-
-
-   
-
-
-
 
 
 %\chapter{EM Algorithms for CT-HMM}
