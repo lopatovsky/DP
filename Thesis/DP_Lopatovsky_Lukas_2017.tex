@@ -69,6 +69,18 @@
 	\section{Motivation and objectives}
 	About a discrete model [inspired by Rabiner? ] and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
 	Add articles and DP that have done it before - less or more successfully 
+	
+The figure example \ref{fig:gb}.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{img/passport.jpg}
+\caption{Possible neighborhood functions \cite{Ho03} }
+\label{fig:gb}
+\end{figure} 	
+	
+	
 \end{introduction}
 
 \setsecnumdepth{all}
@@ -730,6 +742,54 @@ expm.
 \chapter{Implementation}
 
 \chapter{Experiments}
+
+The definition of hidden Markov models can seem to be simple. However, consequently it covers many non-trivial characteristics that needs some intuition to understand them correctly. This chapter is purposed to discuss such characteristic, by simultaneously trying to support the allegations by conducting the experiments.
+
+The later part of the chapter, will contain the experiments, that are in some way connected to the implementation details or its chosen methods.       
+
+\begin{enumerate}[resume]
+\setcounter{enumi}{0}
+\item \textbf{Models Convergence Comparison} \\
+Compare the discrete and continuous-time HMM at the equivalent dataset.
+\item \textbf{Computational Complexity} \\
+bla
+\item \textbf{Numeric Stability} \\
+bla
+\item \textbf{Expected State-Change Time} \\
+bla
+
+\end{enumerate}
+
+
+\section{Models Convergence Comparison}
+
+The thesis are describing two models, discrete-time and continuous-time hidden Markov model. In this test we will compare, how fast can they learn the data (converge to the local optima) and if there is some significant difference among the optima values. 
+
+As the continuous-time model takes except the observations also the time vectors, its domain range is obviously much broader. However, it is always possible to train it at the dataset for discrete-time model, simply by adding artificial equidistant time vectors.     
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{img/passport.jpg}
+\caption{Possible neighborhood functions \cite{Ho03} }
+\label{fig:gb}
+\end{figure} 	
+	
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{img/passport.jpg}
+\caption{Possible neighborhood functions \cite{Ho03} }
+\label{fig:gb}
+\end{figure} 	
+	
+
+
+\section{Computational Complexity}
+
+\section{Numeric Stability}
+
+\section{Expected State-Change Time}
+
 
 
 %\chapter{EM Algorithms for CT-HMM}
