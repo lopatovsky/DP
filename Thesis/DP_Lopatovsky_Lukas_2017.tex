@@ -412,7 +412,7 @@ When dealing with real-world application we need to deal with following problems
 \end{enumerate}
 
 
-\subsection{Forward-Backward Algorithm}
+\subsection{Forward-Backward Algorithm}\label{sec:fb}
 The Forward-Backward Algorithm is actually the pair of two separate algorithms (Forward vs. Backward). We will explain the Forward one and at the end we will describe the modifications that are needed to do the Backward. Both of them are sufficient for solving of the first proposed problem, however we need to define both of them for the later use in the text.  
 
 Forward Algorithm is the Dynamic Programming algorithm building upon the Markov property - the independence upon past events. We will denote the forward variable as $\alpha_t(i)$ defined as the probability of partial observation sequence, with the last observation in time $t$ emitted by the state $s_i$, all given the parameters $\lambda$.
@@ -447,7 +447,7 @@ The DP algorithm can be derived analogically as the one for the Forward procedur
 
 We need to count $n$ variables at each time-step, each of that takes exactly $n$ steps to evaluate. It makes overall complexity $\mathcal{O}(n^2T)$.    
 
-\subsection{Individually Most Likely States Sequence}
+\subsection{Individually Most Likely States Sequence}\label{ssp}
 There is more ways how we can look at the world "optimal" in the problem 2 statement. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in specific state in particular time.
 
 \begin{equation}
@@ -736,6 +736,30 @@ If the matrix is diagonalizable, the closed form can be obtained as describe in 
 The other method of Uniformization is based on truncating of infinite sum as described in [yu-ying 9]. 
 
 expm. 
+
+\section{Complexity}
+
+By Complexity we will refer to the complexity of one iteration of EM-algorithm. All iterations are equivalent, so to get full runtime complexity you can multiply by iteration number.
+
+The number of hidden states will be denoted like $n$, the summary length of the training sequences as $T$. 
+
+\begin{itemize}
+\item \textbf{ Discrete-Time Baum-Welch Algorithm } \\
+In one iteration of the discrete version of algorithm the following main procedures take part:
+\begin{itemize}
+\item Forward algorithm - complexity $\mathcal{O}(n^2T)$ \ref{sec:fb}.
+\item Backward algorithm - complexity $\mathcal{O}(n^2T)$ \ref{sec:fb}.
+\item Computation of single state probabilities \ref{sec:ssp} - complexity $\mathcal{O}(nT)$. Summing and normalizing the forward and backward probabilities, that are of size $nT$.
+\item Computation of double state probabilities - complexity $\mathcal{O}(n^2T)$ \eqref{eq:xi}. Constant computation of probabilities for every pair of states in every time.
+\item Various summing operation - complexity $\mathcal{O}(n^2T)$. Just linear pass trough the arrays, the biggest of size $n^2T$.
+\end{itemize}
+
+As the operations are independent the whole complexity of the algorithm is the maximum -  $\mathcal{O}(n^2T)$.
+
+
+\item \textbf{ Continuous-Time Baum-Welch Algorithm } \\
+
+\end{itemize}
 
 
 
