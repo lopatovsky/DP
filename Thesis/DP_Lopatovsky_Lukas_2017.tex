@@ -789,13 +789,13 @@ For every time interval, we will go trough $n^2$ matrices, that we had precomput
 
 \end{itemize}
 
-
-
 \item \textbf{float-interval}: 
 \begin{itemize}
-\item 
+\item Count end-state conditioned expectation for every interval - complexity $\mathcal{O}(r*n^5)$. 
+We needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $A.t$[not right name?]for every $i$ and $j$, where $t$ is the length of the interval.
 \end{itemize}
 
+The overall lowest time complexity of one iteration is $\mathcal{O}(r*n^5)$, using the float-interval algorithm. However this algorithm use many calls of the expm method, thats theoretical complexity is low, but has high constant. That's way in the practice is mostly more computationally advantageous to use the integer-interval algorithm [experiment s tym]. 
 \end{enumerate}
  
 
