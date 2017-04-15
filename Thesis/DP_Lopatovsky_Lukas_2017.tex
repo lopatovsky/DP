@@ -447,7 +447,7 @@ The DP algorithm can be derived analogically as the one for the Forward procedur
 
 We need to count $n$ variables at each time-step, each of that takes exactly $n$ steps to evaluate. It makes overall complexity $\mathcal{O}(n^2T)$.    
 
-\subsection{Individually Most Likely States Sequence}\label{ssp}
+\subsection{Individually Most Likely States Sequence}\label{sec:ssp}
 There is more ways how we can look at the world "optimal" in the problem 2 statement. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in specific state in particular time.
 
 \begin{equation}
@@ -739,11 +739,13 @@ expm.
 
 \section{Complexity}
 
+\subsection{Time Complexity}
+
 By Complexity we will refer to the complexity of one iteration of EM-algorithm. All iterations are equivalent, so to get full runtime complexity you can multiply by iteration number.
 
 The number of hidden states will be denoted like $n$, the summary length of the training sequences as $T$. 
 
-\begin{itemize}
+\begin{itemize}\label{it:dtc}
 \item \textbf{ Discrete-Time Baum-Welch Algorithm } \\
 In one iteration of the discrete version of algorithm the following main procedures take part:
 \begin{itemize}
@@ -756,10 +758,55 @@ In one iteration of the discrete version of algorithm the following main procedu
 
 As the operations are independent the whole complexity of the algorithm is the maximum -  $\mathcal{O}(n^2T)$.
 
-
 \item \textbf{ Continuous-Time Baum-Welch Algorithm } \\
 
+[todo poznamka o expm]
+
+The counting of complexity of continuous-time algorithm depends on the dataset property. So we will distinguish \textit{integer-interval} [odkaz] and \textit{float-interval} [odkaz] algorithm. In the first one is the time difference among two consecutive observations integral, in the second it is float. Float algorithm can be used for the integral intervals, but not vice-versa [odkaz? na exp?].
+
+We will define $r$ as the number of different time intervals, as in some cases it can be much more restrictive than $T$ - number of all intervals.
+
+The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, we need to precompute the transition probabilities matrix for every time interval. Than we can simple use the discrete time algorithms, as if dealing with heterogeneous Dt-HMM. 
+
+\begin{itemize}
+\item Precompute transition probability matrices - complexity $\mathcal{O}(rn^3)$. We will call expm algorithm $\mathcal{O}(n^3)$[gmail April 12] for every distinct time interval. [pozn. ze to ide mozno zrychlit, ale zbytocne]
+\item Subpart similar to discrete-time algorithm - complexity $\mathcal{O}(n^2T)$ \ref{it:dtc}.
+\item 
+
+Count end-state conditioned expectations \ref{sec:endexp}:
+\begin{enumerate}[resume]
+\setcounter{enumi}{0}
+\item \textbf{integer-interval}:
+
+\begin{itemize}
+\item Preprocessing end-state conditioned expectation - complexity $\mathcal{O}(n^5)$. 
+    In this step we compute all integrals\eqref{eq:int} for unit time interval. It needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $A$[not right name?]for every $i$ and $j$.   
+\item Count matrices for every time interval - complexity $\mathcal{O}(r*n^5*log(max_t))$, where $max_t$ is the longest time interval among two consecutive observations.
+
+For every time interval, we will go trough $n^2$ matrices, that we had precomputed and we will count its value for actual interval by using square and multiply approach. 
+
+%[not asymptotically usefull] We can still make better by precomputed intermediate powers of matrices till $max_t$. This will take  out some computation from main cycle and we can obtain the complexity $\mathcal{O}( max( r*n^3*log(max_t), r*n^5*log(max_t) ) )$.
+
 \end{itemize}
+
+
+
+\item \textbf{float-interval}: 
+\begin{itemize}
+\item 
+\end{itemize}
+
+\end{enumerate}
+ 
+
+\end{itemize}   
+
+full graph bla
+
+\end{itemize}
+
+\subsection{Memory Complexity}
+bla
 
 
 
