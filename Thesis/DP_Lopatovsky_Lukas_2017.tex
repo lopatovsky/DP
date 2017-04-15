@@ -806,9 +806,9 @@ full graph bla
 \end{itemize}
 
 \subsection{Memory Complexity}
-bla
+In the discrete-time algorithm is the biggest array the one for storing double state probabilities, so the memory complexity is equal to its size - $\mathcal{O}(n^2T)$. 
 
-
+In the continuous time model there are more arrays of size $n^2T$ and the array of size $n^4$ to store precomputed expm values. So the final memory complexity is $\mathcal{O}( max( n^2T, n^4 ))$.
 
 \chapter{Implementation}
 
