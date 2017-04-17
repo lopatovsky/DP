@@ -1,0 +1,386 @@
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 3.3590445518493652 seconds ---
+Estimation 8.31165048327e-92
+t1 0.035196542739868164
+t2 1.2287166118621826
+t3 0.05005335807800293
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 3.7813854217529297 seconds ---
+Estimation 5.48055873789e-91
+t1 0.07646608352661133
+t2 1.2660305500030518
+t3 0.13712406158447266
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 4.353562355041504 seconds ---
+Estimation 2.27783340377e-95
+t1 0.12792158126831055
+t2 1.301377534866333
+t3 0.3305649757385254
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 6.142705678939819 seconds ---
+Estimation 2.57861689841e-94
+t1 0.29080963134765625
+t2 1.6195766925811768
+t3 0.749337911605835
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 7.77116322517395 seconds ---
+Estimation 1.19424443086e-92
+t1 0.39540576934814453
+t2 1.748276948928833
+t3 1.3497226238250732
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 9.43175745010376 seconds ---
+Estimation 1.52234912383e-95
+t1 0.5291311740875244
+t2 1.3889951705932617
+t3 2.279906988143921
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 13.581139087677002 seconds ---
+Estimation 2.01962791147e-95
+t1 0.8289849758148193
+t2 1.4276223182678223
+t3 4.0153117179870605
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 12.706001996994019 seconds ---
+Estimation 9.92592255432e-96
+t1 0.7462489604949951
+t2 1.2493007183074951
+t3 4.0736918449401855
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 15.929739952087402 seconds ---
+Estimation 2.20596299501e-94
+t1 0.977665901184082
+t2 1.3530652523040771
+t3 5.627464294433594
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 16.8215651512146 seconds ---
+Estimation 2.87850673756e-95
+t1 1.012059211730957
+t2 1.338299036026001
+t3 6.331792593002319
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 17.759941577911377 seconds ---
+Estimation 1.74830019758e-96
+t1 1.067943811416626
+t2 1.486612319946289
+t3 6.8891167640686035
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 18.02260971069336 seconds ---
+Estimation 1.04067160337e-96
+t1 1.021097183227539
+t2 1.4019172191619873
+t3 7.370331048965454
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 20.746785640716553 seconds ---
+Estimation 8.7214417513e-97
+t1 1.0817153453826904
+t2 1.5699446201324463
+t3 8.864247560501099
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 19.262569904327393 seconds ---
+Estimation 2.40277140352e-93
+t1 0.9784026145935059
+t2 1.4599473476409912
+t3 8.449393510818481
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 19.34195327758789 seconds ---
+Estimation 1.0415558268e-94
+t1 1.1752707958221436
+t2 1.4607036113739014
+t3 8.574481725692749
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 19.638817071914673 seconds ---
+Estimation 1.12855288948e-95
+t1 1.035327672958374
+t2 1.4576654434204102
+t3 9.059330940246582
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 20.607383012771606 seconds ---
+Estimation 1.50456046166e-97
+t1 1.1057367324829102
+t2 1.3715393543243408
+t3 9.839345932006836
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 20.51137614250183 seconds ---
+Estimation 1.84968497168e-97
+t1 0.9906342029571533
+t2 1.4752469062805176
+t3 9.94414758682251
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 21.354976415634155 seconds ---
+Estimation 1.58958141041e-94
+t1 1.038902997970581
+t2 1.480269432067871
+t3 10.615993022918701
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 19.24151849746704 seconds ---
+Estimation 1.58848528657e-95
+t1 0.9985368251800537
+t2 1.2765111923217773
+t3 9.728728771209717
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 19.614357233047485 seconds ---
+Estimation 1.91851090871e-95
+t1 0.9371471405029297
+t2 1.2762126922607422
+t3 10.14354920387268
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 20.878545999526978 seconds ---
+Estimation 1.28906007989e-94
+t1 1.0188193321228027
+t2 1.5618360042572021
+t3 10.755347967147827
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 22.72098445892334 seconds ---
+Estimation 2.84801316456e-96
+t1 1.0886869430541992
+t2 1.509587287902832
+t3 12.070232629776001
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 21.27964186668396 seconds ---
+Estimation 2.14759097051e-96
+t1 0.9888126850128174
+t2 1.4059600830078125
+t3 11.472055673599243
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 25.10237216949463 seconds ---
+Estimation 1.987051719e-96
+t1 1.1368212699890137
+t2 1.5358400344848633
+t3 13.971581935882568
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 28.249314785003662 seconds ---
+Estimation 5.20684790183e-97
+t1 1.2437119483947754
+t2 1.7548229694366455
+t3 15.933540344238281
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 27.112887382507324 seconds ---
+Estimation 1.19309520163e-95
+t1 1.3319928646087646
+t2 1.6228632926940918
+t3 15.39522099494934
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 27.41718363761902 seconds ---
+Estimation 2.79315508448e-95
+t1 1.2555501461029053
+t2 2.1254642009735107
+t3 15.378607988357544
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 37.05581784248352 seconds ---
+Estimation 1.52837275451e-97
+t1 1.8677561283111572
+t2 2.9121596813201904
+t3 20.819894313812256
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 29.22027587890625 seconds ---
+Estimation 3.96474998597e-94
+t1 1.1717445850372314
+t2 1.5683069229125977
+t3 17.384180784225464
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 28.541599988937378 seconds ---
+Estimation 6.55669585055e-95
+t1 1.1088402271270752
+t2 1.908721685409546
+t3 16.86361026763916
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 30.86556124687195 seconds ---
+Estimation 3.80414506175e-99
+t1 1.2457656860351562
+t2 1.5423963069915771
+t3 18.898810863494873
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 28.95279312133789 seconds ---
+Estimation 4.92831768614e-98
+t1 1.3139426708221436
+t2 1.5535478591918945
+t3 17.516945123672485
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 32.87817144393921 seconds ---
+Estimation 2.18425726248e-94
+t1 1.3817002773284912
+t2 1.5264503955841064
+t3 20.518792390823364
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 30.431803941726685 seconds ---
+Estimation 1.32528910945e-92
+t1 1.1246390342712402
+t2 1.6228201389312744
+t3 18.94126272201538
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 30.069390773773193 seconds ---
+Estimation 1.45405611858e-94
+t1 1.4074733257293701
+t2 1.518158197402954
+t3 18.720550775527954
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 31.169974088668823 seconds ---
+Estimation 8.44593842357e-96
+t1 1.1358370780944824
+t2 1.6385817527770996
+t3 19.698464393615723
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 29.93843388557434 seconds ---
+Estimation 5.02258575365e-96
+t1 1.1728744506835938
+t2 1.71331787109375
+t3 18.92833375930786
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 31.382572174072266 seconds ---
+Estimation 2.88137531002e-97
+t1 1.2628211975097656
+t2 1.4203667640686035
+t3 20.395363330841064
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 28.897825002670288 seconds ---
+Estimation 1.01805963037e-95
+t1 1.0585262775421143
+t2 1.381934404373169
+t3 18.7871150970459
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 33.40739059448242 seconds ---
+Estimation 1.19330251511e-94
+t1 1.1333580017089844
+t2 1.4714760780334473
+t3 22.14206314086914
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 34.62352633476257 seconds ---
+Estimation 1.37312106412e-96
+t1 1.2808349132537842
+t2 1.8017864227294922
+t3 22.672504663467407
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 40.00092148780823 seconds ---
+Estimation 3.25661301128e-98
+t1 1.2424507141113281
+t2 1.613208293914795
+t3 27.10032081604004
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 32.368674516677856 seconds ---
+Estimation 1.73295297863e-94
+t1 1.1275646686553955
+t2 1.4510834217071533
+t3 21.71754264831543
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 30.2192599773407 seconds ---
+Estimation 2.43972157685e-96
+t1 1.00538969039917
+t2 1.3566441535949707
+t3 20.393353700637817
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 36.83723759651184 seconds ---
+Estimation 2.50401321505e-97
+t1 1.2578814029693604
+t2 1.777895450592041
+t3 24.83834671974182
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 37.47409105300903 seconds ---
+Estimation 1.71277851055e-92
+t1 1.2877130508422852
+t2 1.7141282558441162
+t3 25.545642614364624
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 31.323750972747803 seconds ---
+Estimation 6.6283772141e-97
+t1 1.1011288166046143
+t2 1.396883249282837
+t3 21.355565786361694
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 33.895025968551636 seconds ---
+Estimation 7.26975452431e-96
+t1 1.1308281421661377
+t2 1.3359804153442383
+t3 23.50818634033203
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 34.66739511489868 seconds ---
+Estimation 1.15875060978e-97
+t1 1.0737030506134033
+t2 1.490600824356079
+t3 24.087942123413086
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 38.59832715988159 seconds ---
+Estimation 5.92497675269e-97
+t1 1.344456434249878
+t2 1.6183569431304932
+t3 26.906057357788086
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 42.17626667022705 seconds ---
+Estimation 4.11559487334e-95
+t1 1.5242919921875
+t2 1.8611571788787842
+t3 29.41934609413147
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 43.40876030921936 seconds ---
+Estimation 2.37878832099e-104
+t1 1.3481435775756836
+t2 1.5516421794891357
+t3 31.02083110809326
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 38.49462294578552 seconds ---
+Estimation 9.09855194637e-97
+t1 1.645479440689087
+t2 2.0946900844573975
+t3 26.307419300079346
+t4 0.0
+Time test size( 10 10 ) -  10 vectors of len =  10 ,traied in 10 iterations.
+--- 43.377882957458496 seconds ---
+Estimation 1.67509957571e-89
+t1 1.791247844696045
+t2 1.9435880184173584
+t3 30.022660732269287
+t4 0.0
+
