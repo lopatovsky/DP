@@ -823,7 +823,9 @@ To accomplish the aim we have chosen to create \textit{Python} library. Specific
 
 The continuous-time hidden Markov model is computationally highly demanding. The using of the plain Python would make it cumbersome. We have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} for the implementation of \textit{exmp} algorithm. 
 
-To make the computational performance even higher, we have coded all the important parts in \textit{Cython} [http://cython.org/]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.        
+To make the computational performance even higher, we have coded all the important parts in \textit{Cython} [http://cython.org/]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.
+
+The best way how to learn to use the library is follow the code examples. That's way we have decided to create \textit{IPython} notebook, covering all the main use-cases of the library. Reading it, the follower can get the understanding how to correctly use the library and learn, what features are supported.          
 
 
 \section{Logarithm Probabilities}
@@ -835,12 +837,14 @@ The use of infinite data-type would be possible. However, it would make the algo
 More appropriate is to use log-probabilities instead \eqref{eq:logprob}. This will make the numbers grows linearly, thus their bite-length logarithmically. Under this property is the underflow almost impossible for common data types and the feasible size of the data-set.
 
 \begin{equation}\label{eq:logprob}
-\mathrm{log}(\mathrm{p1}.\mathrm{p2}) = \mathrm{log}(\mathrm{p1}) + \mathrm{log}(\mathrm{p2})
+\mathrm{log}(\mathrm{p}_1.\mathrm{p}_2) = \mathrm{log}(\mathrm{p}_1) + \mathrm{log}(\mathrm{p}_2)
 \end{equation}   
 
 \section{"Log-sum-exp" Trick}
 
 The log-probabilities work great for multiplication and division, but the problem appears, when we need to sum the probabilities. The so called "log-sum-exp" trick can be used to deal with the issue.
+
+Let's have probabilities $ \mathrm{p}_1, \mathrm{p}_2, \cdots ,\mathrm{p}_n $. Now we want to make the sum of them. It is fairly simple, when they are simple float numbers: $\sum_{i=0}^n \mathrm{p}_i$. But it can get trickier, if they are stored in the form of log-probability.  
 
 
 \section{End of Convergence}
