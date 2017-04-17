@@ -812,7 +812,38 @@ In the continuous time model there are more arrays of size $n^2T$ and the array 
 
 \chapter{Implementation}
 
-..logarithms..
+The chapter discuss chosen technology and specific details of implementation. 
+The code, tutorial and documentation to the library can be found in additional materials.
+
+\section{About Library}
+
+The aim was to create the library, that broad number of user can easily use. Such a library should be usable from the broadly known programming language, should be easy to install and also should have the introductory tutorial, that will help to get orientation in the most of the library functionality fast. 
+
+To accomplish the aim we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library can be easily accessible by downloading from \textit{Pip} [link]. 
+
+The continuous-time hidden Markov model is computationally highly demanding. The using of the plain Python would make it cumbersome. We have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} for the implementation of \textit{exmp} algorithm. 
+
+To make the computational performance even higher, we have coded all the important parts in \textit{Cython} [http://cython.org/]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.        
+
+
+\section{Logarithm Probabilities}
+
+The probability values obtained in the hidden Markov models can often get extremely small. Using the standard data-types, it could fast reach the underflow. Even the small networks of few hidden states could underflow, if proper conditions are met. 
+
+The use of infinite data-type would be possible. However, it would make the algorithm unacceptably computationally and memory expensive, as the bite-length of the numbers can grow linearly with the number of probabilities to multiply.
+
+More appropriate is to use log-probabilities instead \eqref{eq:logprob}. This will make the numbers grows linearly, thus their bite-length logarithmically. Under this property is the underflow almost impossible for common data types and the feasible size of the data-set.
+
+\begin{equation}\label{eq:logprob}
+\mathrm{log}(\mathrm{p1}.\mathrm{p2}) = \mathrm{log}(\mathrm{p1}) + \mathrm{log}(\mathrm{p2})
+\end{equation}   
+
+\section{"Log-sum-exp" Trick}
+
+The log-probabilities work great for multiplication and division, but the problem appears, when we need to sum the probabilities. The so called "log-sum-exp" trick can be used to deal with the issue.
+
+
+\section{End of Convergence}
 ..stop at the end of convergence
 
 \chapter{Experiments}
