@@ -844,8 +844,23 @@ More appropriate is to use log-probabilities instead \eqref{eq:logprob}. This wi
 
 The log-probabilities work great for multiplication and division, but the problem appears, when we need to sum the probabilities. The so called "log-sum-exp" trick can be used to deal with the issue.
 
-Let's have probabilities $ \mathrm{p}_1, \mathrm{p}_2, \cdots ,\mathrm{p}_n $. Now we want to make the sum of them. It is fairly simple, when they are simple float numbers: $\sum_{i=0}^n \mathrm{p}_i$. But it can get trickier, if they are stored in the form of log-probability.  
+Let's have probabilities $ \mathrm{p}_1, \mathrm{p}_2, \cdots ,\mathrm{p}_n $. Now we want to make the sum of them. It is fairly simple, when they are simple float numbers: $\sum_{i=1}^n \mathrm{p}_i$. But it can get trickier, if they are stored in the form of log-probability. We will denote log-probability $\mathrm{log}( \mathrm{p}_i )$ as $a_i$. Than we can write the sum in following form \eqref{eq:logsum} . Notice that the output is also log-probability.
 
+\begin{equation}\label{eq:logsum}
+\mathrm{log} \big( \sum_{i=1}^n e^{a_i} \big)
+\end{equation}
+
+We can't count it directly, as the $e^{a_i}$ can be very small and underflow. The idea of the trick is to take the biggest element out of the sum and move all the other to relative position toward it.
+Let's $b = \max_{i} a_i$. Than we can write the previous equation \eqref{eq:logsum} in the form of \eqref{eq:logsum2}. 
+
+\begin{equation}\label{eq:logsum2}
+\begin{aligned}
+&\mathrm{log} \big( e^b \sum_{i=1}^n e^{a_i - b } \big) = \\
+ = \quad &  b + \mathrm{log} \big( \sum_{i=1}^n e^{a_i - b } \big)
+\end{aligned}
+\end{equation}
+
+This approach will only dismiss the elements, that are for data-type maximal-range smaller than the biggest element $b$. You can see, that also the sum of more such diminished elements will never ( under normal circumstances ) have an impact on the precision of computation, comparing the data-type imprecision.     
 
 \section{End of Convergence}
 ..stop at the end of convergence
