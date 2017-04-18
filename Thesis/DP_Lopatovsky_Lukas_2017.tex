@@ -34,6 +34,10 @@
 %%%%%%%%%%%% own commands %%%%%%%%%%%%%%%%%%
 \newcommand{\matr}[1]{\mathbf{#1}} 
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 %\newcommand{\max}{\mathop{\mathrm{max}}}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
@@ -733,9 +737,35 @@ There exist more ways how to solve proposed integral \eqref{eq:int}.
 
 If the matrix is diagonalizable, the closed form can be obtained as describe in [yu-ying 8]. However as claimed in [yu-ying], the matrices are not diagonalizable in general. That makes the method often inappropriate for use in Baum-Welch algorithm, as the jump-rate matrices during the computation process can take general form.
 
-The other method of Uniformization is based on truncating of infinite sum as described in [yu-ying 9]. 
+The other method of Uniformization is based on truncating of infinite sum as described in [yu-ying 9]. The main advantage of the method is that all the matrices can be precomputed and later reused, so it doesn't need any additional matrix multiplication. \ref[yu-ying] The use of hard or soft method \ref{sec:pos} influence the time performance of the algorithm, with hard method being faster, as the soft count table will become sparse. Its running time also highly depends on the data and values of $\matr{Q}$ matrix, as the sequence truncating point can differ significantly.         
 
 expm. 
+
+\section{Algorithm}
+
+\begin{algorithm}
+\caption{My algorithm}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{MyProcedure}{}
+\State $\textit{stringlen} \gets \text{length of }\textit{string}$
+\State $i \gets \textit{patlen}$
+\BState \emph{top}:
+\If {$i > \textit{stringlen}$} \Return false
+\EndIf
+\State $j \gets \textit{patlen}$
+\BState \emph{loop}:
+\If {$\textit{string}(i) = \textit{path}(j)$}
+\State $j \gets j-1$.
+\State $i \gets i-1$.
+\State \textbf{goto} \emph{loop}.
+\State \textbf{close};
+\EndIf
+\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
+\State \textbf{goto} \emph{top}.
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
 
 \section{Complexity}
 
