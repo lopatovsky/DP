@@ -706,7 +706,7 @@ If we take this observation into the account, we can look on the model as it was
 It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transition $a_{ij}$ to time variable~$p_{i,j}( \tau_u )$.   
 Now, we have everything what we need for counting the posterior state distribution $p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$, using the forward and backward variables and define the variable~$\xi_t(i,j)$ as we have done in the discrete model \eqref{eq:xi}.
 
-The described way for computing the posterior distribution of hidden states is referred to as the "Soft"~method. Supplementary, there is the "Hard"~method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??           
+The described way for computing the posterior distribution of hidden states is referred to as the "Soft"~method. Supplementary, there is the "Hard"~method, that use the Viterbi algorithm to get the maximal posterior assignment of the states. ??todo (1-0) ??  The Hard method is the approximation, but can spare some computation time. ??how much, is it reasonable??  The "Hard" methods try to maximize the probability of most likely sequence, instead of maximizing the most likely observed data. [https://arxiv.org/pdf/1312.4551.pdf]        
 
 \section{The End-State Conditioned Expectations}\label{sec:endexp}
 
@@ -811,7 +811,7 @@ The first part of the algorithm is similar to the discrete-time version \ref{it:
 Count end-state conditioned expectations \ref{sec:endexp}:
 \begin{enumerate}[resume]
 \setcounter{enumi}{0}
-\item \textbf{integer-interval}:
+\item \textbf{integer-interval algorithm}:
 
 \begin{itemize}
 \item Preprocessing end-state conditioned expectation - complexity $\mathcal{O}(n^5)$. 
@@ -824,13 +824,13 @@ For every time interval, we will go trough $n^2$ matrices, that we had precomput
 
 \end{itemize}
 
-\item \textbf{float-interval}: 
+\item \textbf{float-interval algorithm}: 
 \begin{itemize}
 \item Count end-state conditioned expectation for every interval - complexity $\mathcal{O}(r*n^5)$. 
 We needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $A.t$[not right name?]for every $i$ and $j$, where $t$ is the length of the interval.
 \end{itemize}
 
-The overall lowest time complexity of one iteration is $\mathcal{O}(r*n^5)$, using the float-interval algorithm. However this algorithm use many calls of the expm method, thats theoretical complexity is low, but has high constant. That's way in the practice is mostly more computationally advantageous to use the integer-interval algorithm [experiment s tym]. 
+The overall lowest time complexity of one iteration is $\mathcal{O}(r*n^5)$, using the float-interval algorithm. However this algorithm use many calls of the expm method, thats theoretical complexity is low, but has high constant. That's way in the practice is mostly more computationally advantageous to use the integer-interval algorithm [experiment s tym]. [todo popis pade aproximanty a odkaz na experiment
 \end{enumerate}
  
 
@@ -998,9 +998,9 @@ All of the training conducted during this experiment, more or less converged to 
 \begin{itemize}
 \item \textbf{ Description }
 
-In this test we are comparing time performance of two algorithms described in implementation part [odkaz]. We will call them float and int algorithm [odkaz]. 
+In this test we are comparing time performance of two algorithms described in implementation part [odkaz]. We have called them float and integer-interval algorithms [odkaz]. 
 
-The first experiment try to compare the two algorithm and measure, which of their part takes the biggest part in the complexity. We have set variable number of hidden states, to see its dependence on overall complexity. The number of output variables was constantly 10. We have used to randomly generated datasets - \textit{small} compounding 10 sequences of 10 observations and \textit{big} compounding 10 sequences of 100 observations. To minimize the time measurements error, we have always run 10 iterations of algorithm. 
+The first experiment try to compare the two algorithm by measuring, which of their parts takes the biggest part in the computational complexity. We have set variable number of hidden states, to see its dependence on overall complexity. The number of output variables was constantly 10 and we have used always the same randomly generated dataset, so the influence of these factors was minimal. We have used two randomly generated datasets - \textit{small} compounding 10 sequences of 10 observations and \textit{big} compounding 10 sequences of 100 observations. To minimize the time measurements error, we have always run 10 iterations of algorithm. 
 
 \item \textbf{ Observation }
 
