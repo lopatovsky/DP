@@ -13,8 +13,7 @@
 % \usepackage[cp1250]{inputenc} % LaTeX source encoded as Windows-1250
 
 \usepackage{graphicx} %graphics files inclusion
-\usepackage{graphicx}
-\usepackage{subfig}
+%\usepackage{subfig}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[chapter]{algorithm} % http://ctan.org/pkg/algorithms
@@ -23,6 +22,8 @@
 \usepackage{comment}
 \usepackage{enumitem}
 \usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \usepackage{dirtree} %directory tree visualisation
 
@@ -772,7 +773,7 @@ We have got the matrix exponential form, for which conventional methods for matr
 \end{algorithm}
 
 
-\section{Complexity}
+\section{Complexity}\label{sec:complex}
 
 \subsection{Time Complexity}
 
@@ -803,7 +804,7 @@ We will define $r$ as the number of different time intervals, as in some cases i
 
 The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, we need to precompute the transition probabilities matrix for every time interval. Than we can simple use the discrete time algorithms, as if dealing with heterogeneous Dt-HMM. 
 
-\begin{itemize}
+\begin{itemize}\label{it:ctc}
 \item Precompute transition probability matrices - complexity $\mathcal{O}(rn^3)$. We will call expm algorithm $\mathcal{O}(n^3)$[gmail April 12] for every distinct time interval. [pozn. ze to ide mozno zrychlit, ale zbytocne]
 \item Subpart similar to discrete-time algorithm - complexity $\mathcal{O}(n^2T)$ \ref{it:dtc}.
 \item 
@@ -995,12 +996,17 @@ All of the training conducted during this experiment, more or less converged to 
 
 \section{Computational Complexity}
 
+In this section we are comparing the time performance of two CT-HMM algorithm variants, as described in implementation part [odkaz]. We have called them float and integer-interval algorithms [odkaz].
+In two subsection we will manipulate either with hidden states number or maximal time interval value and watch, if the measured values correspond the theoretical expectations \ref{sec:complex}.
+
+\subsection{Variable Hidden-States Number}
+
 \begin{itemize}
 \item \textbf{ Description }
 
-In this test we are comparing time performance of two algorithms described in implementation part [odkaz]. We have called them float and integer-interval algorithms [odkaz]. 
+The hidden states number, referred to as $n$ is the key parameter in overall algorithm complexity. Due to the need of knowing matrix exponentials ($n^3$) for every pair of end states, it influence the time complexity by its fifth power $n^5$. The upper bound theoretical complexity dependance on $n$ is the same for both variants, however the float-algorithm counts the matrix exponential by \textit{expm} method every time, while the integer-algorithm counts it only and then use the matrix multiplication to get the individual results \ref{it:ctc}. In the experiment we will measure the times of most costly algorithm parts, and watch how big is the portion of the overall computational complexity consumed by them.      
 
-The first experiment try to compare the two algorithm by measuring, which of their parts takes the biggest part in the computational complexity. We have set variable number of hidden states, to see its dependence on overall complexity. The number of output variables was constantly 10 and we have used always the same randomly generated dataset, so the influence of these factors was minimal. We have used two randomly generated datasets - \textit{small} compounding 10 sequences of 10 observations and \textit{big} compounding 10 sequences of 100 observations. To minimize the time measurements error, we have always run 10 iterations of algorithm. 
+We have set variable number of hidden states, to see its dependence on overall complexity. The number of output variables was constantly 10 and we have used always the same randomly generated dataset, so the influence of these factors was minimal. We have used two randomly generated datasets - \textit{small} compounding 10 sequences of 10 observations and \textit{big} compounding 10 sequences of 100 observations. To minimize the time measurements error, we have always run 10 iterations of algorithm. 
 
 \item \textbf{ Observation }
 
@@ -1022,18 +1028,34 @@ The first experiment try to compare the two algorithm by measuring, which of the
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{img/ex2/log.png}
-\caption{ log.  }
-\label{fig:e2log}
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{img/ex2/log.png}
+  \captionof{figure}{log.}
+  \label{fig:e2log}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{img/ex2/exp180.png}
+  \captionof{figure}{log2.}
+  \label{fig:e2big}
+\end{minipage}
 \end{figure}
 
 \item \textbf{ Conclusion }
 
 \end{itemize}
 
+\subsection{Variable Maximal Time Interval}
+
+\begin{itemize}
+\item \textbf{ Description }
+\item \textbf{ Observation }
+\item \textbf{ Conclusion }
+\end{itemize}
+
+
  	
-
-
 \section{Numeric Stability} 
 
 \begin{itemize}
@@ -1041,17 +1063,124 @@ The first experiment try to compare the two algorithm by measuring, which of the
 
 \item \textbf{ Observation }
 
+\begin{figure}
+\centering
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex3/relative01.png}
+  \caption{A subfigure}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex3/relative001.png}
+  \caption{A subfigure}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.33\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex3/relative0001.png}
+  \caption{A subfigure}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{A figure with two subfigures}
+\label{fig:test}
+\end{figure}
+
+
 \item \textbf{ Conclusion }
 \end{itemize}
 
-\section{Expected State-Change Time}
+\section{Soft-Hard}
 
 \begin{itemize}
 \item \textbf{ Description }
 \item \textbf{ Observation }
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \caption{A subfigure}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \caption{A subfigure}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{A figure with two subfigures}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \caption{A subfigure}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \caption{A subfigure}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{A figure with two subfigures}
+\label{fig:test}
+\end{figure}
+
 \item \textbf{ Conclusion }
 \end{itemize}
 
+
+\section{States}
+
+\begin{itemize}
+\item \textbf{ Description }
+\item \textbf{ Observation }
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_small100_1.png}
+  \caption{A subfigure}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_small100_1.png}
+  \caption{A subfigure}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{A figure with two subfigures}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \caption{A subfigure}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \caption{A subfigure}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{A figure with two subfigures}
+\label{fig:test}
+\end{figure}
+
+\item \textbf{ Conclusion }
+\end{itemize}
 
 
 %\chapter{EM Algorithms for CT-HMM}
@@ -1067,6 +1196,9 @@ The first experiment try to compare the two algorithm by measuring, which of the
 
 \setsecnumdepth{part}
 \chapter{Conclusion}
+
+malo informacie (vela hidden) menej presny.
+rychlo sa straca informacia 
 
 \section{Future Work}
 
