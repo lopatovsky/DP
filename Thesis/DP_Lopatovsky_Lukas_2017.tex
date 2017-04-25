@@ -1059,6 +1059,7 @@ In the experiment we have set $max_t$ as the variable, taking values of all powe
 
 \item \textbf{ Observation }
 
+Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $max_t$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is the steep growth of the float-interval algorithm time demand present for small $max_t$ values.
 
 \begin{figure}[h]
 \centering
@@ -1077,10 +1078,21 @@ In the experiment we have set $max_t$ as the variable, taking values of all powe
 \end{figure}
 
 \item \textbf{ Conclusion }
+
+The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $max_t$ is high probability of more intervals being the same, what has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $max_t$ values is extremely low.
+
+The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior at the $expm$ method, we need to look deeper in its implementation []%[https://github.com/scipy/scipy/blob/v0.16.1/scipy/sparse/linalg/matfuncs.py#L554]. 
+The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability that the more complex Pad\'{e} approximant will be chosen.     
+
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{ Description }
+\item \textbf{ Observation }
+\item \textbf{ Conclusion }
 \end{itemize}
 
 
- 	
 \section{Numeric Stability}\label{sec:ns} 
 
 \begin{itemize}
