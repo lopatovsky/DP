@@ -752,6 +752,51 @@ We have got the matrix exponential form, for which conventional methods for matr
 tell that float-interval variant of algorithm is used interchangeably with float-interval algorithm
 simplified one data sequence - observations and times, EM of Q nie vsetky - ostatne ako discrete.
 
+\begin{algorithm}
+\caption{CT-HMM Parameters Estimation}\label{euclid}
+\begin{algorithmic}[1]
+\State \textbf{Input data:} observation sequence $\matr{O} = (o_1,o_2,\cdots,o_v)$, time sequence $\matr{T} = (t_1,t_2,\cdots,t_v)$
+\State \textbf{Input parameter:} $n$ - number of hidden states
+\State \textbf{Output:} $\matr{\hat{Q}}$ - estimation of jump-rates matrix $\matr{Q}$
+\Procedure{Baum-Welch}{}
+\State $\matr{\hat{Q}} \gets$ randomly generated jump-rate matrix
+\State $\matr{T}_{\Delta} \gets$ find all distinct time intervals from $\matr{T}$
+\Repeat
+\State $\matr{P}({t_{\Delta}}) \gets \text{ count state transition probabilities } e^{\matr{Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
+\State $\matr{\Xi} \gets \matr{\Xi}[v,k,l] = \mathrm{P}( x_v = k, x_{v+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q })$
+\State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method. The $\matr{P}({t_{\Delta}})$ will be used for counting of state transition probabilities. 
+\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
+\State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
+\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} or \textbf{integer-interval} variant.  
+\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$
+\Until{ probability is satisfiable }
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{The Expm Based Algorithm for Counting End-States Conditioned Probabilities}\label{euclid}
+\begin{algorithmic}[1]
+\State \textbf{Input data:} observation sequence $\matr{O} = (o_1,o_2,\cdots,o_v)$, time sequence $\matr{T} = (t_1,t_2,\cdots,t_v)$
+\State \textbf{Input parameter:} $n$ - number of hidden states
+\State \textbf{Output:} $\matr{\hat{Q}}$ - estimation of jump-rates matrix $\matr{Q}$
+\Procedure{Baum-Welch}{}
+\State $\matr{\hat{Q}} \gets$ randomly generated jump-rate matrix
+\State $\matr{T}_{\Delta} \gets$ find all distinct time intervals from $\matr{T}$
+\Repeat
+\State $\matr{P}({t_{\Delta}}) \gets \text{ count state transition probabilities } e^{\matr{Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
+\State $\matr{\Xi} \gets \matr{\Xi}[v,k,l] = \mathrm{P}( x_v = k, x_{v+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q })$
+\State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method.
+\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
+\State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
+\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} or \textbf{integer-interval} variant.  
+\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$
+\Until{ probability is satisfiable }
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \begin{algorithm}
 \caption{CT-HMM parameters estimation}\label{euclid}
@@ -762,25 +807,16 @@ simplified one data sequence - observations and times, EM of Q nie vsetky - osta
 \Procedure{Baum-Welch}{}
 \State $\matr{\hat{Q}} \gets$ randomly generated jump-rate matrix
 \State $\matr{T}_{\Delta} \gets$ find all distinct time intervals from $\matr{T}$
-\State $\matr{P}({t_{\Delta}}) \gets$ count state transition probabilities $e^{\matr{Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
-\State \textbf{for} $\textit{i}$ \textbf{in} $\textit{iteration_number}$
+\Repeat
+\State $\matr{P}({t_{\Delta}}) \gets \text{ count state transition probabilities } e^{\matr{Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
+\State $\matr{\Xi} \gets \matr{\Xi}[v,k,l] = \mathrm{P}( x_v = k, x_{v+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q })$
+\State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method.
+\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
+\State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
+\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} or \textbf{integer-interval} variant.  
+\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$
+\Until{ probability is satisfiable }
 
-
-
-\State $i \gets \textit{patlen}$
-\BState \emph{top}:
-\If {$i > \textit{stringlen}$} \Return false
-\EndIf
-\State $j \gets \textit{patlen}$
-\BState \emph{loop}:
-\If {$\textit{string}(i) = \textit{path}(j)$}
-\State $j \gets j-1$.
-\State $i \gets i-1$.
-\State \textbf{goto} \emph{loop}.
-\State \textbf{close};
-\EndIf
-\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
-\State \textbf{goto} \emph{top}.
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -965,13 +1001,13 @@ We can also see that the models mostly over-performed the original model. In the
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.8\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex1/1/single_runs_zoom50.png}
+  \includegraphics[width=1\linewidth]{img/ex1/1/single_runs_zoom50.png}
   \captionof{figure}{Convergence from various random starting points.}
   \label{fig:sr50}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+\end{minipage}
+\begin{minipage}{.8\textwidth}
   \centering
   \includegraphics[width=.95\linewidth]{img/ex1/1/average.png}
   \captionof{figure}{Average convergence for various random starting points.}
@@ -981,13 +1017,13 @@ We can also see that the models mostly over-performed the original model. In the
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.8\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex1/2/all.png}
+  \includegraphics[width=1\linewidth]{img/ex1/2/all.png}
   \captionof{figure}{Average convergences for various generated datasets.}
   \label{fig:all}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+\end{minipage}
+\begin{minipage}{.8\textwidth}
   \centering
   \includegraphics[width=.95\linewidth]{img/ex1/2/random.png}
   \captionof{figure}{Average convergences for various generated datasets (zoom).}
@@ -1033,15 +1069,15 @@ The increase of the dataset size caused the larger gap among the whole algorithm
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex2/small.png}
+  \includegraphics[width=1\linewidth]{img/ex2/small.png}
   \caption{Small dataset}
   \label{fig:e2small}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex2/big.png}
+  \includegraphics[width=\linewidth]{img/ex2/big.png}
   \caption{Big dataset}
   \label{fig:e2big}
 \end{subfigure}
@@ -1074,13 +1110,13 @@ Contrary to initial expectation both float and integer interval algorithm comput
 
 \begin{figure}[h]
 \centering
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.8\textwidth}
   \centering
   \includegraphics[width=1.0\linewidth]{img/ex2/log.png}
   \captionof{figure}{log.}
   \label{fig:e2log}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
+\end{minipage}
+\begin{minipage}{.8\textwidth}
   \centering
   \includegraphics[width=1.0\linewidth]{img/ex2/exp180.png}
   \captionof{figure}{log2.}
@@ -1119,21 +1155,21 @@ The measured relative distance of jump-rate matrices seems to be random and it d
 
 \begin{figure}
 \centering
-\begin{subfigure}{.33\textwidth}
+\begin{subfigure}{.7\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex3/relative01.png}
+  \includegraphics[width=1\linewidth]{img/ex3/relative01.png}
   \caption{ $\lambda = 0.1$ }
   \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.33\textwidth}
+\end{subfigure}
+\begin{subfigure}{.7\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex3/relative001.png}
+  \includegraphics[width=1\linewidth]{img/ex3/relative001.png}
   \caption{$\lambda = 0.01$}
   \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.33\textwidth}
+\end{subfigure}
+\begin{subfigure}{.7\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex3/relative0001.png}
+  \includegraphics[width=1\linewidth]{img/ex3/relative0001.png}
   \caption{$\lambda = 0.001$}
   \label{fig:sub2}
 \end{subfigure}
@@ -1154,15 +1190,15 @@ The experiment haven't show any error propagation trough growing iterations numb
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub2}
 \end{subfigure}
@@ -1172,15 +1208,15 @@ The experiment haven't show any error propagation trough growing iterations numb
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/states_big100_2.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub2}
 \end{subfigure}
@@ -1200,15 +1236,15 @@ The experiment haven't show any error propagation trough growing iterations numb
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/train_small.png}
+  \includegraphics[width=1\linewidth]{img/ex5/train_small.png}
   \caption{A subfigure}
   \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/test_small.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub2}
 \end{subfigure}
@@ -1218,15 +1254,15 @@ The experiment haven't show any error propagation trough growing iterations numb
 
 \begin{figure}
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/train_big.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{img/ex5/test_big.png}
+  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
   \caption{A subfigure}
   \label{fig:sub2}
 \end{subfigure}
