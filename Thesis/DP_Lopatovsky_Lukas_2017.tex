@@ -881,11 +881,11 @@ Count end-state conditioned expectations \ref{sec:endexp}:
 \begin{itemize}
 \item Preprocessing end-state conditioned expectation - complexity $\mathcal{O}(n^5)$. 
     In this step we compute all integrals\eqref{eq:int} for unit time interval. It needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $A$[not right name?]for every $i$ and $j$.   
-\item Count matrices for every time interval - complexity $\mathcal{O}(r n^5.log(max_t))$, where $max_t$ is the longest time interval among two consecutive observations.
+\item Count matrices for every time interval - complexity $\mathcal{O}(r n^5.log(t_{max}))$, where $t_{max}$ is the longest time interval among two consecutive observations.
 
 For every time interval, we will go trough $n^2$ matrices, that we had precomputed and we will count its value for actual interval by using square and multiply approach. 
 
-%[not asymptotically usefull] We can still make better by precomputed intermediate powers of matrices till $max_t$. This will take  out some computation from main cycle and we can obtain the complexity $\mathcal{O}( max( r*n^3*log(max_t), r*n^5*log(max_t) ) )$.
+%[not asymptotically usefull] We can still make better by precomputed intermediate powers of matrices till $t_{max}$. This will take  out some computation from main cycle and we can obtain the complexity $\mathcal{O}( max( r*n^3*log(t_{max}), r*n^5*log(t_{max}) ) )$.
 
 \end{itemize}
 
@@ -900,9 +900,9 @@ We needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $A.t$[not right
 
 \end{itemize}   
 
-The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2T )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5.log(max_t) + n^2T )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $max_t$. It is bounded to counting of Pad\'{e} approximants. As matrices containing bigger numbers, in average need to use the approximant of higher order,  that is more complex in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
+The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2T )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5.log(t_{max}) + n^2T )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{max}$. It is bounded to counting of Pad\'{e} approximants. As matrices containing bigger numbers, in average need to use the approximant of higher order,  that is more complex in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
 
-Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction will also manifest itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity will shrink to $\mathcal{O}( r n^3 m + n^2T )$ or $\mathcal{O}( r n^3 m. log(max_t) + n^2T )$ respectively. Notice that the senseful value for $m$ can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
+Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction will also manifest itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity will shrink to $\mathcal{O}( r n^3 m + n^2T )$ or $\mathcal{O}( r n^3 m. log(t_{max}) + n^2T )$ respectively. Notice that the senseful value for $m$ can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
 
 \end{itemize}
 
@@ -1103,7 +1103,7 @@ The increase of the dataset size caused the larger gap among the whole algorithm
 
 \item \textbf{ Conclusion }
 
-As we have only changed the number of states and let the dataset to be the same, the $max_t$ from the integer-interval complexity $\mathcal{O}(r*n^5*log(max_t))$ behaved like the constant and so, both of the algorithm have the seemingly same complexity $\mathcal{O}(r*n^5)$. The \textit{expm} method showed to have very big constant. That's way it is almost always better, if possible to use the integer-interval algorithm. (Its numerical stability is tested later in section \ref{sec:ns}) 
+As we have only changed the number of states and let the dataset to be the same, the $t_{max}$ from the integer-interval complexity $\mathcal{O}(r*n^5*log(t_{max}))$ behaved like the constant and so, both of the algorithm have the seemingly same complexity $\mathcal{O}(r*n^5)$. The \textit{expm} method showed to have very big constant. That's way it is almost always better, if possible to use the integer-interval algorithm. (Its numerical stability is tested later in section \ref{sec:ns}) 
 
 The most of the computational power is used to count matrix exponentials $expm$, as it is in most cases the predominant cause of algorithm "slowness", it makes not much sense to edge-optimize other parts of the algorithm. Instead, the faster implementation of $expm$, its parallelization or replacement with other method could make the thing.      
 
@@ -1113,16 +1113,16 @@ The big dataset \label{fig:e2big} has decreased the percentage of the time spent
 
 \subsection{Variable Maximal Time Interval}
 
-The other parameter present in the theoretical time-complexity of integer-interval algorithm - $\mathcal{O}(r*n^5*log(max_t))$ \ref{it:ctc} is $max_t$ - maximal length of the time interval. However it is not part of the float-interval algorithm complexity term - $\mathcal{O}(r*n^5)$. The experiment aims to observe how the variable value of $max_t$ change the computational demand of the algorithm.  
+The other parameter present in the theoretical time-complexity of integer-interval algorithm - $\mathcal{O}(r*n^5*log(t_{max}))$ \ref{it:ctc} is $t_{max}$ - maximal length of the time interval. However it is not part of the float-interval algorithm complexity term - $\mathcal{O}(r*n^5)$. The experiment aims to observe how the variable value of $t_{max}$ change the computational demand of the algorithm.  
 
 \begin{itemize}
 \item \textbf{ Description }
 
-In the experiment we have set $max_t$ as the variable, taking values of all powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in $expm$ method, that eventually caused the integer overflow. We have generated the dataset of 10 sequences of 10 observations. There were always at least one time-interval of length $max_t$ and all other were chosen uniformly from interval $[1,max_t]$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of time measurement imprecision, we have run $10$ iterations and repeat the whole experiment $5$ times.   
+In the experiment we have set $t_{max}$ as the variable, taking values of all powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in $expm$ method, that eventually caused the integer overflow. We have generated the dataset of 10 sequences of 10 observations. There were always at least one time-interval of length $t_{max}$ and all other were chosen uniformly from interval $[1,t_{max}]$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of time measurement imprecision, we have run $10$ iterations and repeat the whole experiment $5$ times.   
 
 \item \textbf{ Observation }
 
-Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $max_t$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is the steep growth of the float-interval algorithm time demand present for small $max_t$ values.
+Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $t_{max}$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is the steep growth of the float-interval algorithm time demand present for small $t_{max}$ values.
 
 \begin{figure}[h]
 \centering
@@ -1142,7 +1142,7 @@ Contrary to initial expectation both float and integer interval algorithm comput
 
 \item \textbf{ Conclusion }
 
-The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $max_t$ is high probability of more intervals being the same, what has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $max_t$ values is extremely low.
+The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{max}$ is high probability of more intervals being the same, what has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{max}$ values is extremely low.
 
 The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior at the $expm$ method, we need to look deeper in its implementation []%[https://github.com/scipy/scipy/blob/v0.16.1/scipy/sparse/linalg/matfuncs.py#L554]. 
 The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability that the more complex Pad\'{e} approximant will be chosen.     
@@ -1244,49 +1244,66 @@ The experiment haven't show any error propagation trough growing iterations numb
 \end{itemize}
 
 
-\section{States}
+\section{Hidden States Number}
+
+The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model, however sometimes it may not be useful at all and cause the over-training instead. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we will observe, how variable number of states behave, when matching the dataset generating by single model, and in the later we will try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
+
+\subsection{Plasticity of the Models}
 
 \begin{itemize}
 \item \textbf{ Description }
+For this experiment we have created an artificial model consisting of five hidden states arranged in the way of birth and death chain as in the Fig. \ref{??}. There is not allowed for the model to change states except in the way of arrows. However to add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol [table?]. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model.  
+
+We have generated three random datasets by the model. The \textit{small} training dataset consisting of $15$ sequences each by $15$ observations and two \textit{big} datasets of $100$ sequences by $100$ observations, one of these for training and other for testing purpose. We have used both training datasets to converge models having from 2 to 8 hidden states and mark their performance after every of one hundred iteration at the training and \textit{big} testing dataset. We have repeated the experiments five times and plotted the average results.   
+
 \item \textbf{ Observation }
+
+The models, except the ones with 2 and 3 hidden states, were able to over-perform the original model at the \textit{small} dataset after couple of iterations\ref{fig:smtrain}. The bigger number of hidden states makes the convergence faster and also converge to the better value. The measure at the testing dataset shows, that the models were actually over-fitted after couple of iterations and later diverge. \ref{fig:smtest}. 
+
+On the contrary the convergence lines plotting the training on the \textit{big} dataset \ref{fig:bgtrain} are almost the same as on the testing data \ref{fig:bgtest}. Models with the hidden states number higher or equal 5 converge well. After one hundred iteration they have reached performances in interval $[1.00025,1.006]$ on the training dataset and $[1.0032-1.01]$ on the testing dataset. Higher number of states makes the convergence faster, but all of them seems to converge to the similar value. Models with the 4 or lower number of hidden states converge visible worse. 
 
 \begin{figure}
 \centering
 \begin{subfigure}{.8\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex5/train_small.png}
-  \caption{A subfigure}
-  \label{fig:sub1}
+  \caption{Performance on the \textit{small} training dataset}
+  \label{fig:smtrain}
 \end{subfigure}
 \begin{subfigure}{.8\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
-  \caption{A subfigure}
-  \label{fig:sub2}
+  \caption{Performance on the testing dataset}
+  \label{fig:smtest}
 \end{subfigure}
-\caption{A figure with two subfigures}
-\label{fig:test}
+\caption{Performance of the models with variable hidden states number trained by the \textit{small} dataset}
+\label{fig:sm}
 \end{figure}
 
 \begin{figure}
 \centering
 \begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
-  \caption{A subfigure}
-  \label{fig:sub1}
+  \includegraphics[width=1\linewidth]{img/ex5/train_big.png}
+  \caption{Performance on the \textit{big} training dataset}
+  \label{fig:bgtrain}
 \end{subfigure}
 \begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
-  \caption{A subfigure}
-  \label{fig:sub2}
+  \includegraphics[width=1\linewidth]{img/ex5/test_big.png}
+  \caption{Performance on the testing dataset}
+  \label{fig:bgtest}
 \end{subfigure}
-\caption{A figure with two subfigures}
-\label{fig:test}
+\caption{Performance of the models with variable hidden states number trained by the \textit{big} dataset}
+\label{fig:bg}
 \end{figure}
 
 \item \textbf{ Conclusion }
+Choosing the correct number of hidden states is crucial as their under-valuating can negatively influence the performance of the algorithm. Insufficient number of the hidden states for models 2-4 does not allow them to converge to the optimum values. The waves on the convergence lines of models 2 and 3 reveal that the averaged convergence lines differ. That marks the instable model that is too weak to cover the problem space. Model 4 was probably not able to distinguish the states at the ends of the birth and death sequence, what do not allow it to reach the peak performance.
+
+We haven't proof that the over-valuated number of hidden states makes the models more vulnerable to over-fitting, as all models has over-fitted similarly. The high number of states than in the original model makes the model to converge in the smaller number of iterations, but not to the considerably better values. However, the cost of computationally more expensive single iteration makes the convergence slower in real time.
+
+The experiment also stresses the importance of sufficiently sized dataset, as the small one emphasized the statistical error and lead to the over-fitting of the models. That is not the surprise, you can't intentionally build the model better than the dataset. 
 \end{itemize}
 
 
