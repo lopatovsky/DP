@@ -24,6 +24,7 @@
 \usepackage{amssymb}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage[section]{placeins}
 
 \usepackage{dirtree} %directory tree visualisation
 
@@ -749,11 +750,12 @@ We have got the matrix exponential form, for which conventional methods for matr
 
 \section{Algorithm}
 
-tell that float-interval variant of algorithm is used interchangeably with float-interval algorithm
-simplified one data sequence - observations and times, EM of Q nie vsetky - ostatne ako discrete.
+This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe}. We will denote it as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}, also detail described in article [hmm-base].
 
-\begin{algorithm}
-\caption{CT-HMM Parameters Estimation}\label{euclid}
+The base of the algorithm is simplistically described in \ref{pe}. There are two methods affecting convergence - \textbf{soft} and \textbf{hard}. The part that counts the end-state conditioned probabilities is described separately and compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant, the name is derived from ability of the algorithm to process float time-intervals and \textbf{integer-interval} variant, can only process the data with integer time intervals. As showed in the experiment chapter, the second mentioned is significantly faster \ref{sec:cc} and it is probably not the cause of any progressive numerical errors \ref{sec:ns}.   
+
+\begin{algorithm}[h]
+\caption{CT-HMM Parameters Estimation}\label{pe}
 \begin{algorithmic}[1]
 \State \textbf{Input data:} observation sequence $\matr{O} = (o_1,o_2,\cdots,o_v)$, time sequence $\matr{T} = (t_1,t_2,\cdots,t_v)$
 \State \textbf{Input parameter:} $n$ - number of hidden states
@@ -764,10 +766,10 @@ simplified one data sequence - observations and times, EM of Q nie vsetky - osta
 \Repeat
 \State $\matr{P}({t_{\Delta}}) \gets \text{ count state transition probabilities } e^{\matr{Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
 \State $\matr{\Xi} \gets \matr{\Xi}[v,k,l] = \mathrm{P}( x_v = k, x_{v+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q })$
-\State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method. The $\matr{P}({t_{\Delta}})$ will be used for counting of state transition probabilities. 
+\State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method. The $\matr{P}({t_{\Delta}})$ is used for counting of state transition probabilities. 
 \State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
 \State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
-\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} or \textbf{integer-interval} variant.  
+\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} \ref{fv} or \textbf{integer-interval} variant \ref{iv}.  
 \State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$
 \Until{ probability is satisfiable }
 
@@ -775,10 +777,14 @@ simplified one data sequence - observations and times, EM of Q nie vsetky - osta
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-\caption{The Expm Based Algorithm for Counting End-States Conditioned Probabilities (Float-Variant)}\label{euclid}
+
+
+
+
+\begin{algorithm}[h]
+\caption{The Expm Based Algorithm for Counting End-States Conditioned Probabilities (Float-Interval variant)}\label{fv}
 \begin{algorithmic}[1]
-\Procedure{Float-Variant}{}
+\Procedure{Float-Interval}{}
 \ForAll{$t_{\Delta} \in \matr{T}_{\Delta}$}
  \ForAll{$ \text{pair of states } i,j  \in \mathcal{S}$}
 	\State $\matr{D}_{ij} \gets (e^{t_{\Delta} \matr{W}})_{[0:n][n+1:2n]}\text{, where } \matr{W} = \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $
@@ -796,10 +802,10 @@ simplified one data sequence - observations and times, EM of Q nie vsetky - osta
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-\caption{The Expm Based Algorithm for Counting End-States Conditioned Probabilities (Integer-Variant)}\label{euclid}
+\begin{algorithm}[h]
+\caption{The Expm Based Algorithm for Counting End-States Conditioned Probabilities (Integer-Interval variant)}\label{iv}
 \begin{algorithmic}[1]
-\Procedure{Integer-Variant}{}
+\Procedure{Integer-Interval}{}
  \ForAll{$ \text{pair of states } i,j  \in \mathcal{S}$}
 	\State $\matr{D}_{ij} \gets (e^{\matr{W}})_{[0:n][n+1:2n]}\text{, where } \matr{W} = \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $
  \EndFor
@@ -820,7 +826,7 @@ simplified one data sequence - observations and times, EM of Q nie vsetky - osta
 \end{algorithmic}
 \end{algorithm}
 
-
+\FloatBarrier
 
 \section{Complexity}\label{sec:complex}
 
@@ -1043,7 +1049,7 @@ All of the training conducted during this experiment, more or less converged to 
  	
 \end{itemize}
 
-\section{Computational Complexity}
+\section{Computational Complexity}\label{sec:cc}
 
 In this section we are comparing the time performance of two CT-HMM algorithm variants, as described in implementation part [odkaz]. We have called them float and integer-interval algorithms [odkaz].
 In two subsection we will manipulate either with hidden states number or maximal time interval value and watch, if the measured values correspond the theoretical expectations \ref{sec:complex}.
