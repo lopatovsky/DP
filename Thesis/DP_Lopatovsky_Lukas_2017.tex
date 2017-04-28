@@ -80,6 +80,9 @@ The figure example \ref{fig:gb}.
 
 CT-HMM is the natural extension of discrete-time model, that ..
 
+%\section{Continuous-Time Hidden Markov Model}
+[move or delete]When we mention continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.[]
+
 
 \begin{figure}[h]
 \centering
@@ -97,9 +100,9 @@ CT-HMM is the natural extension of discrete-time model, that ..
 
 Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we will briefly explain its discrete-time variant, usually just referred to as Hidden Markov Model (HMM or DT-HMM), starting by explaining the underlaying Markov process. We find it as logical hierarchy as the CT-HMM is the natural extension of the discrete model, sharing many ideas and subroutines and Markov process is the base building block of overall model. The main reference for the DT-HMM was the tutorial article [rabiner], where can be found the more detailed descriptions and examples. The CT-HMM is like the one described in [yu-ying].
 
-\section{Discrete Markov Process}\label{sec:DMP}
+\section{Discrete-Time Markov Process}\label{sec:DMP}
     
-Discrete Markov process (also referred to as Markov chain) is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ t_1,t_2,\dots \}$, that in every time-step occupies some state of the finite state set $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$. The process being in time $t_i$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. The probability that the process changed from the state $s_i$ to the state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can be written in square matrix of size $n$ - transition probabilities matrix $\matr{A}$ . Note that the elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
+Discrete Markov process (also referred to as Markov chain) is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ t_1,t_2,\dots \}$, that in every time-step occupies some state of the finite state set $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$. The process being in time $t_i$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. The probability that the process changed from the state $s_i$ to the state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form the square matrix of size $n$ - transition probabilities matrix $\matr{A}$ . Note that the elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
 
 The Markov process is memory-less, not holding the information about the past states. So the probability of transition depends only on the current state and is defined in the matrix $\matr{A}$. This characteristic is called the Markov property and can be expressed as in equation \eqref{eq:mp}.
 
@@ -110,7 +113,7 @@ The Markov process is memory-less, not holding the information about the past st
 \end{aligned}
 \end{equation}
 
-If not stated differently, we will always refer to the time-homogeneous Markov processes. Homogeneity of the Markov process, described in equation \eqref{eq:homo} guarantees that the transition probabilities are not changing throughout the time, so that the matrix $\matr{A}$ stays constant. 
+If not stated differently, we will always refer to the time-homogeneous Markov processes. Homogeneity of the Markov process, described in equation \eqref{eq:homo} guarantees that the transition probabilities are not changing throughout the time, so the matrix $\matr{A}$ stays constant. 
 
 \begin{equation}\label{eq:homo}
    a_{ij} = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_{j-1} ),\qquad 1 \leq i,j \leq n, \forall t
@@ -126,11 +129,11 @@ For the transition probabilities apply classical stochastic constrains.
    \sum_{j=1}^n a_{ij} = 1
 \end{equation}
 
-\subsection{Discrete-time Hidden Markov Model}
+\section{Discrete-time Hidden Markov Model}
 
-Discrete-time Hidden Markov Model (HMM) is the extension of the previously defined model~\ref{sec:DMP}. In the classic Markov process are the states directly observable. Such a model is often too simplistic to fit well real life problems. The HMM forms the doubly embedded stochastic process, in which the states are not directly observable, but only through the another dependable process, that to every state $s_i$ assign the probability, that it will emit the variable from the set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$. The $\mathcal{V}$ is the set of observable variables. It forms the part of the model, which is known and can be used to guess the possible underlying states chain. The probability of emission of variable $o_j$ by the state $s_i$ will be denoted as $b_i(j)$ and form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns.
+The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process \ref{sec:DMP}, which actual states are not directly visible and only can be observed through the another process $O$. The process $O$ assigns to every state $s_i$ the probabilities that the specific observation symbol from the set $\mathcal{V}$ will be emitted. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable, or also called emission symbols. The sequence of the symbols forms the known part of the model, and it can be used to guess the possible values of underlying states chain. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the classic Markov process, HMM is able to model more complex systems, that can often be used as the description of the real life problems.  
   
-To summarize the HMM can be described by its:
+To summarize the HMM can be described by its [zmen tu vetu, aj cely predosli odstavec :(]:
 
 \begin{enumerate}[resume]
 \setcounter{enumi}{0}
@@ -138,7 +141,7 @@ To summarize the HMM can be described by its:
 \begin{equation}
 \mathcal{S} = \{ s_1,s_2, \dots, s_n \}
 \end{equation} 
-\item \textbf{State Transition Probability Distribution}
+\item \textbf{State Transition Probability Matrix}
 \begin{equation}\label{eq:tp}
 \matr{A} = \{ a_{ij} \}, \quad 1 \leq i,j \leq n
 \end{equation} 
@@ -146,13 +149,13 @@ To summarize the HMM can be described by its:
 \begin{equation}
 \mathcal{V} = \{ v_1,v_2, \dots, v_m \} 
 \end{equation}
-\item \textbf{Observation Symbols Probability Distribution} \\
-$\matr{B} = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observation $k$ will occur, if the system is currently in state $i$. 
+\item \textbf{Observation Symbols Probability Matrix} \\
+$\matr{B} = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observation $v_k$ will occur, if the system is currently in state $i$. 
 \begin{equation}
 b_i(k) = \mathrm{P}(v_k \text{ at t } \mid X_t = s_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
 \end{equation}
 \item \textbf{Initial state distribution} \\
-$\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $S_i$.
+$\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $s_i$.
 \begin{equation}
 \pi_{i} = \mathrm{P}(X_1 = s_i), \qquad 1 \leq i \leq n
 \end{equation}
@@ -160,25 +163,12 @@ $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being
 
 For the convenience we will declare parameter $\lambda = \{\matr{A},\matr{B},\pi\}$, compactly denoting the set of all parameters of the model. 
 
-\section{Continuous-Time Hidden Markov Model}
-
-All the time we will mention continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.
-
-In the DT-HMM described in previous chapter, the change of the current state of the process could happen once we moved a step further in the discrete time $t$. The actual state remained hidden, but it has always emitted the observable variable $v_i$.
-
-Comparing to this, in the CT-HMM can change of the state occur at any moment in time (the occurrence holds exponential distribution ). Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
-
-There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
-Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
-
-Now we will continue by formally defining Continuous time Markov process, after which we will extend it to the hidden model.
-
 \section{Continuous-Time Markov Process} 
 
-%relationship with discrete (construction)? sum(n = 0..inf) p(n(t)) u(i,j)^n 
-%construction from discrete HMM is probably important, heterogenous MM.
+In the discrete-time Markov process described in section \ref{sec:DMP}, the change of the current state of the process could only occur once we have moved a step further in the discrete time $t$. Comparing to this, in the continuous-time Markov process can the change of state occur at any moment in time (the occurrence holds exponential distribution ).
+
 %cit:[S.Karlin]
-A finite state continuous time Markov process (later as CTMC) is a~stochastic process $X_t (t > 0)$ on the states $\mathcal{S} = \{ s_1, s_2, \dots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
+A finite state continuous-time Markov process is a~stochastic process $\{ X_t \mid t > 0\}$ on the states $\mathcal{S} = \{ s_1, s_2, \dots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
 
 For the times $0 \leq u_0 < u_1 < \dots < u_r < u$ it satisfies the following equations: 
 \begin{itemize}
@@ -186,18 +176,18 @@ For the times $0 \leq u_0 < u_1 < \dots < u_r < u$ it satisfies the following eq
     
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( x_{t+u} = j \mid x_u = i, x_{u_r} = i_r, \dots , x_{u_0} = i_0 ) = \\ 
-& = \mathrm{P}( x_{t+u} = j \mid x_u = i ), \qquad 1 \leq i,j,i_{0,\dots,r} \leq n 
+& \mathrm{P}( X_{t+u} = s_j \mid X_u = s_i, X_{u_r} = s_{i_r}, \dots , X_{u_0} = s_{i_0} ) = \\ 
+& = \mathrm{P}( X_{t+u} = s_j \mid X_u = s_i ), \qquad s_i,s_j,s_{i_{0,\dots,r}} \in \mathcal{S} 
 \end{aligned}
 \end{equation}
 
 The equation describes that the stochastic process is memoryless.
 
-\item \textbf{Homogeneity:} Probability of transition from the state $i$ to $j$ in any given time $s \geq 0$ depends only on the length of the time interval $t \geq 0$. 
+\item \textbf{Homogeneity:} Probability of transition from the state $s_i$ to $s_j$ in any given time $u \geq 0$ depends only on the length of the time interval $t \geq 0$. 
 
 \begin{equation}
 \begin{aligned}
-& \mathrm{P}( x_{t+s} = j \mid x_s = i ) = \mathrm{P}( x_t = j \mid x_0 = i ) = \\
+& \mathrm{P}( X_{t+u} = s_j \mid X_u = s_i ) = \mathrm{P}( X_t = s_j \mid X_0 = s_i ) = \\
 & = \mathrm{p_{ij}}(t)
 \end{aligned}
 \end{equation}
@@ -205,7 +195,7 @@ The equation describes that the stochastic process is memoryless.
 \end{itemize}
  
 
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), 1 \leq i,j \leq S$ satisfies following conditions:%cit:[S.Karlin]
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), s_i,s_j \in \mathcal{S}$ satisfies following conditions:%cit:[S.Karlin]
 
 
 \begin{equation}
@@ -225,11 +215,11 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \end{equation}
 
 \begin{equation}\label{eq:ckeq}
-\sum_{k = 1}^n\mathrm{p_{ik}}(u)\mathrm{p_{kj}}(t) = \mathrm{p_{ij}}(u+s)     
+\sum_{k = 1}^n\mathrm{p_{ik}}(u)\mathrm{p_{kj}}(t) = \mathrm{p_{ij}}(u+t)     
 \end{equation}
 
 Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
-We can define the matrix $\mathrm{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij}}(t)$ to get the equation in following form:
+We can define the matrix $\matr{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij}}(t)$ to get the equation in following form:
 
 \begin{equation}\label{eq:ckm}
 \matr{P_u} \matr{P_t} = \matr{P_{u+t}},   \qquad t,u > 0  
@@ -353,6 +343,13 @@ where function $\mathbb{C}$ denotes the total number of intervals, for that cond
 %TODO P_{ij}(t) counting possibilities.
 
 \section{Continuous-Time Hidden Markov Model}
+
+The actual state remained hidden, but it has always emitted the observable variable $v_i$.
+
+ Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
+
+There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
+Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
 
 Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = \{  o_0, o_1, \dots, o_{v} \}$, emitted by the current state $s_i$ with the probability $b_i(o)$.
 The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
@@ -750,7 +747,7 @@ We have got the matrix exponential form, for which conventional methods for matr
 
 \section{Algorithm}
 
-This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe}. We will denote it as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}, also detail described in article [hmm-base].
+This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe}. We will denote it as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}. It is also detail described in article [hmm-base].
 
 The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts.  The algorithm shows training at a single observation and time sequence. It is for the sake of simplicity, the training by more complex dataset can be made by iterating all the sequences. There are two methods affecting way of convergence - \textbf{soft} and \textbf{hard} \ref{sec:shm}. The soft method is using the forward-backward algorithm and the hard uses the Viterbi algorithm to count posterior state probabilities (single and double-state).
 
@@ -796,12 +793,12 @@ The both variants of described algorithms iterate through all pairs of hidden-st
 \Procedure{Float-Interval}{}
 \ForAll{$t_{\Delta} \in \matr{T}_{\Delta}$}
  \ForAll{$ \text{pair of states } i,j  \in \mathcal{S}$}
-	\State $\matr{D}_{ij} \gets (e^{t_{\Delta} \matr{W}})_{[0:n][n+1:2n]}\text{, where } \matr{W} = \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $
+	\State $\matr{D}_{ij} \gets (e^{t_{\Delta} \matr{W}}){[0:n][n+1:2n]}\text{, where } \matr{W} = \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $
 	\State $\matr{D}_{ij} \gets \frac{ \matr{D}_{ij} }{\matr{P}({t_{\Delta}})}$ 
 	\If {$i$ is equal to $j$}
 	 \State $\mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q }) = \sum_{k,l \in \mathcal{S}} \matr{\Xi}_{\Delta}[t_{\Delta},k,l] \matr{D}_{ii}[k,l]$  
 	\Else 
-	 \State $\matr{D}_{ij} \gets  \matr{D}_{ij} \matr{Q}_{[i,j]}$
+	 \State $\matr{D}_{ij} \gets  \matr{D}_{ij} \matr{Q}{[i,j]}$
 	 \State $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) = \sum_{k,l \in \mathcal{S}} \matr{\Xi}_{\Delta}[t_{\Delta},k,l] \matr{D}_{ij}[k,l]$ 
   	\EndIf 
  
@@ -841,37 +838,37 @@ The both variants of described algorithms iterate through all pairs of hidden-st
 
 \subsection{Time Complexity}
 
-By Complexity we will refer to the complexity of one iteration of EM-algorithm. All iterations are equivalent, so to get full runtime complexity you can multiply by iteration number.
+By Complexity we will refer to the complexity of one iteration of EM-algorithm. All the iterations are equivalent, so to get full runtime complexity you can multiply by the iteration number.
 
-The number of hidden states will be denoted like $n$, the summary length of the training sequences as $T$. 
+The number of hidden states will be denoted like $n$, the summary length of the training sequences as $\nu$. 
 
 \begin{itemize}\label{it:dtc}
 \item \textbf{ Discrete-Time Baum-Welch Algorithm } \\
 In one iteration of the discrete version of algorithm the following main procedures take part:
 \begin{itemize}
-\item Forward algorithm - complexity $\mathcal{O}(n^2T)$ \ref{sec:fb}.
-\item Backward algorithm - complexity $\mathcal{O}(n^2T)$ \ref{sec:fb}.
-\item Computation of single state probabilities \ref{sec:ssp} - complexity $\mathcal{O}(nT)$. Summing and normalizing the forward and backward probabilities, that are of size $nT$.
-\item Computation of double state probabilities - complexity $\mathcal{O}(n^2T)$ \eqref{eq:xi}. Constant computation of probabilities for every pair of states in every time.
-\item Various summing operation - complexity $\mathcal{O}(n^2T)$. Just linear pass trough the arrays, the biggest of size $n^2T$.
+\item Forward algorithm - complexity $\mathcal{O}(n^2\nu)$ \ref{sec:fb}.
+\item Backward algorithm - complexity $\mathcal{O}(n^2\nu)$ \ref{sec:fb}.
+\item Computation of single state probabilities \ref{sec:ssp} - complexity $\mathcal{O}(n\nu)$. Summing and normalizing the forward and backward probabilities, that are of size $n\nu$.
+\item Computation of double state probabilities - complexity $\mathcal{O}(n^2\nu)$ \eqref{eq:xi}. Constant computation of probabilities for every pair of states in every time.
+\item Various summing operation - complexity $\mathcal{O}(n^2\nu)$. Just linear pass trough the arrays, the biggest of size $n^2\nu$.
 \end{itemize}
 
-As the operations are independent, the whole complexity of the algorithm is the maximum -  $\mathcal{O}(n^2T)$.
+As the operations are independent, the whole complexity of the algorithm is the maximum -  $\mathcal{O}(n^2\nu)$.
 
 \item \textbf{ Continuous-Time Baum-Welch Algorithm } \\
 
 [todo poznamka o expm and soft a hard ta ista compx]
 
 The complexity of continuous-time algorithm depends on the chosen variant of end-state conditioned probabilities counting. So we will distinguish \textit{integer-interval} \ref{iv} and \textit{float-interval} \ref{fv} variant of algorithm (later just algorithm). In the first one is the time difference among two consecutive observations integral, in the second it is float. Float algorithm can be used for the integral intervals, but not vice-versa. The \textit{soft} and \textit{hard} method of convergence \ref{sec:shm} doesn't impact the asymptotic complexity, as both forward-backward algorithm and Viterbi algorithm 
-have the same $\mathcal{O}(n^2 T)$ complexity.
+have the same $\mathcal{O}(n^2 \nu)$ complexity.
 
-We will define $r$ as the number of different time intervals, as in some cases it can be much more restrictive than $T$ - number of all intervals.
+We will define $r$ as the number of different time intervals, as in some cases it can be much more restrictive than $\nu - 1$ - the number of all intervals.
 
 The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, we need to precompute the transition probabilities matrix for every time interval. Than we can simple use the discrete time algorithms, as if dealing with heterogeneous Dt-HMM. 
 
 \begin{itemize}\label{it:ctc}
 \item Precompute transition probability matrices - complexity $\mathcal{O}(r n^3)$. We will call expm algorithm $\mathcal{O}(n^3)$[gmail April 12] for every distinct time interval. [pozn. ze to ide mozno zrychlit, ale zbytocne]
-\item Subpart similar to discrete-time algorithm - complexity $\mathcal{O}(n^2 T)$ \ref{it:dtc}.
+\item Subpart similar to discrete-time algorithm - complexity $\mathcal{O}(n^2 \nu)$ \ref{it:dtc}.
 \item 
 
 Count end-state conditioned expectations \ref{sec:endexp}:
@@ -901,16 +898,16 @@ We needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $A.t$[not right
 
 \end{itemize}   
 
-The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2T )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5\log(t_{\max}) + n^2T )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{\max}$. It is bounded to counting of Pad\'{e} approximants. As matrices containing bigger numbers, in average need to use the approximant of higher order,  that is more complex in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
+The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2\nu )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5\log(t_{\max}) + n^2\nu )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{\max}$. It is bounded to counting of Pad\'{e} approximants. As matrices containing bigger numbers, in average need to use the approximant of higher order,  that is more complex in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
 
-Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction will also manifest itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity will shrink to $\mathcal{O}( r n^3 m + n^2T )$ or $\mathcal{O}( r n^3 m \log(t_{\max}) + n^2T )$ respectively. Notice that the senseful value for $m$ can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
+Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction will also manifest itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity will shrink to $\mathcal{O}( r n^3 m + n^2\nu )$ or $\mathcal{O}( r n^3 m \log(t_{\max}) + n^2\nu )$ respectively. Notice that the senseful value for $m$ can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
 
 \end{itemize}
 
 \subsection{Memory Complexity}
-In the discrete-time algorithm is the biggest array the one for storing double state probabilities, so the memory complexity is equal to its size - $\mathcal{O}(n^2T)$. 
+In the discrete-time algorithm is the biggest array the one for storing double state probabilities, so the memory complexity is equal to its size - $\mathcal{O}(n^2\nu)$. 
 
-In the continuous time model there are more arrays of size $n^2T$ and the array of size $n^4$ to store precomputed matrix exponentials. So the final memory complexity is $\mathcal{O}( n^2T + n^4 )$.
+In the continuous time model there are more arrays of size $n^2\nu$ and the array of size $n^4$ to store precomputed matrix exponentials. So the final memory complexity is $\mathcal{O}( n^2\nu + n^4 )$.
 
 \chapter{Implementation}
 
