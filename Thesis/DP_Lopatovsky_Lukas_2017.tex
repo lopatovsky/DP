@@ -964,8 +964,10 @@ This approach will only dismiss the elements, that are for data-type maximal-ran
 \section{End of Convergence}
 ..stop at the end of convergence
 
-\section{zeros}
-tu zeros budos 
+\section{The Sparse Jump-Rate Matrix}
+
+The time complexity of the CT-HMM EM algorithm can be smaller, when using the sparse matrix \ref{it:ctc}. The implementation take advantage of it, but not in the term of theoretical complexity as it is still cycling trough all the matrix elements. The algorithm just not continue to perform the body of the cycle. Such solution may seems to be less effective in the terms of theoretical time-complexity, but under the real conditions, will the number of states be mostly in hundreds, so just cycling through all the matrix elements will be utterly negligible, comparing the matrix exponentiations taking part in the body of a cycle.   
+ 
 
 \chapter{Experiments}
 
