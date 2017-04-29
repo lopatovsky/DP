@@ -52,12 +52,12 @@
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 
 \department{Department of Theoretical Computer Science }
-\title{Thesis title (SPECIFY)}
+\title{Learning Methods for Continuous-Time Hidden Markov Models}
 \authorGN{Luk{\' a}{\v s}} %author's given name/names
 \authorFN{Lopatovsk{\' y}} %author's surname
 \author{Luk{\' a}{\v s} Lopatovsk{\' y}} %author's name without academic degrees
 \authorWithDegrees{Bc. Luk{\' a}{\v s} Lopatovsk{\' y}} %author's name with academic degrees
-\supervisor{Ing. Daniel Va{v s}ata, Ph.D.}
+\supervisor{Ing. Daniel Va{\v s}ata, Ph.D.}
 \acknowledgements{THANKS (remove entirely in case you do not with to thank anyone)}
 \abstractEN{Summarize the contents and contribution of your work in a few sentences in English language.}
 \abstractCS{V n{\v e}kolika v{\v e}t{\' a}ch shr{\v n}te obsah a p{\v r}{\' i}nos t{\' e}to pr{\' a}ce v {\v c}esk{\' e}m jazyce.}
@@ -134,7 +134,7 @@ For the transition probabilities apply classical stochastic constrains.
    \sum_{j=1}^n a_{ij} = 1
 \end{equation}
 
-\section{Discrete-time Hidden Markov Model}
+\section{Discrete-Time Hidden Markov Model}
 
 The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$\ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the probabilities that the specific observation symbol from the set $\mathcal{V}$ will be emitted. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
   
@@ -157,7 +157,7 @@ The following parameters are needed to describe the HMM:
 \item \textbf{Observation Symbols Probability Matrix} \\
 $\matr{B} = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observation $v_k$ will occur, if the system is currently in state $i$. 
 \begin{equation}
-b_i(k) = \mathrm{P}(v_k \text{ at t } \mid X_t = s_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
+b_i(k) = \mathrm{P}(v_k \text{ observed at time }t \mid X_t = s_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
 \end{equation}
 \item \textbf{Initial state distribution} \\
 $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $s_i$.
@@ -410,27 +410,27 @@ As the value of $\mathrm{Q}(\hat\theta_{t})$ matches the log-likelihood function
 
 It is important to notice that this approach may lead to the local optima. To get better results the algorithm can be launched more times, starting always from different randomly initiated parameters. Possibly enhanced by the use of some more advance non-linear optimization technique.
 
-\section{Three Basic Problems for HMMs}\label{sec:3p}
+\section{Discrete-Time Hidden Markov Model}\label{sec:3p}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
-When dealing with real-world application we need to deal with following problems, as proposed in [citace]. First we will describe the problems and later in the successive subsections we will explain the algorithms that can effectively solve them. 
+When dealing with HMM real-world application we need to deal with following problems [citace]. First we will describe tham and later in the successive subsections we will explain the algorithms that can effectively solve them. 
 
 \begin{enumerate}
-\item Compute the probability $\mathrm{P}(\matr{O}|\lambda) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_T)$, given the set of parameters $\lambda = \{A,B,\pi\}$. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$.   
-\item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_T$), having the observation sequence $\matr{O}$ and parameters $\lambda$.
-\item Adjust the model parameters $\lambda$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\lambda) $. 
+\item Compute the probability $\mathrm{P}(\matr{O}|\lambda) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the set of parameters $\lambda = \{A,B,\pi\}$. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
+\item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_{\nu}$), having the observation sequence $\matr{O}$ and parameters $\lambda$. \label{it:p2} 
+\item Adjust the model parameters $\lambda$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\lambda) $. \label{it:p3} 
 \end{enumerate}
 
 
 \subsection{Forward-Backward Algorithm}\label{sec:fb}
-The Forward-Backward Algorithm is actually the pair of two separate algorithms (Forward vs. Backward). We will explain the Forward one and at the end we will describe the modifications that are needed to do the Backward. Both of them are sufficient for solving of the first proposed problem, however we need to define both of them for the later use in the text.  
+The \textit{forward-backward} algorithm is actually the pair of two separate algorithms (forward vs. backward). We will explain the \textit{forward} one and at the end we will describe the modifications that are needed to do the \textit{backward}. Both of them are sufficient to solve the first proposed problem \ref{it:p1} separately, however we need to define both, because of the use in the later text.  
 
-Forward Algorithm is the Dynamic Programming algorithm building upon the Markov property - the independence upon past events. We will denote the forward variable as $\alpha_t(i)$ defined as the probability of partial observation sequence, with the last observation in time $t$ emitted by the state $s_i$, all given the parameters $\lambda$.
+Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in the time $t$ emitted by the state $s_i$, given the model parameters $\lambda$.
 
 \begin{equation}
 \alpha_t(i) = \mathrm{P}(o_1,o_2,\dots,o_t,X_t = s_i \mid \lambda )
 \end{equation}
 
-that can be gradually counted by following equations for $t=1$ and $t=t+1$ using bottom-up strategy.
+The forward variables can be gradually counted using the bottom-up strategy following equations for $t=1$ and $t=t+1$.
 
 \begin{equation}
 \alpha_1(i) = \pi_i b_i(o_1), \qquad 1 \leq i \leq n
@@ -438,26 +438,26 @@ that can be gradually counted by following equations for $t=1$ and $t=t+1$ using
 
 \begin{equation}
 \begin{aligned}
-\alpha_{t+1}(i) = \left( \sum_{j=1}^n \alpha_t(j) a_{ji} \right) b_i(o_{t+1}), \qquad 1& \leq t \leq T - 1, \\ 
+\alpha_{t+1}(i) = \left( \sum_{j=1}^n \alpha_t(j) a_{ji} \right) b_i(o_{t+1}), \qquad 1& \leq t \leq \nu - 1, \\ 
                                                                                  1& \leq i \leq n		\end{aligned}
 \end{equation}
 
-Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $T$.
+Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $\nu$.
 
 \begin{equation}
-\mathrm{P}(\matr{O}|\lambda) = \sum_{i=1}^n \alpha_T(i)
+\mathrm{P}(\matr{O}|\lambda) = \sum_{i=1}^n \alpha_{\nu}(i)
 \end{equation} 
 
 Similarly we can define backward variable $\beta_t(i)$ as
 \begin{equation}
-\beta_t(i) = \mathrm{P}(o_{t+1},o_{t+2},\dots,o_T,X_t = s_i \mid \lambda ) 
+\beta_t(i) = \mathrm{P}(o_{t+1},o_{t+2},\dots,o_{\nu},X_t = s_i \mid \lambda ) 
 \end{equation}
-The DP algorithm can be derived analogically as the one for the Forward procedure, with the single difference, that it will start counting from the end, so the total probability can be count by summing the backward variables in time $t=1$.
+The DP algorithm can be derived analogically as the one for the forward procedure, with the single difference, that it will start counting from the end, so the total probability can be count by summing the backward variables in time $t=1$.
 
-We need to count $n$ variables at each time-step, each of that takes exactly $n$ steps to evaluate. It makes overall complexity $\mathcal{O}(n^2T)$.    
+We need to count $n$ variables at each time-step, each of them takes exactly $n$ steps to evaluate. It makes overall complexity $\mathcal{O}(n^2\nu)$.    
 
 \subsection{Individually Most Likely States Sequence}\label{sec:ssp}
-There is more ways how we can look at the world "optimal" in the problem 2 statement. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in specific state in particular time.
+There are more ways how we can look at the word "optimal" in the problem two statement \ref{it:p2}. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in the specific state in the particular time.
 
 \begin{equation}
 \gamma_t(i) = \mathrm{P}(X_t = s_i \mid \matr{O},\lambda ) 
@@ -475,16 +475,16 @@ Here we can use already defined forward and backward variables and count the $\g
 To get the desired individual most likely state $x_t$, it is enough to find one of the highest probability.
 
 \begin{equation}
-x_t = \argmax_{1 \leq i \leq n} \gamma_t(i), \qquad 1 \leq t \leq T
+x_t = \argmax_{1 \leq i \leq n} \gamma_t(i), \qquad 1 \leq t \leq \nu
 \end{equation} 
 
-Applying this algorithm to the whole sequence will lead to the highest expected number of correctly assigned states, however such a sequence as a whole can have low probability or in some extreme cases can not even be feasible. This would happen if probability of transition among two consecutive states in the sequence was zero.   
+Applying this algorithm to the whole sequence would lead to the highest expected number of correctly assigned states, however the sequence as a whole can in some cases have very low probability or even not be feasible. This would happen if probability of transition among two consecutive states in the sequence was zero.   
    
 \subsection{Viterbi Algorithm} 
 
-An another way how to look on the problem 2 is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X}\mid \matr{O},\lambda)$, what is equivalent to maximize $\mathrm{P}(\matr{X}, \matr{O}\mid\lambda)$. %TODO is \matr{X} defined?
+Another way how to look on the problem two \ref{it:p2} is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X}\mid \matr{O},\lambda)$, what is equivalent to maximizing of $\mathrm{P}(\matr{X}, \matr{O}\mid\lambda)$.
 
-Viterbi Algorithm is the Dynamic Programming algorithm, that similarly to the Forward-Backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from $time = 1$ till $t-1$, with the current state being $s_i$.
+\textit{Viterbi} algorithm is the dynamic programming algorithm, that similarly to the forward-backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from the time $t=1$ till the time $t-1$, with the current state being $s_i$.
 
 \begin{equation}\label{eq:delta}
 \delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \lambda )
@@ -599,6 +599,10 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 %proof it is growing { was mentioned in EM }
 
+\section{Continuous-Time Hidden Markov Model}
+
+spomen, kde su tie viterbi a spol vysvetlene a preco nie su samostatne.
+
 \subsection{EM Algorithm} 
 
 There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
@@ -640,7 +644,7 @@ Now, there remain the non-trivial task to evaluate $\mathbf{E}( \eta_{ij} \mid \
    
 With the use of the Markov property and from homogeneity of the Markov process, the computations may be reduced to computing of expected values, for all foursome of $i,j,k,l \in S$. It will be showed later in the text[future ref].     
    
-\section{The Model Parameters Estimation}
+\subsection{The Model Parameters Estimation}
 %viterbi forward-backward need to be redefined with different rates matrix for different interval.
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
@@ -697,7 +701,7 @@ The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \
 
 In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in \ref{sec:endexp}. 
 
-\section{The Posterior State Probabilities}\label{sec:pos}
+\subsection{The Posterior State Probabilities}\label{sec:pos}
 
 We have introduced the tree basic problems of DT-HMM in section \ref{sec:3p}. They can be likewise defined for the continuous model. We have already shown the partial solution of the third problem (model parameters adjustment) in the previous section, now we will discuss the first two problems. We will show that to solve them, we need only little transformation of DT-HMM algorithms.
 
@@ -711,11 +715,11 @@ If we take this observation into the account, we can look on the model as it was
 It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transition $a_{ij}$ to time variable~$p_{i,j}( \tau_u )$.   
 Now, we have everything what we need for counting the posterior state distribution $p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$, using the forward and backward variables and define the variable~$\xi_t(i,j)$ as we have done in the discrete model \eqref{eq:xi}.
 
-\section{Soft vs. Hard Method}\label{sec:shm}
+\subsection{Soft vs. Hard Method}\label{sec:shm}
 
 The described way for computing the posterior distribution of hidden states is referred to as the \textit{Soft~method}. Supplementary, there is the \textit{Hard~method}. The \textit{Hard~method} EM algorithm try to maximize the probability of the most likely hidden states sequence. The sequence can be obtained by Viterbi algorithm and than be used "hardly", just considering single pair of end states for every time interval, to update the End-State Conditioned Expectations. Important to notice is that the \textit{Hard method} try to maximize the probability of most likely sequence, instead of maximizing the most likely observed data. [https://arxiv.org/pdf/1312.4551.pdf] So the other wished optimization can possibly be created just as the byproduct. Also there is any guarantee, that the probability of the dataset being generated by the model will be non-decreasing throughout the iterations every. Instead we can securely claim, the non-decreasing character of maximal state sequence probability.           
 
-\section{The End-State Conditioned Expectations}\label{sec:endexp}
+\subsection{The End-State Conditioned Expectations}\label{sec:endexp}
 
 We have previously described, how to use end-state conditioned expectations $\eta_{ij}$ and $\tau_i$ to compute jump rate matrix, maximizing the resulting probability \eqref{eq:Qmax}. In this section we will watch at them more deeply and discuss the possible ways how to compute their values.
 
@@ -740,7 +744,7 @@ We already know the solution of differential equation for counting of jump proba
 \int_{0}^{t} {e^{\matr{Q}x}}_{[k,i]} {e^{\matr{Q}(t-x)}}_{[j,l]} dx
 \end{equation} 
 
-\section{Methods to Solve End-State CE }
+\subsection{Methods to Solve End-State CE }
 
 There exist more ways how to solve proposed integral \eqref{eq:int}. 
 
@@ -753,7 +757,7 @@ The method referred to as \textit{Expm} is using \textit{Matrix exponentiation} 
 We have got the matrix exponential form, for which conventional methods for matrix exponentiation can be used. For example scaling and squaring method, using Pad\'{e} approximants [yu-ying16 djvu].      
 
 
-\section{Algorithm}
+\section{Algorithms for CT-HMM parameters estimation}
 
 This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe}. We will denote it as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}. It is also detail described in article [hmm-base].
 
