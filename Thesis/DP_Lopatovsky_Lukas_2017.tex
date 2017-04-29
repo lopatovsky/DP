@@ -382,33 +382,33 @@ Sometimes the state can change, without emitting a single observation. The large
 
 %(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
 
-Expectation-Maximization (EM) Algorithm (first introduces in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
-hood estimation, however the latent variables makes finding of the MLE more difficult. To count it directly can be very computationally expensive, so the EM algorithm use the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
+Expectation-Maximization (EM) Algorithm (first introduced in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
+hood estimation, however the latent variables make finding of the MLE more difficult. Direct count can be very computationally expensive, so the EM algorithm uses the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
 
-Let's have vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
+Let's define vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
 %[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
 
 Look at [st] for more detailed, easily understandable tutorial with examples.    
 
 \begin{enumerate}
-\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta^{(0)} $.
+\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta_{0} $.
 \end{enumerate} 
 
 We will continue by iterating through two following steps: 
 
 \begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$. Where $\hat \theta^{(0)}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})$.
+\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t})$. Where $\hat \theta_{0}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t})$.
 
 \begin{equation}\label{eq:exp}
- \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)})
+ \mathrm{Q}(\hat\theta_{t}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t})
 \end{equation}
 
-\item \textbf{Maximization:} Find the value $\hat\theta^{(t+1)}$ that maximize $\mathrm{Q}(\hat\theta^{(t)})$.  
+\item \textbf{Maximization:} Find the value $\hat\theta_{t+1}$ that maximize $\mathrm{Q}(\hat\theta_{t})$.  
 \end{enumerate}  
 
-As the value of $\mathrm{Q}(\hat\theta^{(t)})$ matches the log-likelihood function at $\hat\theta^{(t)}$, it follows that $ \mathrm{Q}(\hat\theta^{(t)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t)}) \leq \mathrm{Q}(\hat\theta^{(t+1)}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta^{(t+1)}) $ thus the function value form the non-decreasing order. [nejaky dokaz?]. We will stop the computation ones the parameter converges to some value, that is not changing.  
+As the value of $\mathrm{Q}(\hat\theta_{t})$ matches the log-likelihood function at $\hat\theta_{t}$, it follows that $ \mathrm{Q}(\hat\theta_{t}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t}) \leq \mathrm{Q}(\hat\theta_{t+1}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t+1}) $ thus the function values in consecutive iterations form the non-decreasing sequence. The computation can be stopped once the parameters converge to some values, that are not changing anymore.  
 
-It is important to notice that this approach leads to the local optimum. To get better results the algorithm can be launched more times starting always with different random initialization. So much some other optimization technique can be used [sources?]. 
+It is important to notice that this approach may lead to the local optima. To get better results the algorithm can be launched more times, starting always from different randomly initiated parameters. Possibly enhanced by the use of some more advance non-linear optimization technique.
 
 \section{Three Basic Problems for HMMs}\label{sec:3p}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
