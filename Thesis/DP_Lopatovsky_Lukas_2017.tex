@@ -598,9 +598,9 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 \section{Continuous-Time Hidden Markov Model}
 
-spomen, kde su tie viterbi a spol vysvetlene a preco nie su samostatne.
+spomen, kde su tie viterbi a spol vysvetlene a preco nie su samostatne. TODO %TODO
 
-\subsection{EM Algorithm} 
+\subsection{Continuous-Time Markov Process EM Algorithm} 
 
 There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
 For the expectation step we will use logarithms of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $\matr{Q}$ in step $t$ noted as $\matr{ \hat Q_t } $.
@@ -756,13 +756,13 @@ We have got the matrix exponential form, for which conventional methods for matr
 
 \section{Algorithms for CT-HMM parameters estimation}
 
-This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe}. We will denote it as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}. It is also detail described in article [hmm-base].
+This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe} also denoting as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}. It is also detail described in article [hmm-base].
 
-The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts.  The algorithm shows training at a single observation and time sequence. It is for the sake of simplicity, the training by more complex dataset can be made by iterating all the sequences. There are two methods affecting way of convergence - \textbf{soft} and \textbf{hard} \ref{sec:shm}. The soft method is using the forward-backward algorithm and the hard uses the Viterbi algorithm to count posterior state probabilities (single and double-state).
+The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts.  The algorithm shows training at a single observation and time sequence. It is for the sake of simplicity, the training by more complex dataset can be made by iterating trough all the sequences. There are two methods affecting the way of convergence - \textbf{soft} and \textbf{hard} \ref{sec:shm}. The soft method uses the forward-backward algorithm and the hard uses the Viterbi algorithm to count posterior state probabilities (single and double-state).
 
-The part that counts the end-state conditioned probabilities is described separately and it compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant \ref{fv}, the name is derived from ability of the algorithm to process float time-intervals and \textbf{integer-interval} variant \ref{iv}, can only process the data with integer time intervals. As showed in the experiment chapter, the second mentioned is significantly faster \ref{sec:cc} and it is probably not the cause of any progressive numerical errors \ref{sec:ns}.
+The part that counts the end-state conditioned probabilities is described separately and it compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant \ref{fv} (the name is derived from ability of the algorithm to process float time-intervals) and \textbf{integer-interval} variant \ref{iv} ( it can only process the data with integer time intervals). As showed in the experiment chapter, the second mentioned is significantly faster \ref{sec:cc} and it is probably not the cause of any critical progressive numerical errors \ref{sec:ns}.
 
-The both variants of described algorithms iterate through all pairs of hidden-states. Namely at $3^{rd}$ line of \textbf{float-interval} \ref{fv}, and at $2^{nd}$ and $5^{th}$ line of \textbf{integer-interval} variant \ref{iv}. It can be optimized for sparse jump-rate matrices $\matr{Q}$. We can simply omit the pairs with the zero jump rate, as once being set to zero, the value can't change by run of the algorithm.       
+The both variants of the described algorithms iterate through all the pairs of hidden-states. Namely at $3^{rd}$ line of \textbf{float-interval} \ref{fv}, and at $2^{nd}$ and $5^{th}$ line of \textbf{integer-interval} variant \ref{iv}. It can be optimized for sparse jump-rate matrices $\matr{Q}$. We can simply omit the pairs with zero jump rate, as once being set to zero, the value can't change by the run of the algorithm.       
 
 \noindent\begin{minipage}{\textwidth} 
 \renewcommand\footnoterule{}
