@@ -457,7 +457,7 @@ The DP algorithm can be derived analogically as the one for the forward procedur
 We need to count $n$ variables at each time-step, each of them takes exactly $n$ steps to evaluate. It makes overall complexity $\mathcal{O}(n^2\nu)$.    
 
 \subsection{Individually Most Likely States Sequence}\label{sec:ssp}
-There are more ways how we can look at the word "optimal" in the problem two statement \ref{it:p2}. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in the specific state in the particular time.
+There are more ways how we can look at the word "optimal" in the problem two statement \ref{it:p2}. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in the specific state in the particular time. We will also call it "single state probability".
 
 \begin{equation}
 \gamma_t(i) = \mathrm{P}(X_t = s_i \mid \matr{O},\lambda ) 
@@ -534,9 +534,9 @@ x_t^* = \psi_{t+1}(x_{t+1}^*), \qquad t = \nu-1, \nu-2, \dots, 1
 
 The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can easily see its complexity is also $\mathcal{O}(n^2\nu)$.
 
-\subsection{Baum-Welch Algorithm}\label{sec:BWA}
+\subsection{Expectation-Maximization Algorithm}\label{sec:BWA}
 
-There doesn't exist analytic solution for the problem~3. There are more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues.[ref?] We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in state~$s_j$ in the time~$t+1$. 
+There doesn't exist analytic solution for the problem~three \ref{it:p3}. There exist more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues called \textit{Baum-Welch} algorithm[ref]. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in state~$s_j$ in the time~$t+1$, later also referred to as "double state probability". 
 
 \begin{equation}
 \xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \lambda )  
@@ -559,16 +559,16 @@ Obviously it is in relation with already defined variable~$\gamma_t(i)$ - the pr
 \gamma_t(i) = \sum_{j=1}^n \xi_t(i,j)  
 \end{equation}
 
-We can get the expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$T-1$. Similarly we would get expected number of times in~$s_i$, by summing over~$t$ from~$t=1$ till~$t=T$. 
+We can get the expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$\nu-1$. Similarly we would get expected number of times in~$s_i$, by summing $\gamma_t(i)$ from~$t=1$ till~$t=\nu$. 
 
 \begin{equation}
-\mathbf{E}(\text{transitions from $s_i$}) = \sum_{t=1}^{T-1} \gamma_t(i)  
+\mathbf{E}(\text{transitions from $s_i$}) = \sum_{t=1}^{\nu-1} \gamma_t(i)  
 \end{equation}
 
 If summing~$\xi_t(i,j)$ over the time, we will get expected number of transitions from $s_i$ to $s_j$, . 
 
 \begin{equation}
-\mathbf{E}(\text{transitions from $s_i$ to $s_j$}) = \sum_{t=1}^{T-1} \xi_t(i,j)  
+\mathbf{E}(\text{transitions from $s_i$ to $s_j$}) = \sum_{t=1}^{\nu-1} \xi_t(i,j)  
 \end{equation}
 
 Now we have all what is needed to define the reestimated model~$\hat\lambda=(\hat{\matr{A}},\hat{\matr{B}},\hat\pi)$.
@@ -581,7 +581,7 @@ Now we have all what is needed to define the reestimated model~$\hat\lambda=(\ha
 \begin{aligned}
 \hat a_{ij} &= \frac{\mathbf{E}(\text{transitions from $s_i$ to $s_j$})}
 				   {\mathbf{E}(\text{transitions from $s_i$})}  \\
-		    &= \frac{\sum\limits_{t=1}^{T-1} \xi_t(i,j)}{\sum\limits_{t=1}^{T-1} \gamma_t(i) }
+		    &= \frac{\sum\limits_{t=1}^{\nu-1} \xi_t(i,j)}{\sum\limits_{t=1}^{\nu-1} \gamma_t(i) }
 \end{aligned}
 \end{equation}
 
@@ -589,15 +589,12 @@ Now we have all what is needed to define the reestimated model~$\hat\lambda=(\ha
 \begin{aligned}
 \hat b_{i}(k) &= \frac{\mathbf{E}(\text{times of visiting $s_i$ and observing symbol $v_k$ })}
 				   {\mathbf{E}(\text{times of visiting $s_i$})} \\
-			  &= \frac{\sum\limits_{t=1, \text{if } O_t = v_k  }^{T} \gamma_t(i)}{\sum\limits_{t=1}^{T} \gamma_t(i) } 
+			  &= \frac{\sum\limits_{t=1, \text{if } O_t = v_k  }^{\nu} \gamma_t(i)}{\sum\limits_{t=1}^{\nu} \gamma_t(i) } 
 \end{aligned}
 \end{equation}
 
-%TODO O_t = v_k, ok?
+The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\lambda,\hat\lambda)$ and maximization step, the maximization over parameter~$\hat\lambda$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
 
-The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\lambda,\hat\lambda)$ and maximization step, the maximization over parameter~$\hat\lambda$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can helpful to start the algorithm more times with different parameter initialization.  
-
-%proof it is growing { was mentioned in EM }
 
 \section{Continuous-Time Hidden Markov Model}
 
