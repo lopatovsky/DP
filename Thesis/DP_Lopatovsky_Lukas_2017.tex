@@ -26,6 +26,9 @@
 \usepackage{subcaption}
 \usepackage[section]{placeins}
 
+\usepackage[hang,flushmargin]{footmisc}
+
+
 \usepackage{dirtree} %directory tree visualisation
 
 % % list of acronyms
@@ -36,6 +39,8 @@
 %%%%%%%%%%%% own commands %%%%%%%%%%%%%%%%%%
 \newcommand{\matr}[1]{\mathbf{#1}} 
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -218,20 +223,16 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \sum_{k = 1}^n\mathrm{p_{ik}}(u)\mathrm{p_{kj}}(t) = \mathrm{p_{ij}}(u+t)     
 \end{equation}
 
-Equation \eqref{eq:ckeq} is known as Chapman-Kolmogorov equation. 
+Equation \eqref{eq:ckeq} is known as \textit{Chapman-Kolmogorov equation}. 
 We can define the matrix $\matr{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij}}(t)$ to get the equation in following form:
 
 \begin{equation}\label{eq:ckm}
 \matr{P_u} \matr{P_t} = \matr{P_{u+t}},   \qquad t,u > 0  
 \end{equation}
 
-?proof of Chapman-kolmogorov?
-
-%construction from Discrete time with poisson timing
-
 \subsection{ Jump Rates }
 
-Using the Chapman-Kolmogorov equation \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
+Using the \textit{Chapman-Kolmogorov equation} \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
 %cit[vytistena st. kniha]
 
 The property \eqref{eq:l0}  asserts that $\mathrm{p_{ij}}(t)$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
@@ -272,7 +273,17 @@ We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the st
 \end{aligned}
 \end{equation}
 
-Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
+We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ by solving the \textit{Kolmogorov's Backward Equation} \eqref{eq:kbe}. It can be obtained from \textit{Chapman-Kolmogorov equation} \eqref{eq:ckm} by differentiation. The solution of the differential equation leads to matrix exponentiation \eqref{eq:mexp}. [zdroj na riesenie]  
+
+\begin{equation}\label{eq:kbe}
+\matr{P_t^{'}} = \matr{Q} \matr{P_{t}}
+\end{equation}
+
+\begin{equation}\label{eq:mexp}
+\matr{P_{t}} = e^{\matr{Q}t}  
+\end{equation}
+
+%Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
 \subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
 
@@ -755,8 +766,10 @@ The part that counts the end-state conditioned probabilities is described separa
 
 The both variants of described algorithms iterate through all pairs of hidden-states. Namely at $3^{rd}$ line of \textbf{float-interval} \ref{fv}, and at $2^{nd}$ and $5^{th}$ line of \textbf{integer-interval} variant \ref{iv}. It can be optimized for sparse jump-rate matrices $\matr{Q}$. We can simply omit the pairs with the zero jump rate, as once being set to zero, the value can't change by run of the algorithm.       
 
-\begin{algorithm}[h]
-\caption{CT-HMM Parameters Estimation}\label{pe}
+\noindent\begin{minipage}{\textwidth} 
+\renewcommand\footnoterule{}
+\begin{algorithm}[H]
+\caption{CT-HMM Parameters Estimation}\label{pe} 
 \begin{algorithmic}[1]
 \State \textbf{Input data:} observation sequence $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, time sequence $\matr{T} = (t_1,t_2,\dots,t_v)$
 \State \textbf{Input parameter:} $n$ - number of hidden states
@@ -771,18 +784,15 @@ The both variants of described algorithms iterate through all pairs of hidden-st
 \State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
 \State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
 \State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} \ref{fv} or \textbf{integer-interval} variant \ref{iv}.  
-\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$
+\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$ \footnote[1]{\label{refqmax}\eqref{eq:Qmax}}
 \Until{ probability is satisfiable }
-
-
 
 \EndProcedure
 \end{algorithmic}
 
-
-
 \end{algorithm}
 
+\end{minipage}
 
 
 
