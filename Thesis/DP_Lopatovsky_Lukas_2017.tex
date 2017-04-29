@@ -602,7 +602,7 @@ spomen, kde su tie viterbi a spol vysvetlene a preco nie su samostatne. TODO %TO
 
 \subsection{Continuous-Time Markov Process EM Algorithm} 
 
-There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76].  
+There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76][8yy].  
 For the expectation step we will use logarithms of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $\matr{Q}$ in step $t$ noted as $\matr{ \hat Q_t } $.
 
 \begin{equation}\label{eq:EMCL}
@@ -779,7 +779,7 @@ The both variants of the described algorithms iterate through all the pairs of h
 \State $\matr{P}({t_{\Delta}}) \gets \text{ count state transition probabilities } e^{\matr{\hat Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
 \State $\matr{\Xi} \gets \matr{\Xi}[u,k,l] = \mathrm{P}( X_{t_u} = k, X_{t_{u+1}} = l \mid \matr{O},\matr{T}, \matr{ \hat Q }),  u \in 1,\dots,v-1$
 \State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method. The $\matr{P}({t_{\Delta}})$ is used for counting of state transition probabilities. 
-\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
+\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the matrices } \matr{\Xi}[u] \text{ with the same length of the time interval } t_{u+1} - t_u \text{ that equals } t_{\Delta} \in \matr{T}_{\Delta}, u \in 1,\dots,v-1 $
 \State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
 \State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} \ref{fv} or \textbf{integer-interval} variant \ref{iv}.  
 \State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$ \footnote{\label{refqmax}\eqref{eq:Qmax}}
@@ -846,33 +846,35 @@ The both variants of the described algorithms iterate through all the pairs of h
 
 \subsection{Time Complexity}
 
-By Complexity we will refer to the complexity of one iteration of EM-algorithm. All the iterations are equivalent, so to get full runtime complexity you can multiply by the iteration number.
+By complexity we will refer to the complexity of one iteration of EM-algorithm. All the iterations are equivalent, so to get full runtime complexity you can multiply by the iteration number.
 
-The number of hidden states will be denoted like $n$, the summary length of the training sequences as $\nu$. 
+The number of hidden states will be denoted as $n$, the summary length of the training sequences as $\nu$. 
 
 \begin{itemize}\label{it:dtc}
 \item \textbf{ Discrete-Time Baum-Welch Algorithm } \\
-In one iteration of the discrete version of algorithm the following main procedures take part:
+In one iteration of the discrete version of the algorithm the following main procedures take part:
 \begin{itemize}
 \item Forward algorithm - complexity $\mathcal{O}(n^2\nu)$ \ref{sec:fb}.
 \item Backward algorithm - complexity $\mathcal{O}(n^2\nu)$ \ref{sec:fb}.
 \item Computation of single state probabilities \ref{sec:ssp} - complexity $\mathcal{O}(n\nu)$. Summing and normalizing the forward and backward probabilities, that are of size $n\nu$.
-\item Computation of double state probabilities - complexity $\mathcal{O}(n^2\nu)$ \eqref{eq:xi}. Constant computation of probabilities for every pair of states in every time.
-\item Various summing operation - complexity $\mathcal{O}(n^2\nu)$. Just linear pass trough the arrays, the biggest of size $n^2\nu$.
+\item Computation of double state probabilities - complexity $\mathcal{O}(n^2\nu)$ \eqref{eq:xi}. Constant-time computation of probabilities for every pair of states in every time.
+\item Various summing operation - complexity $\mathcal{O}(n^2\nu)$. Just linear pass trough the arrays, the biggest one has size $n^2\nu$.
 \end{itemize}
 
-As the operations are independent, the whole complexity of the algorithm is the maximum -  $\mathcal{O}(n^2\nu)$.
+As the operations are consecutive, the whole asymptotic complexity of the algorithm is the maximum -  $\mathcal{O}(n^2\nu)$.
 
 \item \textbf{ Continuous-Time Baum-Welch Algorithm } \\
 
-[todo poznamka o expm and soft a hard ta ista compx]
+The complexity of the continuous-time algorithm depends on the chosen variant of end-state conditioned probabilities counting. So we will distinguish \textit{integer-interval} \ref{iv} and \textit{float-interval} \ref{fv} variant of algorithm (later just algorithm). In the first one is the time difference among two consecutive observations integral, in the second it is float. Float algorithm can be used for the integral intervals, but not vice-versa. 
 
-The complexity of continuous-time algorithm depends on the chosen variant of end-state conditioned probabilities counting. So we will distinguish \textit{integer-interval} \ref{iv} and \textit{float-interval} \ref{fv} variant of algorithm (later just algorithm). In the first one is the time difference among two consecutive observations integral, in the second it is float. Float algorithm can be used for the integral intervals, but not vice-versa. The \textit{soft} and \textit{hard} method of convergence \ref{sec:shm} doesn't impact the asymptotic complexity, as both forward-backward algorithm and Viterbi algorithm 
+The \textit{soft} and \textit{hard} method of convergence \ref{sec:shm} doesn't impact the asymptotic complexity, as both forward-backward algorithm and Viterbi algorithm 
 have the same $\mathcal{O}(n^2 \nu)$ complexity.
 
-We will define $r$ as the number of different time intervals, as in some cases it can be much more restrictive than $\nu - 1$ - the number of all intervals.
+We will define $r$ as the number of different time intervals. In some cases it can be much more restrictive than $\nu - 1$ - the number of all intervals.
 
-The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, we need to precompute the transition probabilities matrix for every time interval. Than we can simple use the discrete time algorithms, as if dealing with heterogeneous Dt-HMM. 
+The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, that we need to pre-compute the transition probabilities matrix for every time interval. Than we can simple use the discrete time algorithms, as if dealing with heterogeneous Dt-HMM. 
+
+....do tade pozrete... TODO %TODO
 
 \begin{itemize}\label{it:ctc}
 \item Precompute transition probability matrices - complexity $\mathcal{O}(r n^3)$. We will call expm algorithm $\mathcal{O}(n^3)$[gmail April 12] for every distinct time interval. [pozn. ze to ide mozno zrychlit, ale zbytocne]
