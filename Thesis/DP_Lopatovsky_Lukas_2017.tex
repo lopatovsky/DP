@@ -308,12 +308,12 @@ Now we can derive the equation for probability of transition from the state $i$ 
 \subsection{ Fully Observable Continuous-Time Markov Process }
 %ref Yu-Ying Liu
 
-Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0, x_1, \dots, x_{\nu^{'}} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
+Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0^{'}, x_1^{'}, \dots, x_{\nu^{'}}^{'} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}  
- \mathcal{L}_{FO} &=  \prod_{u=0}^{\nu^{'}-1} ( q_{x_u x_{u+1}} / q_{x_u} )( q_{x_u} e^{ - q_{x_u} \tau_{u }^{'}}) = \\
-    &= \prod_{u=0}^{\nu^{'}-1} q_{x_u x_{u+1}} e^{ - q_{x_u} \tau_{u}^{'}}
+ \mathcal{L}_{FO} &=  \prod_{u=0}^{\nu^{'}-1} ( q_{x_u^{'} x_{u+1}^{'}} / q_{x_u^{'}} )( q_{x_u^{'}} e^{ - q_{x_u^{'}} \tau_{u }^{'}}) = \\
+    &= \prod_{u=0}^{\nu^{'}-1} q_{x_u^{'} x_{u+1}^{'}} e^{ - q_{x_u^{'}} \tau_{u}^{'}}
 \end{aligned}
 \end{equation}
 
@@ -356,27 +356,23 @@ We will define the $r$ as the number of all distinct time intervals from the set
 
 \section{Continuous-Time Hidden Markov Model}
 
-The actual state remained hidden, but it has always emitted the observable variable $v_i$.
+%The actual state remained hidden, but it has always emitted the observable variable $v_i$.
 
- Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
+ %Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
 
-There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
-Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
-
-Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = \{  o_0, o_1, \dots, o_{v} \}$, emitted by the current state $s_i$ with the probability $b_i(o)$.
+Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = (  o_0, o_1, \dots, o_{v} )$, emitted by the current state $s_i$ with the probability $b_i(o)$.
 The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
 
 \begin{equation}\label{eq:HMCL1}
 \begin{aligned}  
- \mathcal{L}_{FO} &= \prod_{u^{'}}^{u^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
+ \mathcal{L}_{FO} &= \prod_{u^{'}}^{\nu^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
     \prod_{u=0}^v b_{ x_u }(o_u) = \\
-    &= \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i } \prod_{u=0}^v b_{x_u}(o_u)
+    &= \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i } \prod_{u=0}^\nu b_{x_u}(o_u)
 \end{aligned}
 \end{equation}
-%TODO s(t_v) was not defined enywhere, it need to be unified with the notation q_t = S from discrete model!
 
-%TODO Move the CT-HMM intorduction in here, and separate it in the more chapters, not the EM- chapter. 
- 
+There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
+Sometimes the state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
 
 \chapter{Statistics}
 
