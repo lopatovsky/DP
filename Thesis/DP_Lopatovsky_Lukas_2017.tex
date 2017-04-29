@@ -168,7 +168,7 @@ $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being
 
 For the convenience we will declare parameter $\lambda = \{\matr{A},\matr{B},\pi\}$, compactly denoting the set of all parameters of the model. 
 
-\section{Continuous-Time Markov Process} 
+\section{Continuous-Time Markov Process}\label{sec:ctmp}
 
 In the discrete-time Markov process described in section \ref{sec:DMP}, the change of the current state of the process could only occur once we have moved a step further in the discrete time $t$. Comparing to this, in the continuous-time Markov process can the change of state occur at any moment in time (the occurrence holds exponential distribution ).
 
@@ -287,32 +287,33 @@ We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ 
 
 \subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
 
-The useful way to the understanding of the continuous-time Markov process is by its relation to the discrete process, that can be shown by the construction.
+The useful way for understanding of the continuous-time Markov process is to know its relation to the discrete process, that can be shown by the construction.
 
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_n$, with the transition probabilities $a_{ij}$. With the $N(t)$ and $Y_n$ being mutually independent. To make the construction, we will change the equidistant timing of $Y_n$ by Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$) and the sojourn time in state $i$ will be exponentially distributed with the parameter $q_i$, what is $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $X_t = Y_{N(t)}$ is called continuous-time Markov process.
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing the equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in the state $s_i$ can be described by probability density function of exponential distribution with the parameter $a_i$, $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $X_t = Y_{N(t)}$ is called continuous-time Markov process.
 
 Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
 
 \begin{equation}
 \begin{aligned}
-\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_t = s_j \mid Y_t = s_i )  = \\
-                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = s_j \mid Y_{N(t)} = s_i )  = \\
+\mathrm{p_t(i,j)} &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, X_t = s_j \mid X_0 = s_i )  = \\
+                  &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n, Y_{N(t)} = s_j \mid Y_{N(0)} = s_i )  = \\
                   &= \sum_{n=0}^{\infty} \mathrm{P}( N(t) = n ) \mathrm{P}( Y_n = j \mid Y_0 = i )  = \\
 				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
 \end{aligned}
 \end{equation} 
 
 
-%ref Yu-Ying Liu
+
 
 \subsection{ Fully Observable Continuous-Time Markov Process }
+%ref Yu-Ying Liu
 
-Let's have continuous time Markov chain on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known transitions to the corresponding states $\matr{X^{'}}= ( x_0, x_1, \dots, x_{v^{'}} ) $ occurring at times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{v^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
+Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0, x_1, \dots, x_{\nu^{'}} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$). 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}  
- \mathcal{L}_{FO} &=  \prod_{u=0}^{v^{'}-1} ( q_{x_u x_{u+1}} / q_{x_u} )( q_{x_u} e^{ - q_{x_u} \tau_{u }^{'}}) = \\
-    &= \prod_{u=0}^{v^{'}-1} q_{x_u x_{u+1}} e^{ - q_{x_u} \tau_{u}^{'}}
+ \mathcal{L}_{FO} &=  \prod_{u=0}^{\nu^{'}-1} ( q_{x_u x_{u+1}} / q_{x_u} )( q_{x_u} e^{ - q_{x_u} \tau_{u }^{'}}) = \\
+    &= \prod_{u=0}^{\nu^{'}-1} q_{x_u x_{u+1}} e^{ - q_{x_u} \tau_{u}^{'}}
 \end{aligned}
 \end{equation}
 
@@ -327,29 +328,29 @@ The equation can be further rearranged in the form that group together the same 
 
 \subsection{ General Continuous-Time Markov Process }
 
-In general we do not know the state of the system during all the time. It is only known at some unevenly distributed times $\matr{T} = ( t_0, t_1, \dots, t_{v} )$ as $\matr{X}= (x_0, x_1, \dots, x_{v} )$. 
+In general we do not know the states of the system during all the time. It is only known at some unevenly distributed times of observations $\matr{T} = ( t_0, t_1, \dots, t_{\nu} )$ as $\matr{X}= (x_0, x_1, \dots, x_{\nu} )$. 
 This add an amount of insecurity in the probability computation. We do not longer know, the number of transitions $\eta_{ij}$ as well as the time spend in the specific state $\tau_i$. 
 
-To count the likelihood of the chain, we will use earlier defined matrix $\matr{P}(t)$ and its elements $\mathrm{p_{ij}}(t)$ [ref] for the time interval~$\tau_u = t_{u+1} - t_u$.    
+To count the likelihood of the process, we will use earlier defined matrix $\matr{P}(t)$ and its elements $\mathrm{p_{ij}}(t)$ \ref{sec:ctmp}. The time interval among two observation will be marked as  $\tau_u = t_{u+1} - t_u$.    
 
 \begin{equation}
- \mathcal{L} = \prod_{u=0}^{v-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
+ \mathcal{L} = \prod_{u=0}^{\nu-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
 \end{equation}
 
 It can be alternatively extended in the form
 
 \begin{equation}
- \mathcal{L} = \prod_{u=0}^{v-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathbb{I}( x_u = i, x_{u+1} = j )} 
+ \mathcal{L} = \prod_{u=0}^{\nu-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathbb{I}( x_u = s_i, x_{u+1} = s_j )} 
 \end{equation}
 
-where the function $\mathbb{I}(i,j)$ equal either $1$, if both condition inside are true, or $0$ if they are not. 
-If the variable $r$ - the number of all distinct time intervals $\tau_{\Delta}, \Delta =\{1,2,\dots,r\}$ is lower then number of observations, it could be beneficial to aggregate them as in formula,
+where the function $\mathbb{I}(i,j)$ equals either $1$, if both condition inside are true, or $0$ if they are not. 
+We will define the $r$ as the number of all distinct time intervals from the set $ \matr{T}_{\Delta} = \{ \tau_1,\tau_2,\dots,\tau_r\}$. If $r$ is lower then the number of observations, it can be beneficial to aggregate them as in formula
 
 \begin{equation}\label{eq:CTL}
- \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta} x_u = i, x_{u+1} = j )} 
+ \mathcal{L} = \prod_{\Delta = 1}^{r} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_{\Delta})^{\mathbb{C}( \tau=\tau_{\Delta}, x_u = s_i, x_{u+1} = s_j )} 
 \end{equation}
 
-where function $\mathbb{C}$ denotes the total number of intervals, for that condition is true.
+,where function $\mathbb{C}$ denotes the total number of intervals, for which is the condition true.
     
 %TODO P_{ij}(t) counting possibilities.
 
