@@ -484,13 +484,13 @@ Applying this algorithm to the whole sequence would lead to the highest expected
 
 Another way how to look on the problem two \ref{it:p2} is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X}\mid \matr{O},\lambda)$, what is equivalent to maximizing of $\mathrm{P}(\matr{X}, \matr{O}\mid\lambda)$.
 
-\textit{Viterbi} algorithm is the dynamic programming algorithm, that similarly to the forward-backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from the time $t=1$ till the time $t-1$, with the current state being $s_i$.
+\textit{Viterbi} algorithm is the dynamic programming algorithm, that similarly to the forward-backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from its beginning till the state time $t$, with the state $x_{t}$  being $s_i$.
 
 \begin{equation}\label{eq:delta}
 \delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \lambda )
 \end{equation} %TODO x_t = s_i, or X_t = s_i
 
-To get the actual state sequence, we need to store the information about the state that has maximized in the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
+To get the actual state sequence, we need to store the information about the state in time $t-1$ that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
 
 \begin{equation}
 \delta_1(i) = \pi_i b_i(o_1), \qquad 1 \leq i \leq n 
@@ -504,14 +504,14 @@ and consecutive bottom-up computation as
 
 \begin{equation}
 \begin{aligned}
-\delta_{t}(i) = ( \max_{ 1 \leq j \leq n } \delta_{t-1}(j)a_{ji} ) b_i(o_{t}), \qquad 2& \leq t \leq T, \\
+\delta_{t}(i) = ( \max_{ 1 \leq j \leq n } \delta_{t-1}(j)a_{ji} ) b_i(o_{t}), \qquad 2& \leq t \leq \nu, \\
 																					   1& \leq i \leq n
 \end{aligned}
 \end{equation}
 
 \begin{equation}
 \begin{aligned}
-\psi_{t}(i) = ( \argmax_{ 1 \leq j \leq n } \delta_{t-1}(j)a_{ji} ), \qquad \qquad 2& \leq t \leq T, \\
+\psi_{t}(i) = ( \argmax_{ 1 \leq j \leq n } \delta_{t-1}(j)a_{ji} ), \qquad \qquad 2& \leq t \leq \nu, \\
 																			       1& \leq i \leq n
 \end{aligned}
 \end{equation}
@@ -522,17 +522,17 @@ Now we can get the searched state sequence probability
 \mathrm{P}^* = \max_{1 \leq i \leq n} ( \delta_{t}(i) )  
 \end{equation}
 
-and the actual state path by backtracking
+and the actual state path $\matr{X}^* = ( x_1^*, x_2^*, \dots, x_{\nu}^*)$ by backtracking
 
 \begin{equation}
-x_t^* = \argmax_{1 \leq i \leq n} ( \delta_{t}(i) ),  \qquad t = T  
+x_t^* = \argmax_{1 \leq i \leq n} ( \delta_{t}(i) ),  \qquad t = \nu 
 \end{equation}
 
 \begin{equation}
-x_t^* = \psi_{t+1}(x_{t+1}^*), \qquad t = T-1, T-2, \dots, 1  
+x_t^* = \psi_{t+1}(x_{t+1}^*), \qquad t = \nu-1, \nu-2, \dots, 1  
 \end{equation}
 
-The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can easily see its complexity is also $\mathcal{O}(n^2T)$.
+The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can easily see its complexity is also $\mathcal{O}(n^2\nu)$.
 
 \subsection{Baum-Welch Algorithm}\label{sec:BWA}
 
