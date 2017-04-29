@@ -136,9 +136,9 @@ For the transition probabilities apply classical stochastic constrains.
 
 \section{Discrete-time Hidden Markov Model}
 
-The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process \ref{sec:DMP}, which actual states are not directly visible and only can be observed through the another process $O$. The process $O$ assigns to every state $s_i$ the probabilities that the specific observation symbol from the set $\mathcal{V}$ will be emitted. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable, or also called emission symbols. The sequence of the symbols forms the known part of the model, and it can be used to guess the possible values of underlying states chain. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the classic Markov process, HMM is able to model more complex systems, that can often be used as the description of the real life problems.  
+The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$\ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the probabilities that the specific observation symbol from the set $\mathcal{V}$ will be emitted. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
   
-To summarize the HMM can be described by its [zmen tu vetu, aj cely predosli odstavec :(]:
+The following parameters are needed to describe the HMM:
 
 \begin{enumerate}[resume]
 \setcounter{enumi}{0}
@@ -251,7 +251,7 @@ We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other
 dividing by time interval $t$ and letting $t$ decrease close to zero, we will obtain the following equation. 
 
 \begin{equation}\label{eq:qii}
- q_{ii} =  \sum_{j = 1}^{ n ,j \neq i} q_{ij} 
+ q_{ii} =  - \sum_{j = 1}^{ n ,j \neq i} q_{ij} 
 \end{equation}
 
 (We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
@@ -784,7 +784,7 @@ The both variants of described algorithms iterate through all pairs of hidden-st
 \State $\matr{\Xi}_{\Delta} \gets \text{ sum together the probabilities from } \matr{\Xi} \text{ by time interval } t_{\Delta}  $
 \State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
 \State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} \ref{fv} or \textbf{integer-interval} variant \ref{iv}.  
-\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$ \footnote[1]{\label{refqmax}\eqref{eq:Qmax}}
+\State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$ \footnote{\label{refqmax}\eqref{eq:Qmax}}
 \Until{ probability is satisfiable }
 
 \EndProcedure
