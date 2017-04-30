@@ -703,9 +703,9 @@ In the subsection \ref{sec:pos}, we have shown, how to count $\mathrm{P}(x_u = k
 
 \subsection{The End-State Conditioned Expectations}\label{sec:endexp}
 
-We have previously described, how to use end-state conditioned expectations $\eta_{ij}$ and $\tau_i$ to compute jump rate matrix, maximizing the resulting probability \eqref{eq:Qmax}. In this section we will watch at them more deeply and discuss the possible ways how to compute their values.
+We have previously described, how to use end-state conditioned expectations $\eta_{ij}$ and $\tau_i$ to compute estimation of the jump-rate matrix $\matr{Q}$ by maximizing of its resulting probability \eqref{eq:Qmax}. In this section we will discuss them more deeply and show the possible ways how to compute their values.
 
-The Markov chain, we are describing, is time-homogeneous. So the time offset at the beginning of the interval is not important and we can anchor it toward zero. The two following expectations are equivalent: $\mathbf{E}(\eta_{ij} \mid x_{t_1} = k, x_{t_2} = l, \matr{ Q } ) = \mathbf{E}(\eta_{ij} \mid x_0 = k, x_{t_\Delta} = l, \matr{ Q } )$, where $x_{t_\Delta} = x_{t_2} - x_{t_1}$. It can help us to save some computations, as we can store the values and reuse them, if needed.
+The Markov process, we are describing is time-homogeneous. So the time offset at the beginning of the interval is not important and we can anchor it toward zero. The two following expectations are equivalent: $\mathbf{E}(\eta_{ij} \mid x_{t_1} = k, x_{t_2} = l, \matr{ Q } ) = \mathbf{E}(\eta_{ij} \mid x_0 = k, x_{t_\Delta} = l, \matr{ Q } )$, where ${t_\Delta} = {t_2} - {t_1}$. It can help us to save some computations, as we can store the values and reuse them, if needed.
 
 The expectations can be expressed as following integrals [cit: 14 Hobolth].   
 
@@ -719,11 +719,11 @@ The expectations can be expressed as following integrals [cit: 14 Hobolth].
 \int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{il}}(t-x) dx
 \end{equation}
 
-We already know the solution of differential equation for counting of jump probabilities $\mathrm{p}(t)$. So we can transform the previously stated integrals in the following form. We will denote them as $\tau^{ij}_{kl}$. For the equation \eqref{eq:exp2} $i = j$. 
+We already know the solution of differential equation for counting the jump probabilities $\mathrm{p}(t)$. So we can transform the previously stated integrals to the form as shown in equation \eqref{eq:exp2}. We will denote the integrals as $\tau^{ij}_{kl}$. For the equation \eqref{eq:exp2} it will be similarly $\tau^{ii}_{kl}$. 
 
 \begin{equation}\label{eq:int}
 \tau^{ij}_{kl} = \int_{0}^{t} \mathrm{p_{ki}}(x) \mathrm{p_{jl}}(t-x) dx = 
-\int_{0}^{t} {e^{\matr{Q}x}}_{[k,i]} {e^{\matr{Q}(t-x)}}_{[j,l]} dx
+\int_{0}^{t} {e^{\matr{Q}x}}[k,i] {e^{\matr{Q}(t-x)}}[j,l] dx
 \end{equation} 
 
 \subsection{Methods to Solve End-State CE }
