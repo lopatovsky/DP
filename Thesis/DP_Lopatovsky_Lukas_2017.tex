@@ -488,7 +488,7 @@ Another way how to look on the problem two \ref{it:p2} is to find single most pr
 
 \begin{equation}\label{eq:delta}
 \delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \lambda )
-\end{equation} %TODO x_t = s_i, or X_t = s_i
+\end{equation} 
 
 To get the actual state sequence, we need to store the information about the state in time $t-1$ that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
 
@@ -598,7 +598,22 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 \section{Continuous-Time Hidden Markov Model}
 
-spomen, kde su tie viterbi a spol vysvetlene a preco nie su samostatne. TODO %TODO
+We have introduced the basic problems of DT-HMM at the beginning of the section \ref{sec:3p}. They can be similarly defined for the continuous model. Applying the single change that we do not have just the observation sequence $\matr{O}$, but also the time sequence $\matr{T}$, that we need to care about. The solution for the two first problems as well as a considerate part of the third problem is pretty straight-forward. The discrete-time solutions, just need to be redefined with different transition probability matrix for different interval. It will be discussed in the following subsection \ref{sec:pos}. The EM algorithm for jump-rate matrix estimation is not so straight-forward anymore. We need to care about, what is happening in times between two observations, as it has impact on the results of likelihood counting. The EM algorithm and its variants, will be explained in all the remaining subsections.   
+
+%continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok lepsi. ->do uvodu toto.
+
+\subsection{The Posterior State Probabilities}\label{sec:pos}
+
+To count the single and double states probability of the CT-HMM with specified parameters, we do not need to know about the state transition that have occurred in between of the two observations.
+If we take just the observation points into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $\mathrm{p_{i,j}}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of the transition probabilities matrix $\matr{A}$ in the discrete time in-homogeneous model. For example the probability of the model, with the known states in the observation times can be computed as following
+
+\begin{equation}
+\prod_{u=1}^{\ni-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\ni} b_{ x_u }(o_u)
+\end{equation}
+
+The $\tau_u$ is the time interval $t_{u+1} - t_u$. It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transitions $a_{ij}$ to the time variable~$\mathrm{p_{i,j}}( \tau_u )$.   
+Now, we can use the forward and backward variables to count posterior state distribution for the single state  $\gamma_t(i) = \mathrm{P}( x_u = i \mid \matr{O},\matr{T}, \matr{ Q_t } )$ and the two consecutive states $\xi_t(i,j) = \mathrm{P}( x_u = s_i, x_{u+1} = s_j \mid \matr{O},\matr{T}, \matr{ Q_t } )$, in the same way,  as we have done in the discrete model.
+
 
 \subsection{Continuous-Time Markov Process EM Algorithm} 
 
@@ -609,9 +624,9 @@ For the expectation step we will use logarithms of expected complete likelihood 
  \ln( \mathcal{L}_{FO} ) = \sum_{i=0}^n \sum_{j=0}^{n, i \neq j} \ln( \hat q_{ij}) \mathbf{E}( \eta_{ij} \mid \matr{X}, \matr{ \hat Q_t } ) - \hat q_i \mathbf{E}( \tau_i \mid \matr{X}, \matr{ \hat Q_t } )
 \end{equation}
 
-In the maximization step we will evaluate new values for $\matr{ \hat Q }$, so that the previous equation was maximized. 
+In the maximization step we will take the derivative with respect to $q_{ij}$ and evaluate the new values for $\matr{ \hat Q }$, so that the previous equation was maximized. 
 
-\begin{equation}
+\begin{equation}\label{eq:Qmax}
 \begin{aligned}  
 \matr{ \hat Q_t }(i,j)= 
 \begin{cases}
@@ -642,9 +657,6 @@ Now, there remain the non-trivial task to evaluate $\mathbf{E}( \eta_{ij} \mid \
 With the use of the Markov property and from homogeneity of the Markov process, the computations may be reduced to computing of expected values, for all foursome of $i,j,k,l \in S$. It will be showed later in the text[future ref].     
    
 \subsection{The Model Parameters Estimation}
-%viterbi forward-backward need to be redefined with different rates matrix for different interval.
-
-%continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok najlepsi.
 
 For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
 
@@ -659,20 +671,7 @@ The expectation step will be the log-likelihood of the model. Simply just the lo
 \end{aligned}
 \end{equation}
 
-We will maximize the previous function by recalculating the~$\matr{ \hat Q_t }$. 
-
-\begin{equation}\label{eq:Qmax}
-\begin{aligned}  
-\matr{ \hat Q_t }(i,j)= 
-\begin{cases}
-\frac{ \mathbf{E}(\eta_{ij} \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )}{ \mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{\hat Q_t} ) } & \text{if } i\neq j\\
-- \sum\limits_{k=1}^{n,k \neq i} q_{ik}, \qquad & \text{if } i=j
-\end{cases}
-\end{aligned}
-\end{equation}
-
-
-The challenging step is to derive computation of expected values of $\eta_{ij}$ and $\tau_i$. We will start with the first $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
+The new added part, doesn't contain $q$, so the maximization will be the same as in equation \eqref{eq:Qmax}. Lack of the direct states observations, makes the computation of the expected values of $\eta_{ij}$ and $\tau_i$ more challenging. We need to manage it just from the knowledge about emission sequence. We will start with the expectation $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
 
 \begin{equation} 
 \sum_{x_1,\dots,x_v)} p(x_1,\dots,x_v) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_1,\dots,x_v) ,\hat Q_t )
@@ -698,19 +697,6 @@ The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \
 
 In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in \ref{sec:endexp}. 
 
-\subsection{The Posterior State Probabilities}\label{sec:pos}
-
-We have introduced the tree basic problems of DT-HMM in section \ref{sec:3p}. They can be likewise defined for the continuous model. We have already shown the partial solution of the third problem (model parameters adjustment) in the previous section, now we will discuss the first two problems. We will show that to solve them, we need only little transformation of DT-HMM algorithms.
-
-To count the probability of the CT-HMM with specified parameters, and defined states in observation points, we do not need to know about the state transition that have occurred among the observations.
-If we take this observation into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $p_{i,j}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of the transition probabilities in discrete time in-homogeneous model. Now we can define the desired probability as following:
-
-\begin{equation}
-\prod_{u=1}^{v-1} p_{x_u, x_{u+1}}(\tau_u) \prod_{u=1}^{v} b_{ x_u }(o_u)
-\end{equation}
-
-It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transition $a_{ij}$ to time variable~$p_{i,j}( \tau_u )$.   
-Now, we have everything what we need for counting the posterior state distribution $p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$, using the forward and backward variables and define the variable~$\xi_t(i,j)$ as we have done in the discrete model \eqref{eq:xi}.
 
 \subsection{Soft vs. Hard Method}\label{sec:shm}
 
