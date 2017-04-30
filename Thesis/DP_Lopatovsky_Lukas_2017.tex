@@ -674,28 +674,28 @@ The expectation step will be the log-likelihood of the model. Simply just the lo
 The last part of the equation ,specific for the hidden Markov model, doesn't contain $q$, so the maximization will be the same as in equation for Markov process \eqref{eq:Qmax}. Lack of the direct states observations, makes the computation of the expected values $\eta_{ij}$ and $\tau_i$ more challenging. We need to obtain it just from the knowledge about the emission sequence. First we will derive the formula for the expectation $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which can be expressed as the sum through all the possible state sequences.
 
 \begin{equation} 
-\sum_{x_1,\dots,x_\nu)} p(x_1,\dots,x_\nu) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_1,\dots,x_\nu) ,\hat Q_t )
+\sum_{x_0,\dots,x_\nu} \mathrm{P}(x_0,\dots,x_\nu \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_0,\dots,x_\nu , \matr{\hat Q_t} )
 \end{equation}
 
-The expectation part can be rewrite in the intervals form.  
+The expected value formula can be rewritten as the sum for the partial intervals.  
 
 \begin{equation}
- \sum_{x_1,\dots,x_\nu)} p(x_1,\dots,x_\nu \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{\nu-1}\mathbf{E}(\eta_{ij} \mid x_u, x_{u+1} ,\matr{\hat Q_t} )
+ \sum_{x_0,\dots,x_\nu} \mathrm{P}(x_0,\dots,x_\nu \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{\nu-1}\mathbf{E}(\eta_{ij} \mid x_u, x_{u+1} ,\matr{\hat Q_t} )
 \end{equation}
 
-Because the Markov condition hold, we can interval-wise divide the complex probability function and for every of the time intervals sum through all possible states $k,l$ at its edge. 
+Because the Markov condition hold, we can interval-wise divide the complex probability function and for every of the time intervals sum through all the possible states $k,l$ at its edges. 
 
 \begin{equation}
-\sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{ \hat Q_t } )
+\sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n \mathrm{P}( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{ \hat Q_t } )
 \end{equation}
 
-The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$ can be derived equivalently.
+The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$ can be derived equivalently to get \eqref{eq:tau}.
 
-\begin{equation}
-\sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
+\begin{equation}\label{eq:tau}
+\sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n \mathrm{P}( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
 \end{equation}
 
-In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in \ref{sec:endexp}. 
+In the previous subsection \ref{sec:pos}, we have shown, how to count $\mathrm{P}(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part, the computing of $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in \ref{sec:endexp}. 
 
 
 \subsection{Soft vs. Hard Method}\label{sec:shm}
