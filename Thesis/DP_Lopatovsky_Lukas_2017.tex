@@ -360,7 +360,7 @@ We will define the $r$ as the number of all distinct time intervals from the set
 
  %Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
 
-Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{v} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = (  o_0, o_1, \dots, o_{v} )$, emitted by the current state $s_i$ with the probability $b_i(o)$.
+Continuous-time hidden Markov model is the extension of CTMC, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{\nu} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = (  o_0, o_1, \dots, o_{\nu} )$, emitted by the current state $s_i$ with the probability $b_i(o)$.
 The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMC \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
 
 \begin{equation}\label{eq:HMCL1}
@@ -608,17 +608,17 @@ To count the single and double states probability of the CT-HMM with specified p
 If we take just the observation points into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $\mathrm{p_{i,j}}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of the transition probabilities matrix $\matr{A}$ in the discrete time in-homogeneous model. For example the probability of the model, with the known states in the observation times can be computed as following
 
 \begin{equation}
-\prod_{u=1}^{\ni-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\ni} b_{ x_u }(o_u)
+\prod_{u=1}^{\nu-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\nu} b_{ x_u }(o_u)
 \end{equation}
 
 The $\tau_u$ is the time interval $t_{u+1} - t_u$. It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transitions $a_{ij}$ to the time variable~$\mathrm{p_{i,j}}( \tau_u )$.   
 Now, we can use the forward and backward variables to count posterior state distribution for the single state  $\gamma_t(i) = \mathrm{P}( x_u = i \mid \matr{O},\matr{T}, \matr{ Q_t } )$ and the two consecutive states $\xi_t(i,j) = \mathrm{P}( x_u = s_i, x_{u+1} = s_j \mid \matr{O},\matr{T}, \matr{ Q_t } )$, in the same way,  as we have done in the discrete model.
 
 
-\subsection{Continuous-Time Markov Process EM Algorithm} 
+\subsection{Continuous-Time Markov Process EM} 
 
 There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76][8yy].  
-For the expectation step we will use logarithms of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $\matr{Q}$ in step $t$ noted as $\matr{ \hat Q_t } $.
+For the expectation step we will use logarithm of expected complete likelihood function \eqref{eq:CL2}, with the estimated parameter of $\matr{Q}$ in step $t$ noted as $\matr{ \hat Q_t } $.
 
 \begin{equation}\label{eq:EMCL}
  \ln( \mathcal{L}_{FO} ) = \sum_{i=0}^n \sum_{j=0}^{n, i \neq j} \ln( \hat q_{ij}) \mathbf{E}( \eta_{ij} \mid \matr{X}, \matr{ \hat Q_t } ) - \hat q_i \mathbf{E}( \tau_i \mid \matr{X}, \matr{ \hat Q_t } )
@@ -636,63 +636,63 @@ In the maximization step we will take the derivative with respect to $q_{ij}$ an
 \end{aligned}
 \end{equation}
 
-Now, there remain the non-trivial task to evaluate $\mathbf{E}( \eta_{ij} \mid \matr{X}, \matr{\hat Q_t} )$ and $\mathbf{E}( \tau_i \mid \matr{X}, \matr{ \hat Q_t } )$. They can be expressed as following sums.
+The remaining non-trivial task is to evaluate $\mathbf{E}( \eta_{ij} \mid \matr{X}, \matr{\hat Q_t} )$ and $\mathbf{E}( \tau_i \mid \matr{X}, \matr{ \hat Q_t } )$. They can be expressed as following sums.
 
 
 \begin{equation}
 \begin{aligned}  
-\mathbf{E}(\eta_{ij} \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{v-1} \mathbf{E}(\eta_{ij} \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
-&= \sum_{u=0}^{v-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
+\mathbf{E}(\eta_{ij} \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{\nu-1} \mathbf{E}(\eta_{ij} \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
+&= \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
 
 
 \begin{equation}
 \begin{aligned}  
-\mathbf{E}( \tau_i \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{v-1} \mathbf{E}(\tau_i \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
-&= \sum_{u=0}^{v-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
+\mathbf{E}( \tau_i \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{\nu-1} \mathbf{E}(\tau_i \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
+&= \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
    
-With the use of the Markov property and from homogeneity of the Markov process, the computations may be reduced to computing of expected values, for all foursome of $i,j,k,l \in S$. It will be showed later in the text[future ref].     
+The Markov property and homogeneity of the Markov process allows to reduce the computation of expected values to all foursomes $i,j,k,l \in S$ for all distinct time-intervals. The ways how to do it will be shown later in the text \ref{sec:endexp}.     
    
-\subsection{The Model Parameters Estimation}
+\subsection{Continuous-Time Hidden Markov Model EM}
 
-For the model parameters estimation in DT-HMM, we have used the already long known Baum-Welch algorithm \ref{sec:BWA}. We can use the same approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. Just we need to use the time dependent jump rates instead of time-homogeneous transition probabilities. %TODO define new \gamma \chi ? maybe will be done in Posterior.  
+For the EM parameters estimation in DT-HMM, we have used the long known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in subsection \ref{sec:pos}.  
 
-However the estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model, because the state transitions are not dependent on the observation times and there can even be more of them between two observations. The following algorithm proposed in the article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
+The estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model in this way, because the state transitions are not dependent on the observation times and there can even be more of them between two consecutive observations. The following method proposed in the article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
 
 The expectation step will be the log-likelihood of the model. Simply just the logarithm of the full observation probability function \eqref{eq:HMCL1}.
 
 \begin{equation}\label{eq:EMCTHMM}
 \begin{aligned}  
  \ln(\mathcal{L}_{FO}) &= \sum_{i=1}^{n} \sum_{j=1}^{n, i \neq j} \big( \ln( \hat q_{ij}) \mathbf{E}( \eta_{ij} \mid \matr{O},\matr{T}, \matr{ \hat Q_t } ) - \hat q_i \mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } ) \big) + \\
-    &+ \sum_{u=0}^v \mathbf{E}( \ln( b_{ x_u }(o_u) ) \mid, \matr{O},\matr{T},\matr{\hat Q_t} )
+    &+ \sum_{u=0}^{\nu} \mathbf{E}( \ln( b_{ x_u }(o_u) ) \mid, \matr{O},\matr{T},\matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
 
-The new added part, doesn't contain $q$, so the maximization will be the same as in equation \eqref{eq:Qmax}. Lack of the direct states observations, makes the computation of the expected values of $\eta_{ij}$ and $\tau_i$ more challenging. We need to manage it just from the knowledge about emission sequence. We will start with the expectation $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which will be expressed as the sum through all possible state sequences.
+The last part of the equation ,specific for the hidden Markov model, doesn't contain $q$, so the maximization will be the same as in equation for Markov process \eqref{eq:Qmax}. Lack of the direct states observations, makes the computation of the expected values $\eta_{ij}$ and $\tau_i$ more challenging. We need to obtain it just from the knowledge about the emission sequence. First we will derive the formula for the expectation $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which can be expressed as the sum through all the possible state sequences.
 
 \begin{equation} 
-\sum_{x_1,\dots,x_v)} p(x_1,\dots,x_v) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_1,\dots,x_v) ,\hat Q_t )
+\sum_{x_1,\dots,x_\nu)} p(x_1,\dots,x_\nu) \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_1,\dots,x_\nu) ,\hat Q_t )
 \end{equation}
 
 The expectation part can be rewrite in the intervals form.  
 
 \begin{equation}
- \sum_{x_1,\dots,x_v)} p(x_1,\dots,x_v \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{v-1}\mathbf{E}(\eta_{ij} \mid x_u, x_{u+1} ,\matr{\hat Q_t} )
+ \sum_{x_1,\dots,x_\nu)} p(x_1,\dots,x_\nu \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \sum_{u=1}^{\nu-1}\mathbf{E}(\eta_{ij} \mid x_u, x_{u+1} ,\matr{\hat Q_t} )
 \end{equation}
 
 Because the Markov condition hold, we can interval-wise divide the complex probability function and for every of the time intervals sum through all possible states $k,l$ at its edge. 
 
 \begin{equation}
-\sum_{u=0}^{v-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{ \hat Q_t } )
+\sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{ \hat Q_t } )
 \end{equation}
 
 The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$ can be derived equivalently.
 
 \begin{equation}
-\sum_{u=0}^{v-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
+\sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n p( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
 \end{equation}
 
 In the following section \ref{sec:pos}, we will show, how to count $p(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part of computing $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in \ref{sec:endexp}. 
