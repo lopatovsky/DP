@@ -77,6 +77,7 @@
 
 \begin{introduction}
 	This is the master thesis. welcome!
+	bibtex test: \cite{Sk01}
 	\section{Motivation and objectives}
 	About a discrete model [inspired by Rabiner? ] and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
 	Add articles and DP that have done it before - less or more successfully 
@@ -103,7 +104,7 @@ CT-HMM is the natural extension of discrete-time model, that ..
 
 \chapter{Probabilistic Models}
 
-Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we will briefly explain its discrete-time variant, usually just referred to as Hidden Markov Model (HMM or DT-HMM), starting by explaining the underlaying Markov process. We find it as logical hierarchy as the CT-HMM is the natural extension of the discrete model, sharing many ideas and subroutines and Markov process is the base building block of overall model. The main reference for the DT-HMM was the tutorial article [rabiner], where can be found the more detailed descriptions and examples. The CT-HMM is like the one described in [yu-ying].
+Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we will briefly explain its discrete-time variant, usually just referred to as Hidden Markov Model (HMM or DT-HMM), starting by explaining the underlaying Markov process. We find it as logical hierarchy as the CT-HMM is the natural extension of the discrete model, sharing many ideas and subroutines and Markov process is the base building block of overall model. The main reference for the DT-HMM was the tutorial article \cite{Ra89}, where can be found the more detailed descriptions and examples. The CT-HMM is like the one described in article \cite{Li15}.
 
 \section{Discrete-Time Markov Process}\label{sec:DMP}
     
@@ -1302,9 +1303,6 @@ The experiment also stresses the importance of sufficiently sized dataset, as th
 \end{itemize}
 
 
-%\chapter{EM Algorithms for CT-HMM}
-
-
 % expm reference form scipy: The Scaling and Squaring Method for the Matrix Exponential Revisited",
 %    SIAM. J. Matrix Anal. & Appl. 26, 1179 (2005).
 
@@ -1323,7 +1321,7 @@ rychlo sa straca informacia
 
 
 \bibliographystyle{iso690}
-\bibliography{mybibliographyfile}
+\bibliography{bibliography}
 
 \setsecnumdepth{all}
 \appendix
@@ -1331,8 +1329,8 @@ rychlo sa straca informacia
 \chapter{Acronyms}
 % \printglossaries
 \begin{description}
-	\item[DTMC] Discrete-time Markov Chain	
-	\item[CTMC] Continuous-time Markov Chain
+	\item[DTMP] Discrete-time Markov Process	
+	\item[CTMP] Continuous-time Markov Process
 	\item[DT-HMM] Discrete-time Hidden Markov Model
 	\item[CT-HMM] Continuous-time Hidden Markov Model
 	\item[EM] Expectation-Maximization 

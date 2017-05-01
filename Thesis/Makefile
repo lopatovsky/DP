@@ -3,6 +3,8 @@ all: DP_Lopatovsky_Lukas_2017.pdf
 
 DP_Lopatovsky_Lukas_2017.pdf: DP_Lopatovsky_Lukas_2017.tex
 	pdflatex DP_Lopatovsky_Lukas_2017.tex
+	bibtex DP_Lopatovsky_Lukas_2017.aux
+	pdflatex DP_Lopatovsky_Lukas_2017.tex
 	pdflatex DP_Lopatovsky_Lukas_2017.tex
 
 clean:
