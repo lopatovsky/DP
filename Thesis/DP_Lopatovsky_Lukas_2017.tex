@@ -1244,21 +1244,29 @@ The experiment haven't shown any error propagation by growing the iterations num
 
 \section{Hidden States Number}\label{sec:hsn}
 
-The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model, however sometimes it may not be useful at all and cause the over-training instead. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we will observe, how variable number of states behave, when matching the dataset generating by single model, and in the later we will try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
+The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model. It can be beneficial as the model can better fit the domain space, however sometimes it may not be useful at all and cause the over-training. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we will observe, how variable number of states behave, when matching the dataset generating by single model, and in the later we will try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
 
 \subsection{Plasticity of the Models}\label{sec:plast}
 
 \begin{itemize}
 \item \textbf{ Description }
-For this experiment we have created an artificial model consisting of five hidden states arranged in the way of birth and death chain as in the Fig. \ref{??}. There is not allowed for the model to change states except in the way of arrows. However to add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol [table?]. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model.  
+For this experiment we have created an artificial model consisting of five hidden states arranged in the way of birth and death chain as in the figure \ref{??}. There is not allowed for the model to change states except in the way of arrows. However to add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model. 
 
-We have generated three random datasets by the model. The \textit{small} training dataset consisting of $15$ sequences each by $15$ observations and two \textit{big} datasets of $100$ sequences by $100$ observations, one of these for training and other for testing purpose. We have used both training datasets to converge models having from 2 to 8 hidden states and mark their performance after every of one hundred iteration at the training and \textit{big} testing dataset. We have repeated the experiments five times and plotted the average results.   
+%TODO
+%\begin{figure}
+%\centering
+%\includegraphics[width=1\linewidth]{img/ex5/hs.svg}
+%caption{...}
+%\label{fig:bg}
+%\end{figure}
+ 
+We have generated three random datasets. The \textit{small} training dataset consisting of $15$ sequences each by $15$ observations and two \textit{big} datasets of $100$ sequences by $100$ observations, one for training and other for testing purpose. We have used both training datasets to train models with variable number of hidden states (from 2 to 8) and marked their performance after every of one hundred iteration at the respective training and \textit{big} testing dataset. We have repeated the experiments five times and plotted the average results.   
 
 \item \textbf{ Observation }
 
-The models, except the ones with 2 and 3 hidden states, were able to over-perform the original model at the \textit{small} dataset after couple of iterations\ref{fig:smtrain}. The bigger number of hidden states makes the convergence faster and also converge to the better value. The measure at the testing dataset shows, that the models were actually over-fitted after couple of iterations and later diverge. \ref{fig:smtest}. 
+The models, except the ones with 2 and 3 hidden states, were able to over-perform the original model at the \textit{small} training dataset after couple of iterations\ref{fig:smtrain}. The bigger number of hidden states makes the convergence faster and also converge to the lower value. The measure at the testing dataset shows, that the models were actually over-fitted after couple of iterations and later diverge from the actual model. \ref{fig:smtest}. 
 
-On the contrary the convergence lines plotting the training on the \textit{big} dataset \ref{fig:bgtrain} are almost the same as on the testing data \ref{fig:bgtest}. Models with the hidden states number higher or equal 5 converge well. After one hundred iteration they have reached performances in interval $[1.00025,1.006]$ on the training dataset and $[1.0032-1.01]$ on the testing dataset. Higher number of states makes the convergence faster, but all of them seems to converge to the similar value. Models with the 4 or lower number of hidden states converge visible worse. 
+On the contrary the convergence lines plotting the training on the \textit{big} dataset \ref{fig:bgtrain} are almost the same as results on the testing data \ref{fig:bgtest}. Models with the hidden states number higher or equal 5 converge well. After one hundred iteration they have reached performances in interval $[1.00025,1.006]$ on the training dataset and $[1.0032-1.01]$ on the testing dataset. Higher number of states make the convergence faster, but all of the models seems to converge to the similar value. Models with the 4 or lower number of hidden states converge visibly worse. 
 
 \begin{figure}
 \centering
@@ -1297,11 +1305,11 @@ On the contrary the convergence lines plotting the training on the \textit{big} 
 \end{figure}
 
 \item \textbf{ Conclusion }
-Choosing the correct number of hidden states is crucial as their under-valuating can negatively influence the performance of the algorithm. Insufficient number of the hidden states for models 2-4 does not allow them to converge to the optimum values. The waves on the convergence lines of models 2 and 3 reveal that the averaged convergence lines differ. That marks the instable model that is too weak to cover the problem space. Model 4 was probably not able to distinguish the states at the ends of the birth and death sequence, what do not allow it to reach the peak performance.
+Choosing the correct number of hidden states is crucial as its under-valuating can negatively influence the performance of the algorithm. Insufficient number of the hidden states for models 2-4 does not allow them to converge to the optimum values. The waves on the convergence lines of models 2 and 3 reveal that the averaged convergence lines differ. That marks the instability, thus the model that is too weak to cover the problem space. Model 4 was probably not able to distinguish the states at the ends of the birth and death sequence, that's way it has not reached the peak performance.
 
-We haven't proof that the over-valuated number of hidden states makes the models more vulnerable to over-fitting, as all models has over-fitted similarly. The high number of states than in the original model makes the model to converge in the smaller number of iterations, but not to the considerably better values. However, the cost of computationally more expensive single iteration makes the convergence slower in real time.
+We haven't proof that the over-valuated number of hidden states makes the models more vulnerable to over-fitting, as all models has over-fitted similarly. The higher number of states than in the original model makes the model to converge in the smaller number of iterations, but not to the considerably better values. However, the cost of computationally more expensive single iteration makes their convergence slower in real time.
 
-The experiment also stresses the importance of sufficiently sized dataset, as the small one emphasized the statistical error and lead to the over-fitting of the models. That is not the surprise, you can't intentionally build the model better than the dataset. 
+The experiment also stresses the importance of sufficiently sized dataset, as the small one emphasized the statistical error and lead to the over-fitting of the models. That is not the surprise, the weak dataset can't train powerful model. 
 \end{itemize}
 
 
