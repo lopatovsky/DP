@@ -119,7 +119,7 @@ The Markov process is memory-less, not holding the information about the past st
 \end{aligned}
 \end{equation}
 
-If not stated differently, we will always refer to the time-homogeneous Markov processes. Homogeneity of the Markov process, described in equation \eqref{eq:homo} guarantees that the transition probabilities are not changing throughout the time, so the matrix $\matr{A}$ stays constant. 
+If not stated differently, we will always refer to the time-homogeneous Markov processes. Homogeneity of the Markov process, described in equation \eqref{eq:homo} guarantees that the one step transition probabilities are not changing throughout the time, so the matrix $\matr{A}$ stays constant. 
 
 \begin{equation}\label{eq:homo}
    a_{ij} = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_{j-1} ),\qquad 1 \leq i,j \leq n, \forall t
@@ -137,7 +137,7 @@ For the transition probabilities apply standard stochastic constrains \cite{Ra89
 
 \section{Discrete-Time Hidden Markov Model}
 
-The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$\ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the probabilities that the specific observation symbol from the set $\mathcal{V}$ will be emitted. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
+The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$ \ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the specific observation symbol from the set $\mathcal{V}$ that will be emitted with certain probability. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
   
 The following parameters are needed to describe the HMM:
 
@@ -163,11 +163,11 @@ b_i(k) = \mathrm{P}(v_k \text{ observed at time }t \mid X_t = s_i), \qquad 1 \le
 \item \textbf{Initial state distribution} \\
 $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $s_i$.
 \begin{equation}
-\pi_{i} = \mathrm{P}(X_1 = s_i), \qquad 1 \leq i \leq n
+\pi_{i} = \mathrm{P}(X_0 = s_i), \qquad 1 \leq i \leq n
 \end{equation}
 \end{enumerate}
 
-For the convenience we will declare parameter $\lambda = \{\matr{A},\matr{B},\pi\}$, compactly denoting the set of all parameters of the model. 
+For the convenience we will declare parameter $\lambda = (\matr{A},\matr{B},\pi)$, compactly denoting the set of all parameters of the model. 
 
 \section{Continuous-Time Markov Process}\label{sec:ctmp}
 
@@ -177,19 +177,19 @@ In the discrete-time Markov process described in section \ref{sec:DMP}, the chan
 A finite state continuous-time Markov process is a~stochastic process $\{ X_t \mid t > 0\}$ on the states $\mathcal{S} = \{ s_1, s_2, \dots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
 
 For the times $0 \leq u_0 < u_1 < \dots < u_r < u$ it satisfies the following equations: 
-\begin{itemize}
-\item \textbf{Markov property:} Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< u$.  
+\begin{description}
+\item [Markov property:] Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< u$.  
     
 \begin{equation}
 \begin{aligned}
 & \mathrm{P}( X_{t+u} = s_j \mid X_u = s_i, X_{u_r} = s_{i_r}, \dots , X_{u_0} = s_{i_0} ) = \\ 
-& = \mathrm{P}( X_{t+u} = s_j \mid X_u = s_i ), \qquad s_i,s_j,s_{i_{0,\dots,r}} \in \mathcal{S} 
+& = \mathrm{P}( X_{t+u} = s_j \mid X_u = s_i ), \qquad s_i,s_j,s_{i_0}, \dots ,s_{i_r} \in \mathcal{S} 
 \end{aligned}
 \end{equation}
 
-The equation describes that the stochastic process is memoryless.
+The property describes that the stochastic process is memoryless.
 
-\item \textbf{Homogeneity:} Probability of transition from the state $s_i$ to $s_j$ in any given time $u \geq 0$ depends only on the length of the time interval $t \geq 0$. 
+\item [Homogeneity:] Probability of transition from the state $s_i$ to $s_j$ in any given time $u \geq 0$ depends only on the length of the time interval $t \geq 0$. 
 
 \begin{equation}
 \begin{aligned}
@@ -198,7 +198,7 @@ The equation describes that the stochastic process is memoryless.
 \end{aligned}
 \end{equation}
 
-\end{itemize}
+\end{description}
  
 
 The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), s_i,s_j \in \mathcal{S}$ satisfies following conditions:%cit:[S.Karlin]
