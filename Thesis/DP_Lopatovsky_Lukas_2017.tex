@@ -104,18 +104,18 @@ CT-HMM is the natural extension of discrete-time model, that ..
 
 \chapter{Probabilistic Models}
 
-Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we will briefly explain its discrete-time variant, usually just referred to as Hidden Markov Model (HMM or DT-HMM), starting by explaining the underlaying Markov process. We find it as logical hierarchy as the CT-HMM is the natural extension of the discrete model, sharing many ideas and subroutines and Markov process is the base building block of overall model. The main reference for the DT-HMM was the tutorial article \cite{Ra89}, where can be found the more detailed descriptions and examples. The CT-HMM is like the one described in article \cite{Li15}.
+Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we will briefly explain its discrete-time variant, usually just referred to as Hidden Markov Model (HMM or DT-HMM), starting by explaining the underlaying Markov process. We find it as logical hierarchy as the CT-HMM is the natural extension of the discrete model, sharing many ideas and subroutines and Markov process is the base building block of overall model. The main reference for the DT-HMM was the tutorial article \cite{Ra89}, where more detailed descriptions and examples can be found. The CT-HMM is like the one described in article \cite{Li15}.
 
-\section{Discrete-Time Markov Process}\label{sec:DMP}
+\section{Discrete-time Markov Process}\label{sec:DMP}
     
-Discrete Markov process (also referred to as Markov chain) is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ t_1,t_2,\dots \}$, that in every time-step occupies some state of the finite state set $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$. The process being in time $t_i$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. The probability that the process changed from the state $s_i$ to the state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form the square matrix of size $n$ - transition probabilities matrix $\matr{A}$ . Note that the elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
+Discrete-time Markov process (also referred to as Markov chain) \cite{TODO} is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ 0, 1, 2, \dots \}$, that in every time-step occupies some state of the potentially infinite state set. However, later in the text, we will consider restricted definition for the finite state sets $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$.  The process being in time $t_i$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. The probability that the process changed from the state $s_i$ to the state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form the square matrix of size $n$ - transition probabilities matrix $\matr{A}$ . Note that the elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
 
-The Markov process is memory-less, not holding the information about the past states. So the probability of transition depends only on the current state and is defined in the matrix $\matr{A}$. This characteristic is called the Markov property and can be expressed as in equation \eqref{eq:mp}.
+The Markov process is memory-less, not holding the information about the past states. So the probability of transition depends only on the current state and is defined in the matrix $\matr{A}$. This characteristic is called the Markov property and can be expressed in the following equation \eqref{eq:mp}.
 
 \begin{equation}\label{eq:mp}
 \begin{aligned}
 \mathrm{P}(X_t & = s_j \mid X_{t-1} = s_i, X_{t-2} = s_k, \dots)  \\   
-               & = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_i )
+               & = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_i ), \quad s_i,s_j,s_k \in \mathcal{S}, t \in \matr{T}
 \end{aligned}
 \end{equation}
 
@@ -125,7 +125,7 @@ If not stated differently, we will always refer to the time-homogeneous Markov p
    a_{ij} = \mathrm{P}(X_t = s_j \mid X_{t-1} = s_{j-1} ),\qquad 1 \leq i,j \leq n, \forall t
 \end{equation}
 
-For the transition probabilities apply classical stochastic constrains.
+For the transition probabilities apply standard stochastic constrains \cite{Ra89}.
 
 \begin{equation}
    a_{ij} \geq 0
