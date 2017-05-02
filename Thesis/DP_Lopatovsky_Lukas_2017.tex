@@ -913,7 +913,7 @@ The goal was to create the library, that can be used by broad range of users. Su
 
 To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip}. %TODO [link to pip]. 
 
-The continuous-time hidden Markov model parameter estimation is computationally highly demanding. The using of the plain \textit{Python} would make it cumbersome. To deal with the issue, we have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} for the implementation of \textit{exmp} algorithm. To make the computational performance even higher, we have decided to code all the most demanding parts in \textit{Cython} [http://cython.org/]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is, its easy integration into the Python module.
+The continuous-time hidden Markov model parameter estimation is computationally highly demanding. The using of the plain \textit{Python} would make it cumbersome. To deal with the issue, we have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} \cite{Sc01} for the implementation of \textit{exmp} algorithm. To make the computational performance even higher, we have decided to code all the most demanding parts in \textit{Cython} [http://cython.org/]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is, its easy integration into the Python module.
 
 The best way how to learn to use the library is follow the code examples. That's way we have decided to create \textit{IPython} notebook with library usage examples, covering all the main use-cases of the library. Reading it, the follower can get the understanding how to correctly use the library and learn, what features are supported.          
 
@@ -1111,12 +1111,12 @@ Training over the big dataset \label{fig:e2big} has decreased the percentage of 
 
 \subsection{Variable Maximal Time Interval}
 
-The other parameter present in the theoretical time-complexity of integer-interval algorithm - $\mathcal{O}(r n^5 \log(t_{\max}))$ \ref{it:ctc} is $t_{\max}$ - maximal length of the time interval. However it is not part of the float-interval algorithm complexity term - $\mathcal{O}(r n^5)$. The experiment aims to observe how the variable value of $t_{\max}$ change the computational demand of the algorithm.  
+The other parameter presented in the theoretical time-complexity of the integer-interval algorithm - $\mathcal{O}(r n^5 \log(t_{\max}))$ is $t_{\max}$ - maximal length of the time interval. On the oder side the parameter is not part of the float-interval algorithm complexity term - $\mathcal{O}(r n^5)$ \ref{it:ctc}. The experiment aims to observe how the variable value of $t_{\max}$ change the computational demand of the algorithm.  
 
 \begin{itemize}
 \item \textbf{ Description }
 
-In the experiment we have set $t_{\max}$ as the variable, taking values of all powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in $expm$ method, that eventually caused the integer overflow. We have generated the dataset of 10 sequences of 10 observations. There were always at least one time-interval of length $t_{\max}$ and all other were chosen uniformly from interval $[1,t_{\max}]$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of time measurement imprecision, we have run $10$ iterations and repeat the whole experiment $5$ times.   
+In the experiment we have set $t_{\max}$ as the variable, taking values of powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in \textit{SciPy} \textit{expm} method, that eventually causes the integer overflow. We have generated the dataset of 10 sequences by 10 observations. There was always at least one time-interval of length $t_{\max}$ and all other were chosen uniformly from interval $[1,t_{\max}]$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of the time measurement imprecision, we have run $10$ iterations and repeated the whole experiment $5$ times.   
 
 \item \textbf{ Observation }
 
@@ -1140,14 +1140,14 @@ Contrary to initial expectation both float and integer interval algorithm comput
 
 \item \textbf{ Conclusion }
 
-The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is high probability of more intervals being the same, what has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
+The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is higher probability of more same-sized time-intervals. That has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
 
-The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior at the $expm$ method, we need to look deeper in its implementation []%[https://github.com/scipy/scipy/blob/v0.16.1/scipy/sparse/linalg/matfuncs.py#L554]. 
-The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability that the more complex Pad\'{e} approximant will be chosen.     
+The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method, we need to look deeper in its implementation \cite{Sc01}. %[https://github.com/scipy/scipy/blob/v0.16.1/scipy/sparse/linalg/matfuncs.py#L554]. 
+The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability that the more complex Pad\'{e} approximant will be chosen.   %TODO odkaz na clanok co to robi?-zo scipy  
 
 \end{itemize}
 
-\begin{itemize}
+\begin{itemize} %TODO vymaz alebo pridaj posledny experiment s pade.
 \item \textbf{ Description }
 \item \textbf{ Observation }
 \item \textbf{ Conclusion }
