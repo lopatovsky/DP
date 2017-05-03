@@ -137,7 +137,7 @@ For the transition probabilities apply standard stochastic constrains \cite{Ra89
 
 \section{Discrete-Time Hidden Markov Model}
 
-The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$ \ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the specific observation symbol from the set $\mathcal{V}$ that will be emitted with certain probability. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
+The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$ \ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the specific observation symbol from the set $\mathcal{V}$ that will be emitted with certain probability. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ - $\mathrm{P}( O_t = v_j  \mid X_t = s_i)$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
   
 The following parameters are needed to describe the HMM:
 
@@ -158,7 +158,7 @@ The following parameters are needed to describe the HMM:
 \item \textbf{Observation Symbols Probability Matrix} \\
 $\matr{B} = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observation $v_k$ will occur, if the system is currently in state $i$. 
 \begin{equation}
-b_i(k) = \mathrm{P}(v_k \text{ observed at time }t \mid X_t = s_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
+b_i(k) = \mathrm{P}( O_t = v_k  \mid X_t = s_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
 \end{equation}
 \item \textbf{Initial state distribution} \\
 $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $s_i$.
@@ -171,14 +171,14 @@ For the convenience we will declare parameter $\lambda = (\matr{A},\matr{B},\pi)
 
 \section{Continuous-Time Markov Process}\label{sec:ctmp}
 
-In the discrete-time Markov process described in section \ref{sec:DMP}, the change of the current state of the process could only occur once we have moved a step further in the discrete time $t$. Comparing to this, in the continuous-time Markov process can the change of state occur at any moment in time (the occurrence holds exponential distribution ).
+In the discrete-time Markov process described in section \ref{sec:DMP}, the change of the current state of the process could only occur once we have moved a step further in the discrete time $t$. Comparing to this, in the continuous-time Markov process (CTMP) can the change of state occur at any moment in time (the occurrence holds exponential distribution ).
 
 %cit:[S.Karlin]
-A finite state continuous-time Markov process is a~stochastic process $\{ X_t \mid t > 0\}$ on the states $\mathcal{S} = \{ s_1, s_2, \dots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $1 \leq x_t \leq n$. 
+A finite state continuous-time Markov process is a~stochastic process $\{ X_t \mid t > 0\}$ on the states $\mathcal{S} = \{ s_1, s_2, \dots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $x_t \in \mathcal{S}$. 
 
 For the times $0 \leq u_0 < u_1 < \dots < u_r < u$ it satisfies the following equations: 
 \begin{description}
-\item [Markov property:] Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $< u$.  
+\item [Markov property:] Probability of transition from state $i$ to state $j$ during the time interval $t$ is stationary i.e. independent on the states of process in the times $u^{'}$, $ u^{'} < u$.  
     
 \begin{equation}
 \begin{aligned}
@@ -201,7 +201,7 @@ The property describes that the stochastic process is memoryless.
 \end{description}
  
 
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), s_i,s_j \in \mathcal{S}$ satisfies following conditions:%cit:[S.Karlin]
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), i,j = 1,\dots,n$ satisfies following conditions: \cite{Ka81}
 
 
 \begin{equation}
@@ -212,6 +212,7 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 \sum_{j = 1}^n \mathrm{p_{ij}}(t) = 1
 \end{equation}
 
+%TODO delete?
 \begin{equation}\label{eq:l0}  
 \lim_{t \to 0^+} \mathrm{p_{ij}}(t)= 
 \begin{cases}
@@ -240,8 +241,11 @@ The property \eqref{eq:l0}  asserts that $\mathrm{p_{ij}}(t)$ is continuous for 
 Moreover from \eqref{eq:ckm} follows that $\mathrm{p_{ij}}(t)$ is continuous for all $t>0$ ref[S.Karlin] and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_{ij}}(t)$ for any given time $t>0$.   
 
 \begin{equation}
-q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_{ij}}(t)}{\mathrm{dt}} \,\right|_{t=0} = \lim_{t \to 0^+} \frac{\mathrm{p_{ij}}(t)}{t}, \quad \text{if } i\neq j     
+q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_{ij}}(t)}{\mathrm{dt}} \,\right|_{t=0} 
 \end{equation}
+
+%= \lim_{t \to 0^+} \frac{\mathrm{p_{ij}}(t)}{t}, \quad \text{if } i\neq j     
+
 
 We will call this derivative $q_{ij}$ the jump rate from state~$i$ to some other state~$j$. The jump rate $q_{ii}$ can be derived from the equation of transition probabilities summing to the one.
 
@@ -257,7 +261,7 @@ dividing by time interval $t$ and letting $t$ decrease close to zero, we will ob
 
 (We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
 
-It can be shown that by construction of the CTMC from discrete time Markov chain (DTMC) and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from the $i$ to $j$ in DTMC \ref{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj]  
+It can be shown that by construction of the CTMP from discrete time Markov process (DTMP) \ref{sec:constr}  and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from the $i$ to $j$ in DTMP \ref{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj] %TODO zdroj 
 
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
@@ -269,12 +273,12 @@ We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the st
 \matr{Q}(i,j)= 
 \begin{cases}
 \qquad q_{ij}, \qquad & \text{if } i\neq j\\
-\sum\limits_{k = 1}^{ n ,k \neq i} q_{ik}, \qquad & \text{if } i=j
+- \sum\limits_{k = 1}^{ n ,k \neq i} q_{ik}, \qquad & \text{if } i=j
 \end{cases}
 \end{aligned}
 \end{equation}
 
-We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ by solving the \textit{Kolmogorov's Backward Equation} \eqref{eq:kbe}. It can be obtained from \textit{Chapman-Kolmogorov equation} \eqref{eq:ckm} by differentiation. The solution of the differential equation leads to matrix exponentiation \eqref{eq:mexp}. [zdroj na riesenie]  
+We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ by solving the \textit{Kolmogorov's Backward} equation \eqref{eq:kbe}. It can be obtained from \textit{Chapman-Kolmogorov equation} \eqref{eq:ckm} by differentiation. Similarly can be derived the \textit{Kolmogorov's Forward} equation. The solution of the differential equation with the initial condition $\matr{P_0} = \matr{I}$ leads to matrix exponentiation \eqref{eq:mexp}. %[zdroj na riesenie] %TODO
 
 \begin{equation}\label{eq:kbe}
 \matr{P_t^{'}} = \matr{Q} \matr{P_{t}}
@@ -286,11 +290,13 @@ We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ 
 
 %Such a defined matrix will hold $\pi\matr{Q} = 0$... [explain more, proof, $e^{\matr{Q}t}$]
 
-\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing } 
+\subsection{Construction from Discrete-Time Markov Process with Poisson Process Timing }\label{sec:constr} 
 
 The useful way for understanding of the continuous-time Markov process is to know its relation to the discrete process, that can be shown by the construction.
 
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing the equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in the state $s_i$ can be described by probability density function of exponential distribution with the parameter $a_i$, $\mathrm{f}(t)= a_i e^{-a_i t}$. Such a process $X_t = Y_{N(t)}$ is called continuous-time Markov process.
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing the equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in the state $s_i$, before the transition occurs, can be described by probability density function of exponential distribution with the parameter $\lambda a_i$, $\mathrm{f}(t)= \lambda a_i e^{- \lambda a_i t}$. Such a process $X_t = Y_{N(t)}$ fulfills the CTMP definition as described in section \ref{sec:ctmp}.
+
+%TODO prihod nejaku citaci
 
 Now we can derive the equation for probability of transition from the state $i$ to the state $j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
 
@@ -302,6 +308,8 @@ Now we can derive the equation for probability of transition from the state $i$ 
 				  &= \sum_{n=0}^{\infty} e^{-\lambda t} \frac{ (\lambda t)^n}{n!} a_{ij}^n  
 \end{aligned}
 \end{equation} 
+
+%TODO \matr{Q} = \lambda( \matr{A} - \matr{I} )
 
 
 
