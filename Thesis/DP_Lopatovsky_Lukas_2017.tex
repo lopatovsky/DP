@@ -135,7 +135,7 @@ For the transition probabilities apply standard stochastic constrains \cite{Ra89
    \sum_{j=1}^n a_{ij} = 1
 \end{equation}
 
-\section{Discrete-Time Hidden Markov Model}
+\section{Discrete-Time Hidden Markov Model}\label{sec:dthmm}
 
 The Discrete-time Hidden Markov Model (HMM) is the doubly embedded stochastic process consisting of underlaying Markov process $X_t$ \ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the specific observation symbol from the set $\mathcal{V}$ that will be emitted with certain probability. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ - $\mathrm{P}( O_t = v_j  \mid X_t = s_i)$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, the rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of the real life problems.  
   
@@ -167,7 +167,7 @@ $\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being
 \end{equation}
 \end{enumerate}
 
-For the convenience we will declare parameter $\lambda = (\matr{A},\matr{B},\pi)$, compactly denoting the set of all parameters of the model. 
+For the convenience we will declare parameter $\matr{\theta} = (\matr{A},\matr{B},\pi)$, compactly denoting the set of all parameters of the model. 
 
 \section{Continuous-Time Markov Process}\label{sec:ctmp}
 
@@ -390,55 +390,52 @@ Sometimes the state can change, without emitting a single observation. The large
 
 \section{Expectation-Maximization Algorithm}\label{ch:EM}
 
+Expectation-Maximization (EM) Algorithm (first introduced in \cite{De77}) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likelihood estimation, however the latent variables make finding of the MLE more difficult. Direct count can be very computationally expensive, so the EM algorithm uses the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
 
-%(1) Maximum Likelihood from Incomplete Data via the EM Algorithm , A. P. Dempster; N. M. Laird; D. B. Rubin, Journal of the Royal Statistical Society. Series B (Methodological), Vol. 39, No. 1. (1977), pp.  1-38.
+Let's have $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\matr{\theta}$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{log}\mathrm(P)(\mathbf{x},\mathbf{z};\matr{\theta})$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
 
-Expectation-Maximization (EM) Algorithm (first introduced in [1]) is the method for finding the Maximum likelihood estimates(MLE) of parameters in probabilistic models over the incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likeli-
-hood estimation, however the latent variables make finding of the MLE more difficult. Direct count can be very computationally expensive, so the EM algorithm uses the iterative approach to approximate the solution by repeating the sequence of simpler consecutive steps.
-
-Let's define vector $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\theta$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{logP}(\mathbf{x},\mathbf{z};\theta)$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
-%[st]simle tutorial: What is the expectation maximization algorithm? Chuong B Do & Serafim Batzoglou
-
-Look at [st] for more detailed, easily understandable tutorial with examples.    
+Look at \cite{Do08} for more detailed, easily understandable tutorial with examples.    
 
 \begin{enumerate}
-\item \textbf{Initialization:} We will make the initial guess of the parameters $\hat \theta_{0} $.
+\item \textbf{Initialization:} We will make the initial guess of the parameters $\matr{ \hat \theta_{0} } $.
 \end{enumerate} 
 
 We will continue by iterating through two following steps: 
 
 \begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t})$. Where $\hat \theta_{0}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t})$.
+\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}})$. Where ${\matr{\hat \theta_{0}}}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}})$.
+
+%TODO komentare - poupravit
 
 \begin{equation}\label{eq:exp}
- \mathrm{Q}(\hat\theta_{t}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t})
+ \mathrm{Q}( {\matr{\hat \theta_{t}}}) =  \mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}})
 \end{equation}
 
-\item \textbf{Maximization:} Find the value $\hat\theta_{t+1}$ that maximize $\mathrm{Q}(\hat\theta_{t})$.  
+\item \textbf{Maximization:} Find the value $ {\matr{\hat \theta_{t+1}}}$ that maximize $\mathrm{Q}( {\matr{\hat \theta_{t}}})$.  
 \end{enumerate}  
 
-As the value of $\mathrm{Q}(\hat\theta_{t})$ matches the log-likelihood function at $\hat\theta_{t}$, it follows that $ \mathrm{Q}(\hat\theta_{t}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t}) \leq \mathrm{Q}(\hat\theta_{t+1}) =  \mathrm{logP}(\mathbf{x},\mathbf{z};\hat \theta_{t+1}) $ thus the function values in consecutive iterations form the non-decreasing sequence. The computation can be stopped once the parameters converge to some values, that are not changing anymore.  
+As the value of $\mathrm{Q}({\matr{\hat \theta_{t}}})$ matches the log-likelihood function at $ {\matr{ \hat \theta_{t}}}$, it follows that $ \mathrm{Q}( {\matr{\hat \theta_{t}}}) =  \mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}}) \leq \mathrm{Q}( {\matr{\hat \theta_{t+1}}}) =  \mathrm{log}\mathrm{P}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t+1}}}) $ thus the function values in consecutive iterations form non-decreasing sequence. The computation can be stopped once the parameters converge to some values, or if their change is not more significant.  
 
 It is important to notice that this approach may lead to the local optima. To get better results the algorithm can be launched more times, starting always from different randomly initiated parameters. Possibly enhanced by the use of some more advance non-linear optimization technique.
 
 \section{Discrete-Time Hidden Markov Model}\label{sec:3p}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
-When dealing with HMM real-world application we need to deal with following problems [citace]. First we will describe tham and later in the successive subsections we will explain the algorithms that can effectively solve them. 
+When dealing with HMM real-world application we need to deal with following problems \cite{Ra89}. First we  describe them and later in the successive subsections we explain the algorithms that can effectively solve them. 
 
 \begin{enumerate}
-\item Compute the probability $\mathrm{P}(\matr{O}|\lambda) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the set of parameters $\lambda = \{A,B,\pi\}$. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
-\item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_{\nu}$), having the observation sequence $\matr{O}$ and parameters $\lambda$. \label{it:p2} 
-\item Adjust the model parameters $\lambda$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\lambda) $. \label{it:p3} 
+\item Compute the probability $\mathrm{P}(\matr{O}|\matr{\theta}) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the parameters $\matr{\theta} = (A,B,\pi)$ defined in section \ref{sec:dthmm}. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
+\item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_{\nu}$), having the observation sequence $\matr{O}$ and parameters $\matr{\theta}$. \label{it:p2} 
+\item Adjust the model parameters $\matr{\theta}$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\matr{\theta}) $. \label{it:p3} 
 \end{enumerate}
 
 
 \subsection{Forward-Backward Algorithm}\label{sec:fb}
-The \textit{forward-backward} algorithm is actually the pair of two separate algorithms (forward vs. backward). We will explain the \textit{forward} one and at the end we will describe the modifications that are needed to do the \textit{backward}. Both of them are sufficient to solve the first proposed problem \ref{it:p1} separately, however we need to define both, because of the use in the later text.  
+The \textit{forward-backward} algorithm is actually pair of two separate algorithms (forward vs. backward). We will explain the \textit{forward} one and at the end we will describe the modifications that are needed to do the \textit{backward}. Both of them are sufficient to solve the first proposed problem \ref{it:p1} separately, however we need to define both, because of the use in the later text.  
 
-Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in the time $t$ emitted by the state $s_i$, given the model parameters $\lambda$.
+Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in the time $t$ emitted by the state $s_i$, given the model parameters $\matr{\theta}$.
 
 \begin{equation}
-\alpha_t(i) = \mathrm{P}(o_1,o_2,\dots,o_t,X_t = s_i \mid \lambda )
+\alpha_t(i) = \mathrm{P}(o_1,o_2,\dots,o_t,X_t = s_i \mid \matr{\theta} )
 \end{equation}
 
 The forward variables can be gradually counted using the bottom-up strategy following equations for $t=1$ and $t=t+1$.
@@ -456,29 +453,47 @@ The forward variables can be gradually counted using the bottom-up strategy foll
 Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $\nu$.
 
 \begin{equation}
-\mathrm{P}(\matr{O}|\lambda) = \sum_{i=1}^n \alpha_{\nu}(i)
+\mathrm{P}(\matr{O}|\matr{\theta}) = \sum_{i=1}^n \alpha_{\nu}(i)
 \end{equation} 
 
 Similarly we can define backward variable $\beta_t(i)$ as
 \begin{equation}
-\beta_t(i) = \mathrm{P}(o_{t+1},o_{t+2},\dots,o_{\nu},X_t = s_i \mid \lambda ) 
+\beta_t(i) = \mathrm{P}(o_{t+1},o_{t+2},\dots,o_{\nu},X_t = s_i \mid \matr{\theta} ) 
 \end{equation}
-The DP algorithm can be derived analogically as the one for the forward procedure, with the single difference, that it will start counting from the end, so the total probability can be count by summing the backward variables in time $t=1$.
+The Dynamic programming (DP) algorithm consist from two following equations for times $t = \nu$ and $t < \nu$. 
+
+\begin{equation}
+\beta_{\nu}(i) = 1, \qquad 1 \leq i \leq n
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\beta_{t}(i) = \sum_{j=1}^n a_{ij} b_j(o_{t+1}) \beta_{t+1}(j), \qquad 1& \leq t \leq \nu - 1, \\ 
+                                                                                 1& \leq i \leq n		\end{aligned}
+\end{equation}
+
+The solution for the problem 1 can be obtain by summing probabilities for all the beginning states. We need to be careful not to forget to multiply by probability of the first observation symbol, as it is not part of the definition for backward variable in time $t=1$.
+
+\begin{equation}
+\mathrm{P}(\matr{O}|\matr{\theta}) = \sum_{i=1}^n \beta_{1}(i) b_i(o_1)
+\end{equation} 
+
+
 
 We need to count $n$ variables at each time-step, each of them takes exactly $n$ steps to evaluate. It makes overall complexity $\mathcal{O}(n^2\nu)$.    
 
 \subsection{Individually Most Likely States Sequence}\label{sec:ssp}
-There are more ways how we can look at the word "optimal" in the problem two statement \ref{it:p2}. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in the specific state in the particular time. We will also call it "single state probability".
+There are more ways how we can look at the word ``optimal'' in the problem two statement \ref{it:p2}. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in the specific state in the particular time. We will also call it ``single state probability''.
 
 \begin{equation}
-\gamma_t(i) = \mathrm{P}(X_t = s_i \mid \matr{O},\lambda ) 
+\gamma_t(i) = \mathrm{P}(X_t = s_i \mid \matr{O},\matr{\theta} ) 
 \end{equation}
 
 Here we can use already defined forward and backward variables and count the $\gamma_t(i)$ as
 \begin{equation}
 \begin{aligned}
-\gamma_t(i) &= \frac{ \mathrm{P}( X_t = s_i, \matr{O} \mid \lambda )}{ \mathrm{P}( \matr{O} \mid \lambda )} =
-               \frac{  \alpha_t(i) \beta_t(i) }{ \mathrm{P}( \matr{O} \mid \lambda )} = \\
+\gamma_t(i) &= \frac{ \mathrm{P}( X_t = s_i, \matr{O} \mid \matr{\theta} )}{ \mathrm{P}( \matr{O} \mid \matr{\theta} )} =
+               \frac{  \alpha_t(i) \beta_t(i) }{ \mathrm{P}( \matr{O} \mid \matr{\theta} )} = \\
             &= \frac{  \alpha_t(i) \beta_t(i) }{ \sum\limits_{j=1}^n \alpha_t(j) \beta_t(j) } 
 \end{aligned}
 \end{equation}
@@ -493,12 +508,12 @@ Applying this algorithm to the whole sequence would lead to the highest expected
    
 \subsection{Viterbi Algorithm} 
 
-Another way how to look on the problem two \ref{it:p2} is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X}\mid \matr{O},\lambda)$, what is equivalent to maximizing of $\mathrm{P}(\matr{X}, \matr{O}\mid\lambda)$.
+Another way how to look on the problem two \ref{it:p2} is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X} | \matr{O},\matr{\theta})$, what is equivalent to maximizing of $\mathrm{P}(\matr{X},\matr{O} \mid \matr{\theta})$.
 
 \textit{Viterbi} algorithm is the dynamic programming algorithm, that similarly to the forward-backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from its beginning till the state time $t$, with the state $x_{t}$  being $s_i$.
 
 \begin{equation}\label{eq:delta}
-\delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \lambda )
+\delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \matr{\theta} )
 \end{equation} 
 
 To get the actual state sequence, we need to store the information about the state in time $t-1$ that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
@@ -523,7 +538,7 @@ and consecutive bottom-up computation as
 \begin{equation}
 \begin{aligned}
 \psi_{t}(i) = ( \argmax_{ 1 \leq j \leq n } \delta_{t-1}(j)a_{ji} ), \qquad \qquad 2& \leq t \leq \nu, \\
-																			       1& \leq i \leq n
+																			       1& \leq i \leq n.
 \end{aligned}
 \end{equation}
 
@@ -533,24 +548,24 @@ Now we can get the searched state sequence probability
 \mathrm{P}^* = \max_{1 \leq i \leq n} ( \delta_{t}(i) )  
 \end{equation}
 
-and the actual state path $\matr{X}^* = ( x_1^*, x_2^*, \dots, x_{\nu}^*)$ by backtracking
+and the actual state path $\matr{X}^* = ( x_1^*, x_2^*, \dots, x_{\nu}^*)$ by backtracking.
 
 \begin{equation}
 x_t^* = \argmax_{1 \leq i \leq n} ( \delta_{t}(i) ),  \qquad t = \nu 
 \end{equation}
 
 \begin{equation}
-x_t^* = \psi_{t+1}(x_{t+1}^*), \qquad t = \nu-1, \nu-2, \dots, 1  
+x_t^* = \psi_{t+1}(x_{t+1}^*), \qquad t = \nu-1, \nu-2, \dots, 1.  
 \end{equation}
 
 The structure of the algorithm is very similar to the Forward-Backward algorithm, so we can easily see its complexity is also $\mathcal{O}(n^2\nu)$.
 
 \subsection{Expectation-Maximization Algorithm}\label{sec:BWA}
 
-There doesn't exist analytic solution for the problem~three \ref{it:p3}. There exist more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues called \textit{Baum-Welch} algorithm[ref]. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in state~$s_j$ in the time~$t+1$, later also referred to as "double state probability". 
+There is any known general analytic solution for the problem~three \ref{it:p3}. There exist more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues called \textit{Baum-Welch} algorithm[ref]. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in state~$s_j$ in the time~$t+1$, later also referred to as ``double state probability''. 
 
 \begin{equation}
-\xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \lambda )  
+\xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \matr{\theta} )  
 \end{equation}
 
 The probability can be compute using forward-backward variables as follows
@@ -558,7 +573,7 @@ The probability can be compute using forward-backward variables as follows
 \begin{equation}\label{eq:xi}
 \begin{aligned}
 \xi_t(i,j) &= \frac{ \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
-		   		   { \mathrm{P}( \matr{O} \mid \lambda ) } \\
+		   		   { \mathrm{P}( \matr{O} \mid \matr{\theta} ) } \\
 		   &= \frac{ \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
 		   		   { \sum\limits_{i=1}^n \sum\limits_{j=1}^n \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
 \end{aligned}
@@ -570,7 +585,7 @@ Obviously it is in relation with already defined variable~$\gamma_t(i)$ - the pr
 \gamma_t(i) = \sum_{j=1}^n \xi_t(i,j)  
 \end{equation}
 
-We can get the expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$\nu-1$. Similarly we would get expected number of times in~$s_i$, by summing $\gamma_t(i)$ from~$t=1$ till~$t=\nu$. 
+We can get the expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$\nu-1$. Similarly we would get expected number of visits of state~$s_i$, by summing $\gamma_t(i)$ from~$t=1$ till~$t=\nu$. 
 
 \begin{equation}
 \mathbf{E}(\text{transitions from $s_i$}) = \sum_{t=1}^{\nu-1} \gamma_t(i)  
@@ -582,7 +597,7 @@ If summing~$\xi_t(i,j)$ over the time, we will get expected number of transition
 \mathbf{E}(\text{transitions from $s_i$ to $s_j$}) = \sum_{t=1}^{\nu-1} \xi_t(i,j)  
 \end{equation}
 
-Now we have all what is needed to define the reestimated model~$\hat\lambda=(\hat{\matr{A}},\hat{\matr{B}},\hat\pi)$.
+Now we have all what is needed to define the reestimated model~$\hat{\matr{\theta}}=(\hat{\matr{A}},\hat{\matr{B}},\hat\pi)$.
 
 \begin{equation}\label{eq:bwpi}
 \hat\pi_i = \gamma_1(i)  
@@ -604,7 +619,7 @@ Now we have all what is needed to define the reestimated model~$\hat\lambda=(\ha
 \end{aligned}
 \end{equation}
 
-The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\lambda,\hat\lambda)$ and maximization step, the maximization over parameter~$\hat\lambda$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
+The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\matr{\theta},\hat{\matr{\theta}})$ and maximization step, the maximization over parameter~$\hat{\matr{\theta}}$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
 
 
 \section{Continuous-Time Hidden Markov Model}
@@ -1353,12 +1368,15 @@ rychlo sa straca informacia
 \chapter{Acronyms}
 % \printglossaries
 \begin{description}
-	\item[DTMP] Discrete-time Markov Process	
-	\item[CTMP] Continuous-time Markov Process
-	\item[DT-HMM] Discrete-time Hidden Markov Model
+	\item[CL] Complete Likelihood
 	\item[CT-HMM] Continuous-time Hidden Markov Model
+	\item[CTMP] Continuous-time Markov Process
+	\item[DP] Dynamic Programming
+	\item[DT-HMM] Discrete-time Hidden Markov Model	
+	\item[DTMP] Discrete-time Markov Process	
 	\item[EM] Expectation-Maximization 
-	\item[MLE] Maximum likelihood estimation
+	\item[MLE] Maximum Likelihood Estimation
+	
 \end{description}
 
 

@@ -8,6 +8,24 @@
 \providecommand{\selectlanguage}[1]{\relax}
 \providecommand{\eprint}[2][]{\biburl{#2}}
 
+\bibitem{De77}
+Dempster, A.~P.; Laird, N.~M.; Rubin, D.~B.: Maximum likelihood from incomplete
+  data via the EM algorithm. \emph{Journal of the royal statistical society.
+  Series B (methodological)}, 1977: pp. 1--38.
+
+\bibitem{Do08}
+Do, C.~B.; Batzoglou, S.: What is the expectation maximization algorithm?
+  \emph{Nature biotechnology}, volume~26, no.~8, 2008: p. 897.
+
+\bibitem{Sc01}
+Jones, E.; Oliphant, T.; Peterson, P.; etc.: {SciPy}: Open source scientific
+  tools for {Python}. 2001--, [Online; accessed 2017-05-03].
+\urlprefix\biburl{http://www.scipy.org/}
+
+\bibitem{Ka81}
+Karlin, S.; Taylor, H.~E.: \emph{A second course in stochastic processes}.
+  Elsevier, 1981.
+
 \bibitem{Li15}
 Liu, Y.-Y.; Li, S.; Li, F.; etc.: Efficient learning of continuous-time hidden
   markov models for disease progression. In \emph{Advances in neural

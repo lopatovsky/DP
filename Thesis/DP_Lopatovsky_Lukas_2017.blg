@@ -5,46 +5,47 @@ The style file: iso690.bst
 Database file #1: bibliography.bib
 Warning--I didn't find a database entry for "Ho03"
 Warning--I didn't find a database entry for "Sk01"
+Warning--I didn't find a database entry for "TODO"
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 2 entries,
+You've used 6 entries,
             3151 wiz_defined-function locations,
-            669 strings with 5700 characters,
-and the built_in function-call counts, 1334 in all, are:
-= -- 105
-> -- 35
-< -- 4
-+ -- 19
-- -- 10
-* -- 73
-:= -- 149
-add.period$ -- 4
-call.type$ -- 2
-change.case$ -- 10
+            702 strings with 6323 characters,
+and the built_in function-call counts, 3290 in all, are:
+= -- 244
+> -- 112
+< -- 8
++ -- 60
+- -- 32
+* -- 180
+:= -- 371
+add.period$ -- 12
+call.type$ -- 6
+change.case$ -- 29
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 120
-empty$ -- 118
-format.name$ -- 11
-if$ -- 293
+cite$ -- 6
+duplicate$ -- 304
+empty$ -- 291
+format.name$ -- 37
+if$ -- 717
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 25
-newline$ -- 16
-num.names$ -- 4
-pop$ -- 49
+int.to.str$ -- 6
+missing$ -- 71
+newline$ -- 29
+num.names$ -- 12
+pop$ -- 155
 preamble$ -- 1
-purify$ -- 8
+purify$ -- 26
 quote$ -- 0
-skip$ -- 66
+skip$ -- 147
 stack$ -- 0
-substring$ -- 83
-swap$ -- 73
-text.length$ -- 4
+substring$ -- 140
+swap$ -- 173
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
+type$ -- 22
 warning$ -- 0
-while$ -- 10
-width$ -- 3
-write$ -- 27
-(There were 2 warnings)
+while$ -- 23
+width$ -- 7
+write$ -- 61
+(There were 3 warnings)
