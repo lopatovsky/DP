@@ -89,7 +89,7 @@ The figure example \ref{fig:gb}.
 CT-HMM is the natural extension of discrete-time model, that ..
 
 %\section{Continuous-Time Hidden Markov Model}
-[move or delete]When we mention continuous-time hidden Markov model, we will consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.[]
+[move or delete]When we mention continuous-time hidden Markov model, we consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.[]
 
 
 \begin{figure}[h]
@@ -173,7 +173,7 @@ For the convenience we will declare parameter $\matr{\theta} = (\matr{A},\matr{B
 
 \section{Continuous-Time Markov Process}\label{sec:ctmp}
 
-In the discrete-time Markov process described in section \ref{sec:DMP}, the change of the current state of the process could only occur once we have moved a step further in the discrete time $t$. Comparing to this, in the continuous-time Markov process (CTMP) can the change of state occur at any moment in time (the occurrence holds exponential distribution ).
+In the discrete-time Markov process described in the Section \ref{sec:DMP}, the change of the current state of the process could only occur once we have moved a step further in the discrete time $t$. Comparing to this, in the continuous-time Markov process (CTMP) can the change of state occur at any moment in time (the occurrence holds exponential distribution ).
 
 %cit:[S.Karlin]
 A finite state continuous-time Markov process is a~stochastic process $\{ X_t \mid t > 0\}$ on the states $\mathcal{S} = \{ s_1, s_2, \dots, s_n \}$  (for $n>0$ and $\mathcal{S}$ being the finite state set), that in any time $t$  occurs in the corresponding state $x_t \in \mathcal{S}$. 
@@ -296,7 +296,7 @@ We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ 
 
 The useful way for understanding of the continuous-time Markov process is to know its relation to the discrete process, that can be shown by the construction.
 
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing the equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in the state $s_i$, before the transition occurs, can be described by probability density function of exponential distribution with the parameter $\lambda a_i$, $\mathrm{f}(t)= \lambda a_i e^{- \lambda a_i t}$. Such a process $X_t = Y_{N(t)}$ fulfills the CTMP definition as described in section \ref{sec:ctmp}.
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing the equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which the transition from the state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in the state $s_i$, before the transition occurs, can be described by probability density function of exponential distribution with the parameter $\lambda a_i$, $\mathrm{f}(t)= \lambda a_i e^{- \lambda a_i t}$. Such a process $X_t = Y_{N(t)}$ fulfills the CTMP definition as described in the Section \ref{sec:ctmp}.
 
 %TODO prihod nejaku citaci
 
@@ -425,7 +425,7 @@ It is important to notice that this approach may lead to the local optima. To ge
 When dealing with HMM real-world application we need to deal with following problems \cite{Ra89}. First we  describe them and later in the successive subsections we explain the algorithms that can effectively solve them. 
 
 \begin{enumerate}
-\item Compute the probability $\mathrm{P}(\matr{O}|\matr{\theta}) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the parameters $\matr{\theta} = (A,B,\pi)$ defined in section \ref{sec:dthmm}. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
+\item Compute the probability $\mathrm{P}(\matr{O}|\matr{\theta}) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the parameters $\matr{\theta} = (A,B,\pi)$ defined in the Section \ref{sec:dthmm}. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
 \item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_{\nu}$), having the observation sequence $\matr{O}$ and parameters $\matr{\theta}$. \label{it:p2} 
 \item Adjust the model parameters $\matr{\theta}$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\matr{\theta}) $. \label{it:p3} 
 \end{enumerate}
@@ -626,7 +626,7 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 \section{Continuous-Time Hidden Markov Model}
 
-We have introduced the basic problems of DT-HMM at the beginning of the section \ref{sec:3p}. They can be similarly defined for the continuous model. Just not only the observation sequence $\matr{O}$, but also the time sequence $\matr{T}$ need to be included. The solution for the two first problems as well as a considerate part of the third problem is pretty straight-forward. The discrete-time solutions, just need to be redefined with different transition probability matrix for different intervals. It is discussed in the following subsection \ref{sec:pos}. The EM algorithm for jump-rate matrix estimation is not so straight-forward anymore. We need to care about, what is happening in times between two observations, as it has impact on the results of likelihood computation. The EM algorithm and its variants are explained in all the remaining subsections.   
+We have introduced the basic problems of DT-HMM at the beginning of the Section \ref{sec:3p}. They can be similarly defined for the continuous model. Just not only the observation sequence $\matr{O}$, but also the time sequence $\matr{T}$ need to be included. The solution for the two first problems as well as a considerate part of the third problem is pretty straight-forward. The discrete-time solutions, just need to be redefined with different transition probability matrix for different intervals. It is discussed in the following Subsection \ref{sec:pos}. The EM algorithm for jump-rate matrix estimation is not so straight-forward anymore. We need to care about, what is happening in times between two observations, as it has impact on the results of likelihood computation. The EM algorithm and its variants are explained in all the remaining subsections.   
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok lepsi. ->do uvodu toto.
 
@@ -693,7 +693,7 @@ The Markov property and homogeneity of the Markov process allows to reduce the c
    
 \subsection{Continuous-Time Hidden Markov Model EM}
 
-For the EM parameters estimation in DT-HMM, we have used the well known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in subsection \ref{sec:pos}.  
+For the EM parameters estimation in DT-HMM, we have used the well known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in the Subsection \ref{sec:pos}.  
 
 The estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model, because the state transitions do not depend on the observation times and there can even be more of them between two consecutive observations. The following method proposed in the article \cite{Li15}, was the first which could efficiently solve the issue.        
 
@@ -730,7 +730,7 @@ The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \
 \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n \mathrm{P}( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
 \end{equation}
 
-In Subsection \ref{sec:pos}, we have shown, how to count $\mathrm{P}(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part, the computing of $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ is presented in following to subsections. 
+In the Subsection \ref{sec:pos}, we have shown, how to count $\mathrm{P}(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part, the computing of $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ is presented in following to subsections. 
 
 \subsection{The End-State Conditioned Expectations}\label{sec:endexp}
 
@@ -765,14 +765,14 @@ If the matrix $\matr{Q}$ is diagonalizable, the closed form can be obtained by \
 
 The another method of \textit{Uniformization} is based on truncating of infinite sum defining the exponential as described in \cite{Ho11}. The main advantage of the method is that all the matrices can be precomputed and later reused, so it doesn't need any additional matrix multiplication. \cite{Li15} The use of hard or soft method \ref{sec:pos} influence the time performance of the algorithm, with hard method being faster, because of the posterior state probability table will become sparse. The method's running time also highly depends on the data and values of $\matr{Q}$ matrix, as the sequence truncating point can differ significantly.         
 
-The method referred to as \textit{Expm} is using \textit{Matrix exponentiation} to count the proposed integrals. The method is described in article \cite{Va78}. The advantage is that just by one exponentiation of auxiliary matrix, we can get results for all pairs of $k,l$ end-states expectations. The auxiliary matrix $\matr{W}$ is in the form $\matr{W} =  \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $, where $\matr{I}_{ij}$ is the square matrix of size $\matr{Q}$ composed by zeros and the only one at position $i,j$. Indices $i,j$ refer to the states of intermediate visit as defined in previous subsections. The following equality holds $ \int_{0}^{t} {e^{\matr{Q}x}}[k,i] {e^{\matr{Q}(t-x)}}[j,l] dx  =  \int_{0}^{t} ( e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} )[k,l] dx $. In the article \cite{Va78} is shown that $\int_{0}^{t}  e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} = {e^{\matr{Q}t}}[0:n][n+1:2n]$, where $n$ is the size of the matrix $\matr{Q}$.
+The method referred to as \textit{Expm} is using \textit{Matrix exponentiation} to count the proposed integrals. The method is described in article \cite{Va78}. The advantage is that just by one exponentiation of auxiliary matrix, we can get results for all pairs of $k,l$ end-states expectations. The auxiliary matrix $\matr{W}$ is in the form $\matr{W} =  \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $, where $\matr{I}_{ij}$ is the square matrix of size $\matr{Q}$ composed by zeros and the only one at position $i,j$. Indices $i,j$ refer to the states of intermediate visit as defined in the previous subsections. The following equality holds $ \int_{0}^{t} {e^{\matr{Q}x}}[k,i] {e^{\matr{Q}(t-x)}}[j,l] dx  =  \int_{0}^{t} ( e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} )[k,l] dx $. In the article \cite{Va78} is shown that $\int_{0}^{t}  e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} = {e^{\matr{Q}t}}[0:n][n+1:2n]$, where $n$ is the size of the matrix $\matr{Q}$.
 
 We have got the matrix exponential form, for which conventional methods for matrix exponentiation can be used. For example scaling and squaring method using Pad\'{e} approximants as described in \cite{Hi08}.      
 
 
 \section{Algorithms for CT-HMM parameters estimation}\label{sec:alg}
 
-This section will roughly describe the algorithm \ref{pe} for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ also denoting as continuous-time Baum-Welch algorithm. We only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm so as the single and double state probabilities can be easily derived from DT-HMM algorithm explained in Section \ref{sec:3p}. It is also described in details in article \cite{Ra89}.
+This section roughly describe the algorithm \ref{pe} for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ also denoting as continuous-time Baum-Welch algorithm. We only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm so as the single and double state probabilities can be easily derived from DT-HMM algorithm explained in Section \ref{sec:3p}. It is also described in details in article \cite{Ra89}.
 
 The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts. The algorithm shows training at a single observation and time sequence. 
 It is for the sake of simplicity, the training by more complex dataset can be made by iterating trough all the sequences. 
@@ -869,7 +869,7 @@ The both variants of the described algorithms iterate through all the pairs of h
 
 By complexity we refer to the complexity of one iteration of EM-algorithm. All the iterations are equivalent, so to get full runtime complexity you can multiply it by the iteration number.
 
-The number of hidden states will be denoted as $n$, the overall length of the training sequences as $\nu$. 
+The number of hidden states is denoted as $n$, the overall length of the training sequences as $\nu$. 
 
 \begin{itemize}\label{it:dtc}
 \item \textbf{ Discrete-Time Baum-Welch Algorithm } \\
@@ -911,7 +911,7 @@ Count end-state conditioned expectations \ref{sec:endexp}:
     In this step we compute all the integrals\eqref{eq:int} for unit time interval. It needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $\matr{W}$for every $i$ and $j$ \ref{sec:solve}.   
 \item Count matrices for every time interval - complexity $\mathcal{O}(r n^5\log(t_{\max}))$, where $t_{\max}$ is the longest time interval among two consecutive observations.
 
-For every time interval, we will go trough $n^2$ matrices, that we have already precomputed and we will count its value for actual interval by using square and multiply approach. 
+For every time interval, we go trough $n^2$ matrices, that we have already precomputed and we count its value for actual interval by using square and multiply approach. 
 
 %[not asymptotically usefull] We can still make better by precomputed intermediate powers of matrices till $t_{\max}$. This will take  out some computation from main cycle and we can obtain the complexity $\mathcal{O}( max( r*n^3*log(t_{\max}), r*n^5*log(t_{\max}) ) )$.
 
@@ -926,14 +926,14 @@ We needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $\matr{W}t$ for
  
 \end{itemize}   
 
-The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2\nu )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5\log(t_{\max}) + n^2\nu )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in the time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{\max}$. It is bounded to counting of Pad\'{e} approximants. The matrices containing bigger numbers in average need to use the approximant of higher order, which is more complex to compute in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
+The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2\nu )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5\log(t_{\max}) + n^2\nu )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm runs faster. As showed in the time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{\max}$. It is bounded to counting of Pad\'{e} approximants. The matrices containing bigger numbers in average need to use the approximant of higher order, which is more complex to compute in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
 
-Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction will also manifest itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity will shrink to $\mathcal{O}( r n^3 m + n^2\nu )$ or $\mathcal{O}( r n^3 m \log(t_{\max}) + n^2\nu )$ respectively. Notice that the possible value for $m$, which is making sense, can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
+Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction also manifests itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity shrinks to $\mathcal{O}( r n^3 m + n^2\nu )$ or $\mathcal{O}( r n^3 m \log(t_{\max}) + n^2\nu )$ respectively. Notice that the possible value for $m$, which makes sense, can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
 
 \end{itemize}
 
 \subsection{Memory Complexity}
-In the discrete-time algorithm is the biggest array, the one for storing double state probabilities, so the memory complexity is equal to its size - $\mathcal{O}(n^2\nu)$. 
+In the discrete-time algorithm the biggest array is the one for storing double state probabilities, so the memory complexity is equal to its size - $\mathcal{O}(n^2\nu)$. 
 
 In the continuous time model there are more arrays of size $n^2\nu$ and the array of size $n^4$ to store precomputed matrix exponentials. So the final memory complexity is $\mathcal{O}( n^2\nu + n^4 )$.
 
@@ -944,7 +944,7 @@ The code, tutorial and documentation to the library can be found in supplementar
 
 \section{About Library}
 
-The goal was to create a library, that can be used by broad range of users. Such a library should be written in the well known programming language. It should be easy to install and also it should have the introductory tutorial, that will help to get orientation in the most of the library functionality. 
+The goal was to create a library, that can be used by broad range of users. Such a library should be written in the well known programming language. It should be easy to install and also it should have the introductory tutorial, that would help to get orientation in the most of the library functionality. 
 
 To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip}. %TODO [link to pip]. 
 
@@ -959,7 +959,7 @@ The probability values obtained in the hidden Markov models can often get extrem
 
 The use of infinite data-type would be possible. However, it would make the algorithm unacceptably computationally and memory expensive, as the bit-length of the numbers can grow linearly with the number of probabilities to multiply.
 
-More appropriate is to use log-probabilities \eqref{eq:logprob}. This will make the numbers grows linearly, thus their bite-length logarithmically. Under this conditions is the underflow for common data types and the feasible size of the data-set almost impossible.
+More appropriate is to use log-probabilities \eqref{eq:logprob}. This makes the numbers grows linearly, thus their bite-length logarithmically. Under this conditions is the underflow for common data types and the feasible size of the data-set almost impossible.
 
 \begin{equation}\label{eq:logprob}
 \mathrm{log}(\mathrm{p}_1\mathrm{p}_2) = \mathrm{log}(\mathrm{p}_1) + \mathrm{log}(\mathrm{p}_2)
@@ -969,7 +969,7 @@ More appropriate is to use log-probabilities \eqref{eq:logprob}. This will make 
 
 The log-probabilities work great for multiplication and division, but the problem appears, once we need to sum the probabilities. The so called "log-sum-exp" trick can be used to deal with the issue. 
 
-Let's have probabilities $ \mathrm{p}_1, \mathrm{p}_2, \dots ,\mathrm{p}_n $. Now we want to make the sum of them. It is fairly simple, when they are usual float numbers: $\sum_{i=1}^n \mathrm{p}_i$. But it can get trickier, if they are stored in the form of log-probability. We will denote log-probability $\mathrm{log}( \mathrm{p}_i )$ as $a_i$. Than we can write the sum in the following form. Notice that the output is also log-probability.
+Let's have probabilities $ \mathrm{p}_1, \mathrm{p}_2, \dots ,\mathrm{p}_n $. Now we want to make the sum of them. It is fairly simple, when they are usual float numbers: $\sum_{i=1}^n \mathrm{p}_i$. But it can get trickier, if they are stored in the form of log-probability. We denote log-probability $\mathrm{log}( \mathrm{p}_i )$ as $a_i$. Than we can write the sum in the following form. Notice that the output is also log-probability.
 
 \begin{equation}\label{eq:logsum}
 \mathrm{log} \big( \sum_{i=1}^n e^{a_i} \big)
@@ -985,7 +985,7 @@ Let's $b = \max_{i} a_i$. Than we can write the previous equation \eqref{eq:logs
 \end{aligned}
 \end{equation}
 
-This approach will only dismiss the elements, that are relatively for data-type maximal-range smaller than the biggest element $b$. Also the sum of more such diminished elements will, under normal circumstances, never have an impact on the precision of computation - comparing the data-type imprecision.     
+This approach only dismiss the elements, that are relatively for data-type maximal-range smaller than the biggest element $b$. Also the sum of more such diminished elements, under normal circumstances, never have an impact on the precision of computation - comparing the data-type imprecision.     
 
 %TODO \section{End of Convergence}
 %..stop at the end of convergence
@@ -993,7 +993,7 @@ This approach will only dismiss the elements, that are relatively for data-type 
 
 \section{The Sparse Jump-Rate Matrix}
 
-The time-complexity of the CT-HMM EM algorithm can shrink, when using the sparse matrix, as described in section \ref{it:ctc}. The implementation take advantage of it, but not in the term of the theoretical complexity, since it is still cycling trough all the matrix elements. The algorithm just stop to perform the body of the cycle. Such solution may seems to be less effective in the terms of theoretical time-complexity. The number of states under the real conditions will not be bigger than hundreds, so just cycling through all the matrix elements is utterly negligible, comparing the matrix exponentiations taking part in the body of the cycle.  
+The time-complexity of the CT-HMM EM algorithm can shrink, when using the sparse matrix, as described in the Section \ref{it:ctc}. The implementation take advantage of it, but not in the term of the theoretical complexity, since it is still cycling trough all the matrix elements. The algorithm just stop to perform the body of the cycle. Such solution may seems to be less effective in the terms of theoretical time-complexity. The number of states under the real conditions is not bigger than hundreds, so just cycling through all the matrix elements is utterly negligible, comparing the matrix exponentiations taking part in the body of the cycle.  
 
 
 %TODO Tahle kapitola je poměrně krátká... Chtělo by to popsat základní funkcionality, které jste implementoval. Tj. jaké funkce a co počítají. Aby měl čtenář představu...
@@ -1021,7 +1021,7 @@ Examination of the models behavior, when trained with different numbers of hidde
 
 \section{Models Convergence Comparison}
 
-In the theoretical part, we are describing two models, discrete-time and continuous-time hidden Markov model. The model convergence test will compare, how fast they can learn from generated dataset (converge to the local optima) and we will check, if there is some significant difference among the converged optima values. 
+In the theoretical part, we are describing two models, discrete-time and continuous-time hidden Markov model. The model convergence test compares, how fast they can learn from generated dataset (converge to the local optima) and we have checked, if there is some significant difference among the converged optima values. 
 
 As the continuous-time model takes, except the observations, also the time vectors, its domain range is obviously much broader. Still, it is possible to train it at the dataset for discrete-time model, simply by adding artificial equidistant time vectors.
 
@@ -1084,11 +1084,11 @@ We can also see that the models mostly over-performed the original model. For ex
 \subsection{ Conclusions }
 
 The slower convergence of continuous-time model is bounded with the different character of the model. Since in the discrete-time model we always know, the precise time, when the state-change can happen (always at observation point), in continuous-time model it can happen in any time in between as well. Thus, the computing of the new estimated parameters in maximization step needs to deal with more unknown. 
-In continuous-time model is uncertainty not only caused by indirect observation of hidden states, but also by possible state changes in between of the observations. As we have any observations from that area, the probability estimation will be counted by parameters from the last iteration, what is creating the momentum in favor of old parameters and slow down the convergence process. The longer is the time interval, the stronger is the momentum.
+In continuous-time model is uncertainty not only caused by indirect observation of hidden states, but also by possible state changes in between of the observations. As we have any observations from that area, the probability estimation is counted by parameters from the last iteration, what is creating the momentum in favor of old parameters and slow down the convergence process. The longer is the time interval, the stronger is the momentum.
 
 In the second experiment we have showed, how the characteristic of the searched model influenced the training complexity. The randomly generated models usually generate datasets with higher entropy. Such datasets are closer to converge from most regions of the parameter space. 
 
-The over-performing of the original model is caused by the over-fitting. the small size of dataset was not sufficient to cover characteristic of the model completely, instead the trained models were learned to fit its imprecision. It is not a problem for our experiment as the original models were chosen more-less randomly and it fill in its purpose. The over-performing would probably gradually disappear with growing size of the data-set. It will be shown in experiment \ref{sec:plast}.
+The over-performing of the original model is caused by the over-fitting. the small size of dataset was not sufficient to cover characteristic of the model completely, instead the trained models were learned to fit its imprecision. It is not a problem for our experiment as the original models were chosen more-less randomly and it fill in its purpose. The over-performing would probably gradually disappear with growing size of the data-set. It is shown in experiment \ref{sec:plast}.
 
 %TODO All of the training conducted during this experiment, more or less converged to something, what seems to be global optima. We have used the simple 3-states models, the behavior of more complex models will be examined later in [odkaz].    
  	
@@ -1097,7 +1097,7 @@ The over-performing of the original model is caused by the over-fitting. the sma
 \section{Computational Complexity}\label{sec:cc}
 
 In this section we are comparing time-performance of the float and integer-interval variants of CT-HMM  as described in implementation part \ref{sec:alg}.
-In two following subsection we experimented either with  variable hidden states number or maximal time interval and examined, if the measured values correspond to their theoretical expectations described in section \ref{sec:complex}.
+In two following subsection we experimented either with  variable hidden states number or maximal time interval and examined, if the measured values correspond to their theoretical expectations described in the Section \ref{sec:complex}.
 
 \subsection{Variable Hidden-states Number}
 
@@ -1140,7 +1140,7 @@ The increase of the dataset size caused the larger gap among the whole algorithm
 
 \item \textbf{ Conclusion }
 
-We have only changed the number of states and let the dataset to be the same, so the $t_{\max}$ parameter from the integer-interval complexity $\mathcal{O}(r n^5 \log(t_{\max}))$ is fixed as constant. This makes both both algorithm variants to have same complexity $\mathcal{O}(r*n^5)$. The measurements have shown, the big multiplicative constant of \textit{expm} method. That's way it is almost always better, if possible to use the integer-interval algorithm. (Its numerical stability is tested later in section \ref{sec:ns}) 
+We have only changed the number of states and let the dataset to be the same, so the $t_{\max}$ parameter from the integer-interval complexity $\mathcal{O}(r n^5 \log(t_{\max}))$ is fixed as constant. This makes both both algorithm variants to have same complexity $\mathcal{O}(r*n^5)$. The measurements have shown, the big multiplicative constant of \textit{expm} method. That's way it is almost always better, if possible to use the integer-interval algorithm. (Its numerical stability is tested later in the Section \ref{sec:ns}) 
 
 The most of the computational power is used to count matrix exponentials $expm$. In most cases it is the predominant cause of algorithm "slowness". It makes not much sense to edge-optimize other parts of the algorithm. Instead, the faster implementation of \textit{expm}, its parallelization or replacement with other method could spare the significant portion of time.      
 
@@ -1182,7 +1182,7 @@ Contrary to initial expectation both float and integer interval algorithm comput
 The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is higher probability of more same-sized time-intervals. That has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
 
 The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method, we need to look deeper in its implementation \cite{Sc01}. %[https://github.com/scipy/scipy/blob/v0.16.1/scipy/sparse/linalg/matfuncs.py#L554]. 
-The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability that the more complex Pad\'{e} approximant will be chosen.   %TODO odkaz na clanok co to robi?-zo scipy  
+The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability of the more complex Pad\'{e} approximant being chosen.   %TODO odkaz na clanok co to robi?-zo scipy  
 
 \end{itemize}
 
@@ -1283,7 +1283,7 @@ The experiment haven't shown any error propagation by growing the iterations num
 
 \section{Hidden States Number}\label{sec:hsn}
 
-The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model. It can be beneficial as the model can better fit the domain space, however sometimes it may not be useful at all and cause the over-training. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we will observe, how variable number of states behave, when matching the dataset generating by single model, and in the later we will try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
+The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model. It can be beneficial as the model can better fit the domain space, however sometimes it may not be useful at all and cause the over-training. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we observe, how variable number of states behave, when matching the dataset generating by single model, and in the later we try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
 
 \subsection{Plasticity of the Models}\label{sec:plast}
 
