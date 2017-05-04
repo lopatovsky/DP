@@ -624,21 +624,24 @@ The formulas can be interpreted as the steps of EM-algorithm, with the expectati
 
 \section{Continuous-Time Hidden Markov Model}
 
-We have introduced the basic problems of DT-HMM at the beginning of the section \ref{sec:3p}. They can be similarly defined for the continuous model. Applying the single change that we do not have just the observation sequence $\matr{O}$, but also the time sequence $\matr{T}$, that we need to care about. The solution for the two first problems as well as a considerate part of the third problem is pretty straight-forward. The discrete-time solutions, just need to be redefined with different transition probability matrix for different interval. It will be discussed in the following subsection \ref{sec:pos}. The EM algorithm for jump-rate matrix estimation is not so straight-forward anymore. We need to care about, what is happening in times between two observations, as it has impact on the results of likelihood counting. The EM algorithm and its variants, will be explained in all the remaining subsections.   
+We have introduced the basic problems of DT-HMM at the beginning of the section \ref{sec:3p}. They can be similarly defined for the continuous model. Just not only the observation sequence $\matr{O}$, but also the time sequence $\matr{T}$ need to be included. The solution for the two first problems as well as a considerate part of the third problem is pretty straight-forward. The discrete-time solutions, just need to be redefined with different transition probability matrix for different intervals. It is discussed in the following subsection \ref{sec:pos}. The EM algorithm for jump-rate matrix estimation is not so straight-forward anymore. We need to care about, what is happening in times between two observations, as it has impact on the results of likelihood computation. The EM algorithm and its variants are explained in all the remaining subsections.   
 
 %continuous time Baum-Welch -> citace veci, ktore to robili - DP, spaniely, starsi clanok. + preco je novsi clanok lepsi. ->do uvodu toto.
 
 \subsection{The Posterior State Probabilities}\label{sec:pos}
 
 To count the single and double states probability of the CT-HMM with specified parameters, we do not need to know about the state transition that have occurred in between of the two observations.
-If we take just the observation points into the account, we can look on the model as it was the time in-homogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $\mathrm{p_{i,j}}( \tau ) = e^{ \matr{Q} \tau}$, that can play the role of the transition probabilities matrix $\matr{A}$ in the discrete time in-homogeneous model. For example the probability of the model, with the known states in the observation times can be computed as following
+If we take just the observation points into the account, we can look on the model as it was the time inhomogeneous DT-HMM. It is the model, in which the state transition probabilities can change in every time-step. We have previously defined the transition probability from state $i$ to the state $j$ in time interval $\tau$ as $\mathrm{p_{i,j}}( \tau ) = e^{ \matr{Q} \tau}[i,j]$, that can play the role of the transition probabilities matrix $\matr{A}$ in the discrete time in-homogeneous model. For example, the probability of the model with the known states in the observation times can be computed as following
 
 \begin{equation}
-\prod_{u=1}^{\nu-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\nu} b_{ x_u }(o_u)
+\begin{aligned}
+&TODO\mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu, O_{t_0} = o_0, \dots ,O_{t_\nu} = o_\nu \mid \matr{Q} ) \\
+&\prod_{u=1}^{\nu-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\nu} b_{ x_u }(o_u),
+\end{aligned}
 \end{equation}
 
-The $\tau_u$ is the time interval $t_{u+1} - t_u$. It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transitions $a_{ij}$ to the time variable~$\mathrm{p_{i,j}}( \tau_u )$.   
-Now, we can use the forward and backward variables to count posterior state distribution for the single state  $\gamma_t(i) = \mathrm{P}( x_u = i \mid \matr{O},\matr{T}, \matr{ Q_t } )$ and the two consecutive states $\xi_t(i,j) = \mathrm{P}( x_u = s_i, x_{u+1} = s_j \mid \matr{O},\matr{T}, \matr{ Q_t } )$, in the same way,  as we have done in the discrete model.
+where $\tau_u = t_{u+1} - t_{u}$ is the $u$-th time interval. It should be obvious now, that for the continuous variant of Viterbi and Forward-backward algorithm, we only need to change the state transitions $a_{ij}$ to the time variable~$\mathrm{p_{i,j}}( \tau_u )$.   
+Now, we can use the forward and backward variables to count posterior state distribution for the single state  $\gamma_t(i) = \mathrm{P}( X_{t_u} = s_i \mid \matr{O},\matr{T}, \matr{ Q_t } )$ and the two consecutive states $\xi_t(i,j) = \mathrm{P}( X_{t_u} = s_i, X_{t_{u+1}} = s_j \mid \matr{O},\matr{T}, \matr{ Q_t } )$, in the same way,  as we have done in the discrete model.
 
 \subsection{Soft vs. Hard Method}\label{sec:shm}
 
