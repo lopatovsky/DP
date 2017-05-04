@@ -5,7 +5,7 @@ from matplotlib.patches import Rectangle
 def plot_tables():
 
 
-    d5 = np.loadtxt("d5", delimiter=',')
+    d5 = np.loadtxt("d10", delimiter=',')
 
     fig = plt.figure()
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\biburl}[1]{\url{#1}}
 \providecommand{\urlprefix}{Available from: }
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -22,6 +22,19 @@ Dempster, A.~P.; Laird, N.~M.; Rubin, D.~B.: Maximum likelihood from incomplete
 Do, C.~B.; Batzoglou, S.: What is the expectation maximization algorithm?
   \emph{Nature biotechnology}, volume~26, no.~8, 2008: p. 897.
 
+\bibitem{Hi08}
+Higham, N.~J.: \emph{Functions of matrices: theory and computation}. SIAM,
+  2008.
+
+\bibitem{Ho11}
+Hobolth, A.; Jensen, J.~L.: Summary statistics for endpoint-conditioned
+  continuous-time Markov chains. \emph{Journal of applied probability},
+  volume~48, no.~04, 2011: pp. 911--924.
+
+\bibitem{Ho05}
+Hobolth, A.; Jensen, J.~L.; etc.: \emph{Statistical inference in evolutionary
+  models of DNA sequences via the EM algorithm}. University of Aarhus, 2005.
+
 \bibitem{Sc01}
 Jones, E.; Oliphant, T.; Peterson, P.; etc.: {SciPy}: Open source scientific
   tools for {Python}. 2001--, [Online; accessed 2017-05-03].
@@ -36,9 +49,18 @@ Liu, Y.-Y.; Li, S.; Li, F.; etc.: Efficient learning of continuous-time hidden
   markov models for disease progression. In \emph{Advances in neural
   information processing systems}, 2015, pp. 3600--3608.
 
+\bibitem{Me07}
+Metzner, P.; Horenko, I.; Sch{\"u}tte, C.: Generator estimation of Markov jump
+  processes based on incomplete observations nonequidistant in time.
+  \emph{Physical Review E}, volume~76, no.~6, 2007: p. 066702.
+
 \bibitem{Ra89}
 Rabiner, L.~R.: A tutorial on hidden Markov models and selected applications in
   speech recognition. \emph{Proceedings of the IEEE}, volume~77, no.~2, 1989:
   pp. 257--286.
+
+\bibitem{Va78}
+Van~Loan, C.: Computing integrals involving the matrix exponential. \emph{IEEE
+  transactions on automatic control}, volume~23, no.~3, 1978: pp. 395--404.
 
 \end{thebibliography}

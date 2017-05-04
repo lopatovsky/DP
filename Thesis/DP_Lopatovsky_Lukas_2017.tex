@@ -47,6 +47,8 @@
 \makeatother
 %\newcommand{\max}{\mathop{\mathrm{max}}}
 
+\raggedbottom
+
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % EDIT THIS
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
@@ -650,7 +652,7 @@ The described way for computing the posterior state distribution of hidden state
 
 \subsection{Continuous-Time Markov Process EM} 
 
-There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in [ref:PhysRevE.76][8yy].  
+There is no available analytic maximizer of likelihood function \eqref{eq:CTL}, however it can be estimated iteratively by the EM algorithm proposed in article \cite{Me07}.  
 For the expectation step we will use logarithm of expected complete likelihood function \eqref{eq:CL2} with the estimated parameter of $\matr{Q}$ in step $t$ noted as $\matr{ \hat Q_t } $.
 
 \begin{equation}\label{eq:EMCL}
@@ -687,27 +689,27 @@ The remaining non-trivial task is to evaluate $\mathbf{E}( \eta_{ij} \mid \matr{
 \end{aligned}
 \end{equation}
    
-The Markov property and homogeneity of the Markov process allows to reduce the computation of expected values to all foursomes $i,j,k,l \in S$ for all distinct time-intervals. The ways how to do it will be shown later in the text \ref{sec:endexp}.     
+The Markov property and homogeneity of the Markov process allows to reduce the computation of expected values to all $i,j,k,l \in S$ for all distinct time-intervals. The ways how to do it are shown in \ref{sec:endexp}.     
    
 \subsection{Continuous-Time Hidden Markov Model EM}
 
-For the EM parameters estimation in DT-HMM, we have used the long known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in subsection \ref{sec:pos}.  
+For the EM parameters estimation in DT-HMM, we have used the well known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in subsection \ref{sec:pos}.  
 
-The estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model in this way, because the state transitions are not dependent on the observation times and there can even be more of them between two consecutive observations. The following method proposed in the article [ref:YuYingLiu], was the first which could efficiently solve the issue.        
+The estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model, because the state transitions do not depend on the observation times and there can even be more of them between two consecutive observations. The following method proposed in the article \cite{Li15}, was the first which could efficiently solve the issue.        
 
 The expectation step will be the log-likelihood of the model. Simply just the logarithm of the full observation probability function \eqref{eq:HMCL1}.
 
 \begin{equation}\label{eq:EMCTHMM}
 \begin{aligned}  
  \ln(\mathcal{L}_{FO}) &= \sum_{i=1}^{n} \sum_{j=1}^{n, i \neq j} \big( \ln( \hat q_{ij}) \mathbf{E}( \eta_{ij} \mid \matr{O},\matr{T}, \matr{ \hat Q_t } ) - \hat q_i \mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } ) \big) + \\
-    &+ \sum_{u=0}^{\nu} \mathbf{E}( \ln( b_{ x_u }(o_u) ) \mid, \matr{O},\matr{T},\matr{\hat Q_t} )
+    &+ \sum_{u=0}^{\nu} \mathbf{E}( \ln( b_{ x_u }(o_u) ) \mid \matr{O},\matr{T},\matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
 
-The last part of the equation ,specific for the hidden Markov model, doesn't contain $q$, so the maximization will be the same as in equation for Markov process \eqref{eq:Qmax}. Lack of the direct states observations, makes the computation of the expected values $\eta_{ij}$ and $\tau_i$ more challenging. We need to obtain it just from the knowledge about the emission sequence. First we will derive the formula for the expectation $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which can be expressed as the sum through all the possible state sequences.
+The last part of the equation, specific for the hidden Markov model, doesn't contain $q$, so the result of maximization will be the same as in equation \eqref{eq:Qmax} for Markov process. Lack of the direct states observations makes the computation of the expected values $\eta_{ij}$ and $\tau_i$ more challenging. We need to obtain it just from the knowledge about the emission sequence. First we will derive the formula for the expectation $\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t )$, which can be expressed as the sum through all the possible state sequences.
 
 \begin{equation} 
-\sum_{x_0,\dots,x_\nu} \mathrm{P}(x_0,\dots,x_\nu \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_0,\dots,x_\nu , \matr{\hat Q_t} )
+\mathbf{E}(\eta_{ij} \mid O,T, \hat Q_t ) = \sum_{x_0,\dots,x_\nu} \mathrm{P}(x_0,\dots,x_\nu \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_0,\dots,x_\nu , \matr{\hat Q_t} )
 \end{equation}
 
 The expected value formula can be rewritten as the sum for the partial intervals.  
@@ -722,21 +724,21 @@ Because the Markov condition hold, we can interval-wise divide the complex proba
 \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n \mathrm{P}( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{ \hat Q_t } )
 \end{equation}
 
-The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$ can be derived equivalently to get \eqref{eq:tau}.
+The expected value of sojourn time $\mathbf{E}( \tau_i \mid \matr{O},\matr{T}, \matr{ \hat Q_t } )$ can be derived equivalently to get
 
 \begin{equation}\label{eq:tau}
 \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^n \mathrm{P}( x_u = k, x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t }) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )
 \end{equation}
 
-In the subsection \ref{sec:pos}, we have shown, how to count $\mathrm{P}(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part, the computing of $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ will be presented in following to subsections. 
+In Subsection \ref{sec:pos}, we have shown, how to count $\mathrm{P}(x_u = k,x_{u+1} = l \mid \matr{O},\matr{T}, \matr{ \hat Q_t })$. The remaining part, the computing of $\mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l,\matr{\hat Q_t} )$ and $\mathbf{E}(\tau_i \mid x_u = k, x_{u+1}) = l, \matr{ \hat Q_t } )$ is presented in following to subsections. 
 
 \subsection{The End-State Conditioned Expectations}\label{sec:endexp}
 
 We have previously described, how to use end-state conditioned expectations $\eta_{ij}$ and $\tau_i$ to compute estimation of the jump-rate matrix $\matr{Q}$ by maximizing of its resulting probability \eqref{eq:Qmax}. In this section we will discuss them more deeply and show the possible ways how to compute their values.
 
-The Markov process, we are describing is time-homogeneous. So the time offset at the beginning of the interval is not important and we can anchor it toward zero. The two following expectations are equivalent: $\mathbf{E}(\eta_{ij} \mid x_{t_1} = k, x_{t_2} = l, \matr{ Q } ) = \mathbf{E}(\eta_{ij} \mid x_0 = k, x_{t_\Delta} = l, \matr{ Q } )$, where ${t_\Delta} = {t_2} - {t_1}$. It can help us to save some computations, as we can store the values and reuse them, if needed.
+The Markov process, we are describing is time-homogeneous. So the time offset at the beginning of the interval is not important and we can anchor it toward zero. The two following expectations are equivalent: $\mathbf{E}(\eta_{ij} \mid x_{t_1} = k, x_{t_2} = l, \matr{ Q } ) = \mathbf{E}(\eta_{ij} \mid x_0 = k, x_{t_\Delta} = l, \matr{ Q } )$, where ${t_\Delta} = {t_2} - {t_1}$. It can help us to save some computations as we can store the values and reuse them if needed.
 
-The expectations can be expressed as following integrals [cit: 14 Hobolth].   
+The expectations can be expressed in the following way ( see \cite{Ho05} ).   
 
 \begin{equation}\label{eq:exp1}
 \mathbf{E}(\eta_{ij} \mid x_0 = k, x_t = l, \matr{ Q } ) = \frac{ q_{ij} }{ \mathrm{p_{kl}}(t) } 
@@ -757,26 +759,31 @@ We already know the solution of differential equation for counting the jump prob
 
 \subsection{Methods to Solve End-State CE }\label{sec:solve}
 
-There exist more ways how to solve the proposed integral \eqref{eq:int}. 
+There are several methods how to solve the proposed integral \eqref{eq:int}. 
 
-If the matrix is diagonalizable, the closed form can be obtained by \textit{Eigen-decomposition} based algorithm as describe in [yu-ying 8]. However as claimed in [yu-ying], the matrices are not diagonalizable in general. That makes the method often inappropriate for use in Baum-Welch algorithm, because the jump-rate matrices can take general form during the computation process.
+If the matrix $\matr{Q}$ is diagonalizable, the closed form can be obtained by \textit{Eigen-decomposition} based algorithm as describe in \cite{Me07}. However as claimed in \cite{Li15}, the matrices are not diagonalizable in general. That makes the method often inappropriate for use in Baum-Welch algorithm, because the jump-rate matrices can take general form during the computation process.
 
-The another method of \textit{Uniformization} is based on truncating of infinite sum as described in [yu-ying 9]. The main advantage of the method is that all the matrices can be precomputed and later reused, so it doesn't need any additional matrix multiplication. \ref[yu-ying] The use of hard or soft method \ref{sec:pos} influence the time performance of the algorithm, with hard method being faster, because of the posterior state probability table will become sparse. The method's running time also highly depends on the data and values of $\matr{Q}$ matrix, as the sequence truncating point can differ significantly.         
+The another method of \textit{Uniformization} is based on truncating of infinite sum defining the exponential as described in \cite{Ho11}. The main advantage of the method is that all the matrices can be precomputed and later reused, so it doesn't need any additional matrix multiplication. \cite{Li15} The use of hard or soft method \ref{sec:pos} influence the time performance of the algorithm, with hard method being faster, because of the posterior state probability table will become sparse. The method's running time also highly depends on the data and values of $\matr{Q}$ matrix, as the sequence truncating point can differ significantly.         
 
-The method referred to as \textit{Expm} is using \textit{Matrix exponentiation} to count the proposed integrals. The method is described in article [https://www.cs.cornell.edu/cv/ResearchPDF/computing.integrals.involving.Matrix.Exp.pdf]. The advantage is that just by one exponentiation of auxiliary matrix, we can get results for all pairs of $k,l$ end-states expectations. The auxiliary matrix $\matr{W}$ is in the form $\matr{W} =  \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $, where $\matr{I}$ is the square matrix of size $\matr{Q}$ composed by zeros and the only one at position $i,j$. $i,j$ refer to the states of intermediate visit, as defined in previous subsections. You can see that following equality holds $ \int_{0}^{t} {e^{\matr{Q}x}}[k,i] {e^{\matr{Q}(t-x)}}[j,l] dx  =  \int_{0}^{t} ( e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} )[k,l] dx $. In the article [cornell] is shown that $\int_{0}^{t}  e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} = {e^{\matr{Q}t}}[0:n][n+1:2n]$, where $n$ is the size of the matrix $\matr{Q}$.
+The method referred to as \textit{Expm} is using \textit{Matrix exponentiation} to count the proposed integrals. The method is described in article \cite{Va78}. The advantage is that just by one exponentiation of auxiliary matrix, we can get results for all pairs of $k,l$ end-states expectations. The auxiliary matrix $\matr{W}$ is in the form $\matr{W} =  \begin{pmatrix} \matr{Q} & \matr{I}_{ij} \\ 0 & \matr{Q} \end{pmatrix} $, where $\matr{I}_{ij}$ is the square matrix of size $\matr{Q}$ composed by zeros and the only one at position $i,j$. Indices $i,j$ refer to the states of intermediate visit as defined in previous subsections. The following equality holds $ \int_{0}^{t} {e^{\matr{Q}x}}[k,i] {e^{\matr{Q}(t-x)}}[j,l] dx  =  \int_{0}^{t} ( e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} )[k,l] dx $. In the article \cite{Va78} is shown that $\int_{0}^{t}  e^{\matr{Q}x} \matr{I} e^{\matr{Q}(t-x)} = {e^{\matr{Q}t}}[0:n][n+1:2n]$, where $n$ is the size of the matrix $\matr{Q}$.
 
-We have got the matrix exponential form, for which conventional methods for matrix exponentiation can be used. For example scaling and squaring method, using Pad\'{e} approximants [yu-ying16 djvu].      
+We have got the matrix exponential form, for which conventional methods for matrix exponentiation can be used. For example scaling and squaring method using Pad\'{e} approximants as described in \cite{Hi08}.      
 
 
 \section{Algorithms for CT-HMM parameters estimation}\label{sec:alg}
 
-This section will roughly describe the algorithm for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ \ref{pe} also denoting as continuous-time Baum-Welch algorithm. We will only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm, so as the single and double state probabilities can be easily derived from DT-HMM algorithm \ref{sec:3p}. It is also detail described in article [hmm-base].
+This section will roughly describe the algorithm \ref{pe} for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ also denoting as continuous-time Baum-Welch algorithm. We only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm so as the single and double state probabilities can be easily derived from DT-HMM algorithm explained in Section \ref{sec:3p}. It is also described in details in article \cite{Ra89}.
 
-The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts.  The algorithm shows training at a single observation and time sequence. It is for the sake of simplicity, the training by more complex dataset can be made by iterating trough all the sequences. There are two methods affecting the way of convergence - \textbf{soft} and \textbf{hard} \ref{sec:shm}. The soft method uses the forward-backward algorithm and the hard uses the Viterbi algorithm to count posterior state probabilities (single and double-state).
+The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts. The algorithm shows training at a single observation and time sequence. 
+It is for the sake of simplicity, the training by more complex dataset can be made by iterating trough all the sequences. 
+There are two methods affecting the way of convergence - \textbf{soft} and \textbf{hard} \ref{sec:shm}. 
+The soft method uses the forward-backward algorithm and the hard uses the Viterbi algorithm to count posterior state probabilities (single and double-state).
 
-The part that counts the end-state conditioned probabilities is described separately and it compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant \ref{fv} (the name is derived from ability of the algorithm to process float time-intervals) and \textbf{integer-interval} variant \ref{iv} ( it can only process the data with integer time intervals). As showed in the experiment chapter, the second mentioned is significantly faster \ref{sec:cc} and it is probably not the cause of any critical progressive numerical errors \ref{sec:ns}.
+The part that counts the end-state conditioned probabilities is described separately and it compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant \ref{fv} (the name is derived from ability of the algorithm to process float time-intervals) and \textbf{integer-interval} variant \ref{iv} ( it can only process the data with integer time intervals). As showed in the Chapter 4, the second mentioned variant is significantly faster \ref{sec:cc} and it is probably not the cause of any critical progressive numerical errors \ref{sec:ns}.
 
-The both variants of the described algorithms iterate through all the pairs of hidden-states. Namely at $3^{rd}$ line of \textbf{float-interval} \ref{fv}, and at $2^{nd}$ and $5^{th}$ line of \textbf{integer-interval} variant \ref{iv}. It can be optimized for sparse jump-rate matrices $\matr{Q}$. We can simply omit the pairs with zero jump rate, as once being set to zero, the value can't change by the run of the algorithm.       
+The both variants of the described algorithms iterate through all the pairs of hidden-states. Namely at $3^{rd}$ line of \textbf{float-interval} algorithm \ref{fv}, and at $2^{nd}$ and $5^{th}$ line of \textbf{integer-interval} algorithm \ref{iv}. It can be optimized for sparse jump-rate matrices $\matr{Q}$. We can simply omit the pairs with zero jump rate, as once being set to zero, the value can't change by the run of the algorithm.       
+
+
 
 \noindent\begin{minipage}{\textwidth} 
 \renewcommand\footnoterule{}
@@ -790,12 +797,12 @@ The both variants of the described algorithms iterate through all the pairs of h
 \State $\matr{\hat{Q}} \gets$ randomly generated jump-rate matrix
 \State $\matr{T}_{\Delta} \gets$ find all distinct time intervals from $\matr{T}$
 \Repeat
-\State $\matr{P}({t_{\Delta}}) \gets \text{ count state transition probabilities } e^{\matr{\hat Q}t_{\Delta}} \text{ for each } t_{\Delta} \text{ from } \matr{T}_{\Delta}$
+\State $\matr{P}({t_{\Delta}}) \gets \text{count state transition probabilities} e^{\matr{\hat Q}t_{\Delta}} \text{ for each } t_{\Delta} $ from $ \matr{T}_{\Delta}$
 \State $\matr{\Xi} \gets \matr{\Xi}[u,k,l] = \mathrm{P}( X_{t_u} = k, X_{t_{u+1}} = l \mid \matr{O},\matr{T}, \matr{ \hat Q }),  u \in 1,\dots,v-1$
 \State \Comment The double state probability can be counted either from \textit{forward} and \textit{backward} probability tables - \textbf{soft} method, or from \textit{viterbi} algorithm most probable state sequence - \textbf{hard} method. The $\matr{P}({t_{\Delta}})$ is used for counting of state transition probabilities. 
-\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the matrices } \matr{\Xi}[u] \text{ with the same length of the time interval } t_{u+1} - t_u \text{ that equals } t_{\Delta} \in \matr{T}_{\Delta}, u \in 1,\dots,v-1 $
+\State $\matr{\Xi}_{\Delta} \gets \text{ sum together the matrices } \matr{\Xi}[u]$ with the same length of the time interval $t_{u+1} - t_u \text{ that equals } t_{\Delta} \in \matr{T}_{\Delta}, u \in 1,\dots,v-1 $
 \State Count end-state probabilities $\mathbf{E}(\eta_{ij} \mid \matr{O}, \matr{T}, \matr{ \hat Q } ) \text{ and } \mathbf{E}(\tau_{i} \mid \matr{O}, \matr{T}, \matr{ \hat Q })$
-\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} \ref{fv} or \textbf{integer-interval} variant \ref{iv}.  
+\State \Comment It can be counted by one of the two \textit{expm} based algorithm variants described later, \textbf{float-interval} algorithm \ref{fv} or \textbf{integer-interval} algorithm \ref{iv}.  
 \State $\matr{\hat{Q}} \gets \matr{\hat{Q}}[i,j] = \frac{\mathbf{E}(\eta_{ij} \mid \matr{O}, matr{T}, \matr{ \hat Q } )}{\mathbf{E}(\tau_{i} \mid \matr{O}, matr{T}, \matr{ \hat Q })} \text{, and } \matr{\hat{Q}}[i,i] =  - \sum_{i \neq j} \matr{\hat{Q}}[i,j]$ \footnote{\label{refqmax}\eqref{eq:Qmax}}
 \Until{ probability is satisfiable }
 
@@ -854,7 +861,7 @@ The both variants of the described algorithms iterate through all the pairs of h
 \end{algorithmic}
 \end{algorithm}
 
-\FloatBarrier
+%\FloatBarrier
 
 \section{Complexity}\label{sec:complex}
 
