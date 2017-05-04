@@ -867,18 +867,18 @@ The both variants of the described algorithms iterate through all the pairs of h
 
 \subsection{Time Complexity}
 
-By complexity we will refer to the complexity of one iteration of EM-algorithm. All the iterations are equivalent, so to get full runtime complexity you can multiply by the iteration number.
+By complexity we refer to the complexity of one iteration of EM-algorithm. All the iterations are equivalent, so to get full runtime complexity you can multiply it by the iteration number.
 
-The number of hidden states will be denoted as $n$, the summary length of the training sequences as $\nu$. 
+The number of hidden states will be denoted as $n$, the overall length of the training sequences as $\nu$. 
 
 \begin{itemize}\label{it:dtc}
 \item \textbf{ Discrete-Time Baum-Welch Algorithm } \\
 In one iteration of the discrete version of the algorithm the following main procedures take part:
 \begin{itemize}
-\item Forward algorithm - complexity $\mathcal{O}(n^2\nu)$ \ref{sec:fb}.
-\item Backward algorithm - complexity $\mathcal{O}(n^2\nu)$ \ref{sec:fb}.
-\item Computation of single state probabilities \ref{sec:ssp} - complexity $\mathcal{O}(n\nu)$. Summing and normalizing the forward and backward probabilities, that are of size $n\nu$.
-\item Computation of double state probabilities - complexity $\mathcal{O}(n^2\nu)$ \eqref{eq:xi}. Constant-time computation of probabilities for every pair of states in every time.
+\item Forward algorithm (Subsection \ref{sec:fb} )- complexity $\mathcal{O}(n^2\nu)$.
+\item Backward algorithm (Subsection \ref{sec:fb} ) - complexity $\mathcal{O}(n^2\nu)$.
+\item Computation of single state probabilities (Subsection \ref{sec:ssp} ) - complexity $\mathcal{O}(n\nu)$. Summing and normalizing the forward and backward probabilities, that are of size $n\nu$.
+\item Computation of double state probabilities (Subsection \eqref{eq:xi}) - complexity $\mathcal{O}(n^2\nu)$. Constant-time computation of probabilities for every pair of states in every time.
 \item Various summing operation - complexity $\mathcal{O}(n^2\nu)$. Just linear pass trough the arrays, the biggest one has size $n^2\nu$.
 \end{itemize}
 
@@ -886,14 +886,14 @@ As the operations are consecutive, the whole asymptotic complexity of the algori
 
 \item \textbf{ Continuous-Time Baum-Welch Algorithm } \\
 
-The complexity of the continuous-time algorithm depends on the chosen variant of end-state conditioned probabilities counting. So we will distinguish \textit{integer-interval} \ref{iv} and \textit{float-interval} \ref{fv} variant of algorithm (later just algorithm). In the first one is the time difference among two consecutive observations integral, in the second it is float. Float algorithm can be used for the integral intervals, but not vice-versa. 
+The complexity of the continuous-time algorithm depends on the chosen variant of end-state conditioned probabilities counting. So we distinguish \textit{integer-interval} \ref{iv} and \textit{float-interval} \ref{fv} variants of the algorithm (later just algorithm). In the first one is the time difference among two consecutive observations integral, in the second it is float. Float algorithm can be used for the integral intervals, but not vice-versa. 
 
-The \textit{soft} and \textit{hard} method of convergence \ref{sec:shm} doesn't impact the asymptotic complexity, as both forward-backward algorithm and Viterbi algorithm 
+The \textit{soft} and \textit{hard} method of convergence \ref{sec:shm} doesn't impact the asymptotic complexity, as both the forward-backward algorithm and the Viterbi algorithm 
 have the same $\mathcal{O}(n^2 \nu)$ complexity.
 
-We will define $r$ as the number of different time intervals. In some cases it can be much more restrictive than $\nu - 1$ - the number of all intervals.
+Let $r$ be the number of different time intervals. In some cases it can be much more restrictive than $\nu - 1$ - the number of all intervals.
 
-The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, that we need to pre-compute the transition probabilities matrix for every time interval. Than we can simply use the discrete-time algorithms, as if dealing with heterogeneous Dt-HMM. 
+The first part of the algorithm is similar to the discrete-time version \ref{it:dtc}. With the difference, that we need to pre-compute the transition probabilities matrix for every time interval. Than we can simply use the discrete-time algorithms, as if dealing with heterogeneous DT-HMM. 
 
 
 \begin{itemize}\label{it:ctc}
@@ -926,7 +926,7 @@ We needs to call expm method $\mathcal{O}(n^3)$[gmail] at matrix $\matr{W}t$ for
  
 \end{itemize}   
 
-The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2\nu )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5\log(t_{\max}) + n^2\nu )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in the time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{\max}$. It is bounded to counting of Pad\'{e} approximants. The matrices containing bigger numbers, in average need to use the approximant of higher order, which is more complex to compute in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
+The overall time complexity of the iteration is $\mathcal{O}( r n^5 + n^2\nu )$, using the \textit{float-interval} algorithm and $\mathcal{O}( r n^5\log(t_{\max}) + n^2\nu )$ using the \textit{integer-interval} algorithm. However, it doesn't necessary mean the float-algorithm will run faster. As showed in the time measurement experiment \ref{sec:cc}, the multiplicative constant for \textit{expm} algorithm is very high. The experiment has shown, that there also exists logarithmic pseudo-dependence on parameter $t_{\max}$. It is bounded to counting of Pad\'{e} approximants. The matrices containing bigger numbers in average need to use the approximant of higher order, which is more complex to compute in the terms of multiplicative constant. We have shown, that in the real practice, it is generally much more computationally efficient to use the integer-interval algorithm.
 
 Till now, we have assumed the full jump-rate matrix $\matr{Q}$. However, in some cases we may intentionally forbid some state-to-state transitions. Such a restriction will also manifest itself in the term of complexity. Let's define $m$ as the number of allowed state-to-state transition pairs. Than the new complexity will shrink to $\mathcal{O}( r n^3 m + n^2\nu )$ or $\mathcal{O}( r n^3 m \log(t_{\max}) + n^2\nu )$ respectively. Notice that the possible value for $m$, which is making sense, can be in the interval $[n,n^2]$, depending on the sparsity of the matrix $\matr{Q}$. So it can effectively divide the full matrix complexity by $n$.  
 
