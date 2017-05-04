@@ -7,45 +7,45 @@ Warning--I didn't find a database entry for "Ho03"
 Warning--I didn't find a database entry for "Sk01"
 Warning--I didn't find a database entry for "TODO"
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 6 entries,
+You've used 7 entries,
             3151 wiz_defined-function locations,
-            702 strings with 6323 characters,
-and the built_in function-call counts, 3290 in all, are:
-= -- 244
-> -- 112
-< -- 8
-+ -- 60
-- -- 32
-* -- 180
-:= -- 371
-add.period$ -- 12
-call.type$ -- 6
-change.case$ -- 29
+            709 strings with 6515 characters,
+and the built_in function-call counts, 3939 in all, are:
+= -- 298
+> -- 126
+< -- 9
++ -- 67
+- -- 36
+* -- 212
+:= -- 439
+add.period$ -- 14
+call.type$ -- 7
+change.case$ -- 35
 chr.to.int$ -- 0
-cite$ -- 6
-duplicate$ -- 304
-empty$ -- 291
-format.name$ -- 37
-if$ -- 717
+cite$ -- 7
+duplicate$ -- 365
+empty$ -- 354
+format.name$ -- 42
+if$ -- 866
 int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 71
-newline$ -- 29
-num.names$ -- 12
-pop$ -- 155
+int.to.str$ -- 7
+missing$ -- 83
+newline$ -- 32
+num.names$ -- 14
+pop$ -- 185
 preamble$ -- 1
-purify$ -- 26
+purify$ -- 30
 quote$ -- 0
-skip$ -- 147
+skip$ -- 179
 stack$ -- 0
-substring$ -- 140
-swap$ -- 173
-text.length$ -- 8
+substring$ -- 185
+swap$ -- 205
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 22
+type$ -- 26
 warning$ -- 0
-while$ -- 23
-width$ -- 7
-write$ -- 61
+while$ -- 28
+width$ -- 8
+write$ -- 70
 (There were 3 warnings)

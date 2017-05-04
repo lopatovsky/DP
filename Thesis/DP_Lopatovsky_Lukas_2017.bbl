@@ -8,6 +8,11 @@
 \providecommand{\selectlanguage}[1]{\relax}
 \providecommand{\eprint}[2][]{\biburl{#2}}
 
+\bibitem{Al11}
+Allahverdyan, A.; Galstyan, A.: Comparative analysis of viterbi training and
+  maximum likelihood estimation for hmms. In \emph{Advances in Neural
+  Information Processing Systems}, 2011, pp. 1674--1682.
+
 \bibitem{De77}
 Dempster, A.~P.; Laird, N.~M.; Rubin, D.~B.: Maximum likelihood from incomplete
   data via the EM algorithm. \emph{Journal of the royal statistical society.
