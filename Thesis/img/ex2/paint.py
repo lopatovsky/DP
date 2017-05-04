@@ -6,17 +6,17 @@ def plot_tables():
     
     ## SMALL dataset
 
-    #datai = np.loadtxt("table1", delimiter=',')
-    #dataf = np.loadtxt("table2", delimiter=',')
-    #X = range(2,41,2)
-    #X2 = range(2,29,2)
+    datai = np.loadtxt("table1", delimiter=',')
+    dataf = np.loadtxt("table2", delimiter=',')
+    X = range(2,41,2)
+    X2 = range(2,29,2)
  
     ## BIG dataset
 
-    datai = np.loadtxt("table3", delimiter=',')
-    dataf = np.loadtxt("table4", delimiter=',')
-    X = range(2,37,2)
-    X2 = range(2,29,2)
+    #datai = np.loadtxt("table3", delimiter=',')
+    #dataf = np.loadtxt("table4", delimiter=',')
+    #X = range(2,37,2)
+    #X2 = range(2,29,2)
 
     #legend
     fig = plt.figure()
