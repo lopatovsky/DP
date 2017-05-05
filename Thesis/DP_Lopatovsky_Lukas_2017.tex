@@ -25,6 +25,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage[section]{placeins}
+\usepackage{dsfont}
 
 \usepackage[hang,flushmargin]{footmisc}
 
@@ -110,7 +111,7 @@ Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we w
 
 \section{Discrete-time Markov Process}\label{sec:DMP}
     
-Discrete-time Markov process (also referred to as Markov chain) \cite{TODO} is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ 0, 1, 2, \dots \}$, that in every time-step occupies some state of the potentially infinite state set. However, later in the text, we will consider restricted definition for the finite state sets $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$.  The process being in time $t_i$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. Probability that the process changed from the state $s_i$ to the state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form square matrix of size $n$ - the transition probabilities matrix $\matr{A}$ . Note that elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
+Discrete-time Markov process (also referred to as Markov chain) \cite{TODO} is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ 0, 1, 2, \dots \}$, that in every time-step occupies some state of the potentially infinite state set. However, later in the text, we will consider restricted definition for the finite state sets $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$.  The process being in time $t_i$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. Probability that the process changed from state $s_i$ to state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form square matrix of size $n$ - the transition probabilities matrix $\matr{A}$ . Note that elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
 
 The Markov process is memory-less, not holding information about the past states. So the probability of transition depends only on the current state and is defined in the matrix $\matr{A}$. This characteristic is called the Markov property and can be expressed in the following equation \eqref{eq:mp}.
 
@@ -139,7 +140,7 @@ For the transition probabilities apply standard stochastic constrains \cite{Ra89
 
 \section{Discrete-Time Hidden Markov Model}\label{sec:dthmm}
 
-The Discrete-time Hidden Markov Model (HMM) is doubly embedded stochastic process consisting of underlaying Markov process $X_t$ \ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the specific observation symbol from the set $\mathcal{V}$ that will be emitted with certain probability. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that the state $s_i$ emits the symbol $v_j$ - $\mathrm{P}( O_t = v_j  \mid X_t = s_i)$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of real life problems.  
+The Discrete-time Hidden Markov Model (HMM) is doubly embedded stochastic process consisting of underlaying Markov process $X_t$ \ref{sec:DMP} and another process $O$. The process $O$ assigns to every state $s_i$ the specific observation symbol from the set $\mathcal{V}$ that will be emitted with certain probability. The model is called "hidden", because the state sequence of Markov process is not directly visible. It can only be guessed from statistic over the model parameters. The set $\mathcal{V}=\{  v_1,v_2,\dots,v_m\}$ is the set of all observable (emission) symbols. The probability that state $s_i$ emits symbol $v_j$ - $\mathrm{P}( O_t = v_j  \mid X_t = s_i)$ will be denoted as $b_i(j)$ and together with other elements form the matrix $B$, rectangular matrix of $n$ rows and $m$ columns. Comparing to the single Markov process, HMM is able to model more complex systems, that can often be close to describe the processes of real life problems.  
   
 The following parameters are needed to describe the HMM:
 
@@ -191,7 +192,7 @@ For the times $0 \leq u_0 < u_1 < \dots < u_r < u$ it satisfies the following eq
 
 The property describes that the stochastic process is memoryless.
 
-\item [Homogeneity:] Probability of transition from the state $s_i$ to $s_j$ in any given time $u \geq 0$ depends only on the length of the time interval $t \geq 0$. 
+\item [Homogeneity:] Probability of transition from state $s_i$ to $s_j$ in any given time $u \geq 0$ depends only on the length of the time interval $t \geq 0$. 
 
 \begin{equation}
 \begin{aligned}
@@ -212,15 +213,6 @@ The upper mentioned conditions assert, that the transition probability $\mathrm{
 
 \begin{equation}
 \sum_{j = 1}^n \mathrm{p_{ij}}(t) = 1
-\end{equation}
-
-%TODO delete?
-\begin{equation}\label{eq:l0}  
-\lim_{t \to 0^+} \mathrm{p_{ij}}(t)= 
-\begin{cases}
-1, i = j\\
-0, i \neq j
-\end{cases}
 \end{equation}
 
 \begin{equation}\label{eq:ckeq}
@@ -263,22 +255,12 @@ dividing by time interval $t$ and letting $t$ decrease close to zero, we will ob
 
 (We assume the finite rates $q_{ij}$, infinite rate would immediately lead to the leaving of the state, so it makes no sense for us to consider.)
 
-It can be shown that by construction of the CTMP from discrete time Markov process (DTMP) \ref{sec:constr}  and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from the state $s_i$ to the state $s_j$ in DTMP \ref{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj] %TODO zdroj 
+It can be shown that by construction of the CTMP from discrete time Markov process (DTMP) \ref{sec:constr}  and  it's underlying Poisson process with rate $\lambda$, the equation $q_{ij} = \lambda a_{ij}$ holds. Where $a_{ij}$ is the transition probability from state $s_i$ to state $s_j$ in DTMP \ref{eq:tp}. This is why we call the $q_{ij}$ the jump rate.[zdroj] %TODO zdroj 
 
 %ROUTING MATRIX - u(i, j) = q(i, j) / lambda max
 %u(i, i) = 1 - sum_j u(i, j)
 
-We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving the state $s_i$ \eqref{eq:ckeq}. Then we can define the jump rates matrix $\matr{Q}$ as following:
-
-\begin{equation}
-\begin{aligned}  
-\matr{Q}(i,j)= 
-\begin{cases}
-\qquad q_{ij}, \qquad & \text{if } i\neq j\\
-- \sum\limits_{k = 1}^{ n ,k \neq i} q_{ik}, \qquad & \text{if } i=j
-\end{cases}
-\end{aligned}
-\end{equation}
+We can also look at $q_{ii}$ as at the rate in which the $X_t$ is leaving state $s_i$ \eqref{eq:ckeq}. We define the jump rates matrix as $\matr{Q}(i,j) = q_{ij}$.
 
 We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ by solving the \textit{Kolmogorov's Backward} equation \eqref{eq:kbe}. It can be obtained from \textit{Chapman-Kolmogorov equation} \eqref{eq:ckm} by differentiation. Similarly can be derived the \textit{Kolmogorov's Forward} equation. The solution of the differential equation with the initial condition $\matr{P_0} = \matr{I}$ leads to matrix exponentiation \eqref{eq:mexp}. %[zdroj na riesenie] %TODO
 
@@ -296,11 +278,11 @@ We can get the transition probabilities for any time $t$ from matrix $\matr{Q}$ 
 
 The useful way for understanding the continuous-time Markov process is to know its relation to the discrete process, that can be shown by the construction.
 
-We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which transition from the state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in the state $s_i$, before the transition occurs, can be described by probability density function of exponential distribution with the parameter $\lambda a_i$, $\mathrm{f}(t)= \lambda a_i e^{- \lambda a_i t}$. Such a process $X_t = Y_{N(t)}$ fulfills the CTMP definition as described in Section \ref{sec:ctmp}.
+We will take the homogeneous Poisson process $N(t)$ with parameter $\lambda$ and the discrete-time Markov process $Y_{\nu}$, with the states transition probabilities $a_{ij}$. We will assume the $N(t)$ and $Y_{\nu}$ being mutually independent. By changing equidistant timing of $Y_{\nu}$ to Poisson process timing. We will get the process $Y_{N(t)}$ in which transition from state $s_i$ happens at each arrival in $N(t)$ with the probability $a_i = \sum_{j = 1}^{ n ,j \neq i} a_{ij}$ (notice that the transition will not occur if $i=j$). Similarly, the time spent in state $s_i$, before the transition occurs, can be described by probability density function of exponential distribution with the parameter $\lambda a_i$, $\mathrm{f}(t)= \lambda a_i e^{- \lambda a_i t}$. Such a process $X_t = Y_{N(t)}$ fulfills the CTMP definition as described in Section \ref{sec:ctmp}.
 
 %TODO prihod nejaku citaci
 
-Now we can derive the equation for probability of transition from the state $s_i$ to the state $s_j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
+Now we can derive the equation for probability of transition from state $s_i$ to state $s_j$ in the time $t$ as the sum of all the possible number of steps in which the transition can occur. 
 
 \begin{equation}
 \begin{aligned}
@@ -319,7 +301,7 @@ Now we can derive the equation for probability of transition from the state $s_i
 \subsection{ Fully Observable Continuous-Time Markov Process }
 %ref Yu-Ying Liu
 
-Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0^{'}, x_1^{'}, \dots, x_{\nu^{'}}^{'} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$), probability TODO(?) at the state sequence $\matr{X^{'}}$ and the time sequence $\matr{T^{'}}$ are generated by the model with parameters $\matr{Q}$. 
+Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0^{'}, x_1^{'}, \dots, x_{\nu^{'}}^{'} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$) which is the probability of TODO the state sequence $\matr{X^{'}}$ and the time sequence $\matr{T^{'}}$ are generated by the model with parameters $\matr{Q}$. 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}
@@ -346,16 +328,16 @@ This add an amount of insecurity in the probability computation. We do not longe
 To count the likelihood of the process, we will use earlier defined matrix $\matr{P}(t)$ and its elements $\mathrm{p_{ij}}(t)$ \ref{sec:ctmp}. The time interval among two observation will be marked as  $\tau_u = t_{u+1} - t_u$.    
 
 \begin{equation}
- \mathcal{L} = TODO? \mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu \mid \matr{Q} ) = \prod_{u=0}^{\nu-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
+ \mathcal{L} = \mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu \mid \matr{Q} ) = \prod_{u=0}^{\nu-1} \mathrm{p}_{x_u x_{u+1}}(\tau_u) 
 \end{equation}
 
 It can be alternatively extended in the form
 
 \begin{equation}
- \mathcal{L} = \prod_{u=0}^{\nu-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathbb{I}( x_u = s_i, x_{u+1} = s_j )} 
+ \mathcal{L} = \prod_{u=0}^{\nu-1} \prod_{i=0,j=0}^{n}  \mathrm{p}_{ij}(\tau_u)^{\mathds{1}( x_u = s_i, x_{u+1} = s_j )} 
 \end{equation}
 
-where the function $\mathbb{I}(i,j)$ equals either $1$, if both condition inside are true, or $0$ if they are not. 
+where the function $\mathds{1}(i,j)$ equals either $1$, if both condition inside are true, or $0$ if they are not. 
 We will define the $r$ as the number of all distinct time intervals from the set $ \matr{T}_{\Delta} = \{ \tau_1,\tau_2,\dots,\tau_r\}$. If $r$ is lower then the number of observations, it can be beneficial to aggregate them as in formula
 
 \begin{equation}\label{eq:CTL}
@@ -377,8 +359,8 @@ The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be sim
 
 \begin{equation}\label{eq:HMCL1}
 \begin{aligned} 
-			TODO	 &= \mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu, O_{t_0} = o_0, \dots ,O_{t_\nu} = o_\nu \mid \matr{Q} ) \\
- \mathcal{L}_{FO} &= \prod_{u^{'}}^{\nu^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
+			\mathcal{L}_{FO} &= \mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu, O_{t_0} = o_0, \dots ,O_{t_\nu} = o_\nu \mid \matr{Q}, \matr{B} ) = \\
+  &= \prod_{u^{'}}^{\nu^{'}-1} q_{x_{u^{'}} x_{u^{'}+1}} e^{ - q_{x_{u^{'}}} \tau_{u^{'}} } 
     \prod_{u=0}^v b_{ x_u }(o_u) = \\
     &= \prod_{i=1}^{n} \prod_{j=1}^{n, i \neq j} q_{ij}^{\eta_{ij} } e^{ - q_i \tau_i } \prod_{u=0}^\nu b_{x_u}(o_u)
 \end{aligned}
@@ -434,7 +416,7 @@ When dealing with HMM real-world application we need to deal with following prob
 \subsection{Forward-Backward Algorithm}\label{sec:fb}
 The \textit{forward-backward} algorithm is actually pair of two separate algorithms (forward vs. backward). We will explain the \textit{forward} one and at the end we will describe the modifications that are needed to do the \textit{backward}. Both of them are sufficient to solve the first proposed problem \ref{it:p1} separately, however we need to define both, because of the use in the later text.  
 
-Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in the time $t$ emitted by the state $s_i$, given the model parameters $\matr{\theta}$.
+Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in time $t$ emitted by state $s_i$, given the model parameters $\matr{\theta}$.
 
 \begin{equation}
 \alpha_t(i) = \mathrm{P}(o_1,o_2,\dots,o_t,X_t = s_i \mid \matr{\theta} )
@@ -502,7 +484,9 @@ Here we can use already defined forward and backward variables and count the $\g
 To get the desired individual most likely state $x_t$, it is enough to find one of the highest probability.
 
 \begin{equation}
-x_t = \argmax_{1 \leq i \leq n} \gamma_t(i), \qquad 1 \leq t \leq \nu
+\begin{aligned}
+x_t &= \argmax_{1 \leq i \leq n} \gamma_t(i), \qquad 1 \leq t \leq \nu \\
+\end{aligned}
 \end{equation} 
 
 Applying this algorithm to the whole sequence would lead to the highest expected number of correctly assigned states, however the sequence as a whole can in some cases have very low probability or even not be feasible. This would happen if probability of transition among two consecutive states in the sequence was zero.   
@@ -636,8 +620,8 @@ If we take just the observation points into the account, we can look on the mode
 
 \begin{equation}
 \begin{aligned}
-&TODO\mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu, O_{t_0} = o_0, \dots ,O_{t_\nu} = o_\nu \mid \matr{Q} ) \\
-&\prod_{u=1}^{\nu-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\nu} b_{ x_u }(o_u),
+&\mathrm{P}(X_{t_0} = x_0, \dots ,X_{t_\nu} = x_\nu, O_{t_0} = o_0, \dots ,O_{t_\nu} = o_\nu \mid \matr{Q}, \matr{B} ) = \\
+& = \prod_{u=1}^{\nu-1} \mathrm{p_{x_u, x_{u+1}}} (\tau_u) \prod_{u=1}^{\nu} b_{ x_u }(o_u),
 \end{aligned}
 \end{equation}
 
@@ -676,7 +660,7 @@ The remaining non-trivial task is to evaluate $\mathbf{E}( \eta_{ij} \mid \matr{
 \begin{equation}
 \begin{aligned}  
 \mathbf{E}(\eta_{ij} \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{\nu-1} \mathbf{E}(\eta_{ij} \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
-&= \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
+&= \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^{n} \mathds{1}( x_u = k, x_{u+1} = l ) \mathbf{E}(\eta_{ij} \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
 
@@ -684,7 +668,7 @@ The remaining non-trivial task is to evaluate $\mathbf{E}( \eta_{ij} \mid \matr{
 \begin{equation}
 \begin{aligned}  
 \mathbf{E}( \tau_i \mid \matr{X}, \matr{\hat Q_t} ) &= \sum_{u=0}^{\nu-1} \mathbf{E}(\tau_i \mid x_u, x_{u+1}, \matr{ \hat Q_t } ) = \\
-&= \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^{n} \mathbb{I}( x_u = k, x_{u+1} = l ) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
+&= \sum_{u=0}^{\nu-1} \sum_{k=0,l=0}^{n} \mathds{1}( x_u = k, x_{u+1} = l ) \mathbf{E}(\tau_i \mid x_u = k, x_{u+1} = l, \matr{\hat Q_t} )
 \end{aligned}
 \end{equation}
    
@@ -778,7 +762,7 @@ It is for the sake of simplicity, the training by more complex dataset can be ma
 There are two methods affecting the way of convergence - \textbf{soft} and \textbf{hard} \ref{sec:shm}. 
 The soft method uses the forward-backward algorithm and the hard uses the Viterbi algorithm to count posterior state probabilities (single and double-state).
 
-The part that counts the end-state conditioned probabilities is described separately and it compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant \ref{fv} (the name is derived from ability of the algorithm to process float time-intervals) and \textbf{integer-interval} variant \ref{iv} ( it can only process the data with integer time intervals). As showed in the Chapter 4, the second mentioned variant is significantly faster \ref{sec:cc} and it is probably not the cause of any critical progressive numerical errors \ref{sec:ns}.
+The part that counts the end-state conditioned probabilities is described separately and it compounds two variants different by implementation and computational complexity. We refer to them as \textbf{float-interval} variant \ref{fv} (the name is derived from ability of the algorithm to process float time-intervals) and \textbf{integer-interval} variant \ref{iv} ( it can only process the data with integer time intervals). As showed in the Chapter 4, the second mentioned variant is significantly faster \ref{sec:cc} and it probably do not produce any critical progressive numerical errors \ref{sec:ns}.
 
 The both variants of the described algorithms iterate through all the pairs of hidden-states. Namely at $3^{rd}$ line of \textbf{float-interval} algorithm \ref{fv}, and at $2^{nd}$ and $5^{th}$ line of \textbf{integer-interval} algorithm \ref{iv}. It can be optimized for sparse jump-rate matrices $\matr{Q}$. We can simply omit the pairs with zero jump rate, as once being set to zero, the value can't change by the run of the algorithm.       
 
@@ -1006,8 +990,8 @@ The later part of the chapter contains the experiments, that are connected to th
 
 \begin{enumerate}[resume]
 \setcounter{enumi}{0}
-\item \textbf{Models Convergence Comparison} \\
-Comparison of the discrete and continuous-time HMM at the equivalent dataset.
+\item \textbf{Discrete-time vs. Continuous-time Hidden Markov Model} \\
+Comparison of the discrete and continuous-time HMM convergences at the equivalent dataset.
 \item \textbf{Computational Complexity} \\
 Examination of the time complexity and comparison with theoretical expectations.
 \item \textbf{Numerical Stability} \\
@@ -1018,47 +1002,59 @@ Examination of the models behavior, when trained with different numbers of hidde
 \end{enumerate}
 
 
-\section{Models Convergence Comparison}
+\section{Discrete-time vs. Continuous-time Hidden Markov Model}
 
 In the theoretical part we are describing two models, discrete-time and continuous-time hidden Markov model. The model convergence test compares, how fast they can learn from generated dataset (converge to the local optima) and we have checked, if there is some significant difference among the converged optima values. 
 
 As the continuous-time model takes, except the observations, also the time vectors, its domain range is obviously much broader. Still, it is possible to train it at dataset for discrete-time model, simply by adding artificial equidistant time vectors.
 
-\subsection{ Description }
+\subsection*{ Description }
 
-For the first experiment we have used the dataset generated by the model, which we have created artificially to suit its purpose well. %TODO See its parameter here [table]. 
+In the first part of the experiment we have used the dataset generated by the model, which we have created artificially to suit its purpose well. %TODO See its parameter here [table]. 
 The model contains three hidden states and three observation symbols. Comparing the general randomly generated model (model with the parameters generated by exponential distribution), it takes advantage of its more extreme position in the parameter space, so its distance to the majority of the random generated parameters is bigger. This makes the problem of convergence harder and in final produces nicer graphs, unfolding more of the process characteristics.
-%TODO separate it into two experiments.
-
-In the second experiment, we have repeated the procedure of the first experiment five times on the models, which parameters were created by hand in some specific real-life like manner, and five times with randomly generated models. 
 
 Training dataset consists of 50 vectors, each of them compounding 50 observation. For the continuous-time model we have add the same number of time vectors, with unit time differences.
 
 In the test, we have conducted ten runs of Baum-Welch algorithm, always starting from different random position and averaged the results. The starting positions were equivalent for both models. We have run 150 iterations for every convergence.
 
-The convergences for the single runs of the first experiment can be seen in Figure \ref{fig:sr50} and then their average in Figure \ref{fig:avgc}. Figures \ref{fig:all} and \ref{fig:random} show the results of the second experiment. Notice that the \textit{performance ratio} refer to the ratio of the logarithmic probability estimations of the trained model toward the original model (the one, which was used to generate dataset). So the lower the ratio is, the better fit the model the dataset. The performance ratio of the model before the first iteration is cut of the graph, because it often takes too extreme value.
+The convergences for the single runs of the first experiment can be seen in Figure \ref{fig:sr50} and then their average in Figure \ref{fig:avgc}.
 
-\subsection{ Observations }
+To make the results of the experiment more general we have continued with the second part, in which we have repeated the procedure of the experiment with the same parameters five times on the models, which parameters were created by hand in some specific real-life like manner, and five times with randomly generated models.
 
-In the figures with the average convergences \ref{fig:avgc} and \ref{fig:all} we can see the continuous-time model converge slightly slower. However both models seem to converge to the same value, closing the gap by every iteration.
  
-The single run convergences \ref{fig:sr50} show the irregular speed of convergence of both models. The better performance at the beginning doesn't ensure it will not be over-performed by other instances later. The convergence slopes seem to be more regular towards the end of convergence.
 
-The convergences to the datasets generated by the random models start mostly with visibly lower performance ratio than the convergence lines generated by specific hand-made models \ref{fig:all}. 
+%TODO moce the note about performance ration somewhere else???
+Notice that the \textit{performance ratio} refer to the ratio of the logarithmic probability estimations of the trained model toward the original model (the one, which was used to generate dataset). So the lower the ratio is, the better fit the model the dataset. The performance ratio of the model before the first iteration is cut of the graph, because it often takes too extreme value.
 
-We can also see that the models mostly over-performed the original model. For example, the average convergence from the first experiment \ref{fig:avgc} is converging to the performance ratio $\sim 0.99372$.  
+\subsection*{Observations }
+
+The convergences for the single runs of the first part of the experiment can be seen
+in Figure \ref{fig:sr50} and then their average in Figure \ref{fig:avgc}. Figures \ref{fig:all} and \ref{fig:random} show the results of the second second part of experiment.
+
+In the figures with the average convergences \ref{fig:avgc} and \ref{fig:all} we can see the
+continuous-time model converge slightly slower. However both models seem
+to converge to the same value, closing the gap by every iteration.
+The single run convergences \ref{fig:sr50} show the irregular speed of convergence of
+both models. The better performance at the beginning doesn’t ensure it will
+not be over-performed by other instances later. The convergence slopes seem
+to be more regular towards the end of convergence.
+
+The convergences to the datasets generated by the random models start
+mostly with visibly lower performance ratio than the convergence lines generated by specific hand-made models \ref{fig:all}.
+We can also see that the models mostly over-performed the original model.
+For example, the average convergence from the first experiment \ref{fig:avgc} is converging to the performance ratio $\sim 0.99481$.  
 
 \begin{figure}
 \centering
 \begin{minipage}{.8\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex1/1/single_runs_zoom50_h.png}
+  \includegraphics[width=1\linewidth]{img/ex1/g1.png}
   \captionof{figure}{Convergence }
   \label{fig:sr50}
 \end{minipage}
 \begin{minipage}{.8\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex1/1/average_h.png}
+  \includegraphics[width=.95\linewidth]{img/ex1/g2.png}
   \captionof{figure}{Average of the convergences from various random starting points}
   \label{fig:avgc}
 \end{minipage}
@@ -1068,19 +1064,19 @@ We can also see that the models mostly over-performed the original model. For ex
 \centering
 \begin{minipage}{.8\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex1/2/all.png}
+  \includegraphics[width=1\linewidth]{img/ex1/g3.png}
   \captionof{figure}{Average of the convergences for various generated datasets}
   \label{fig:all}
 \end{minipage}
 \begin{minipage}{.8\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex1/2/random.png}
+  \includegraphics[width=.95\linewidth]{img/ex1/g4.png}
   \captionof{figure}{Average of the convergences for various generated datasets (zoom)}
   \label{fig:random}
 \end{minipage}
 \end{figure}  
 
-\subsection{ Conclusions }
+\subsection*{ Conclusions }
 
 The slower convergence of continuous-time model is bounded with different character of the model. Since in the discrete-time model we always know the precise time when the state-change can happen (always at observation point), in continuous-time model it can happen in any time in between as well. Thus, computing of the new estimated parameters in maximization step needs to deal with more uncertainty. 
 In continuous-time model is uncertainty not only caused by indirect observation of hidden states, but also by possible state changes in between of the observations. As we have any observations from that area, the probability estimation is counted by parameters from the last iteration, what is creating momentum in favor of old parameters and slow down the convergence process. The longer is the time interval, the stronger is the momentum.
@@ -1090,7 +1086,6 @@ In the second experiment we have showed, how characteristic of the searched mode
 The over-performing of the original model is caused by the overfitting. The small size of dataset was not sufficient to cover characteristic of the model completely, instead the trained models were learned to fit its imprecision. It is not a problem for our experiment as the original models were chosen more-less randomly and it fills in its purpose. The over-performing would probably gradually disappear with growing size of the data-set. It is shown in experiment \ref{sec:plast}.
 
 %TODO All of the training conducted during this experiment, more or less converged to something, what seems to be global optima. We have used the simple 3-states models, the behavior of more complex models will be examined later in [odkaz].    
- 	
 
 
 \section{Computational Complexity}\label{sec:cc}
@@ -1102,14 +1097,14 @@ In two following subsections we experiment with variable hidden states number an
 
 The hidden states number, referred to as $n$ is the key parameter in overall algorithm complexity. Due to computing of the matrix exponentials $\mathcal{O}(n^3)$ for every pair of end states, it influence the final time-complexity by its fifth power $n^5$. The upper bound theoretical complexity dependence on $n$ is the same for both of the variants. However, the float-algorithm counts the matrix exponential by \textit{expm} method separately for every time interval, while the integer-algorithm counts it only once and then use the matrix multiplication to get the individual results \ref{it:ctc}. In the experiment we measure and compare the times of most costly algorithm parts, and notice how big is the portion of the overall computational complexity consumed by them. 
 
-\begin{itemize}
-\item \textbf{ Description }
+
+\subsubsection*{ Description }
 
 We have trained the models with the variable number of hidden states. To minimize the impact of the other factors, we have let the number of output variables to be constantly 10 and we have used the same randomly generated dataset for both algorithm variants. The integral times intervals were generated by exponential distribution with parameter 0.5. To minimize the time measurements error, we have always run 10 iterations of algorithm and repeated the overall procedure 5 times. 
 
 To see how the size of the dataset influence time-demand, we have conducted all the described experiments twice. Once with the \textit{small} dataset - compounding 10 sequences of 10 observations and once with the \textit{big} dataset - compounding 10 sequences of 100 observations.  
 
-\item \textbf{ Observation }
+\subsubsection*{ Observation }
 
 In Figure \ref{fig:e2n}, we can observe that the float-interval algorithm is always slower. The prevalent source of complexity is the \textit{expm} method. In the float-interval algorithm over the small dataset are all other parts of the algorithm almost neglectable comparing to it.
 
@@ -1135,7 +1130,7 @@ The increase of the dataset size caused the larger gap among the whole algorithm
 \label{fig:e2n}
 \end{figure}
 
-\item \textbf{ Conclusion }
+\subsubsection*{ Conclusion }
 
 We have only changed the number of states and let the dataset to be the same, so the $t_{\max}$ parameter from the integer-interval complexity $\mathcal{O}(r n^5 \log(t_{\max}))$ is fixed as constant. This makes both algorithm variants to have same complexity $\mathcal{O}(r n^5)$. The measurements have shown, the big multiplicative constant of \textit{expm} method. That's way it is almost always better to use the integer-interval algorithm. (Its numerical stability is tested later in Section \ref{sec:ns}) 
 
@@ -1143,18 +1138,16 @@ The most of the computational power is used to count matrix exponentials $expm$.
 
 Training over the big dataset \label{fig:e2big} has decreased the percentage of the time spent by $expm$ method. It is because the higher demand of other algorithm parts. Potentially, it can happen that this gap would overgrowth the $expm$ part. The complexity of the algorithm part that call $expm$ method only depend on $r$ - the number of different time intervals, however there are parts of the algorithms with complexity ${O}(n^2T)$ \ref{it:ctc}, where $T$ is number of all time intervals. So for the huge dataset with lower number of hidden states and many identical time intervals can this part be the predominant cause of the complexity.   
 
-\end{itemize}
-
 \subsection{Variable Maximal Time Interval}
 
 The other parameter presented in the theoretical time-complexity of the integer-interval algorithm - $\mathcal{O}(r n^5 \log(t_{\max}))$ is $t_{\max}$ - maximal length of the time interval. On the oder side the parameter is not part of the float-interval algorithm complexity term - $\mathcal{O}(r n^5)$ \ref{it:ctc}. The experiment aims to observe how the variable value of $t_{\max}$ changes the computational demand of the algorithm.  
 
-\begin{itemize}
-\item \textbf{ Description }
+
+\subsubsection*{ Description }
 
 In the experiment we have set $t_{\max}$ as the variable, taking values of powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in \textit{SciPy} \textit{expm} method, that eventually causes the integer overflow. We have generated the dataset of 10 sequences by 10 observations. There was always at least one time-interval of length $t_{\max}$ and all other were chosen uniformly from interval $[1,t_{\max}]$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of the time measurement imprecision, we have run $10$ iterations and repeated the whole experiment $5$ times.   
 
-\item \textbf{ Observation }
+\subsubsection*{ Observation }
 
 Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $t_{\max}$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is the steep growth of the float-interval algorithm time demand present for small $t_{\max}$ values.
 
@@ -1174,14 +1167,12 @@ Contrary to initial expectation both float and integer interval algorithm comput
 \end{minipage}
 \end{figure}
 
-\item \textbf{ Conclusion }
+\subsubsection*{ Conclusion }
 
 The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is higher probability of more same-sized time-intervals. That has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
 
 The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method, we need to look deeper in its implementation \cite{Sc01}. %[https://github.com/scipy/scipy/blob/v0.16.1/scipy/sparse/linalg/matfuncs.py#L554]. 
 The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability of the more complex Pad\'{e} approximant being chosen.   %TODO odkaz na clanok co to robi?-zo scipy  
-
-\end{itemize}
 
 \begin{itemize} %TODO vymaz alebo pridaj posledny experiment s pade.
 \item \textbf{ Description }
@@ -1194,11 +1185,10 @@ The method is using Pad\'{e} approximants of different values from $3$ to $13$. 
 
 The main advantage of integer-interval variant of algorithm is that it computes the costly matrix exponential only once and derive all other exponentials of the matrix multiplications by computing its powers, via \textit{square and multiply} method. It arise the question of numerical stability of the method. Can the inaccuracies acquired by \textit{square and multiply} significantly change the direction of convergence?   
 
-\begin{itemize}
-\item \textbf{ Description }
+\subsection*{ Description }
 In the experiment we have run both integer and float-algorithms with the same initial parameters. As the value of interest, we have measured the relative euclidean distance among both models jump-rates matrices $\matr{Q}$. We have used the models of $5$ hidden states and $5$ observable variables at the dataset of $100$ observation points. The time intervals were generated by exponential distribution with parameter $\lambda$ equal $0.1$, $0.01$ and $0.001$ consecutively. The obtained plotted error is the average value of $10$ runs of the experiment.      
 
-\item \textbf{ Observation }
+\subsection*{ Observation }
 
 The measured relative distance of jump-rate matrices seems to be random and it doesn't significantly increase by the growing iteration number. However it seems that the variance magnitude grows with the decreasing magnitude of exponential parameter $\lambda$.   
 
@@ -1207,19 +1197,19 @@ The measured relative distance of jump-rate matrices seems to be random and it d
 \centering
 \begin{subfigure}{.7\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex3/relative01.png}
+  \includegraphics[width=1\linewidth]{img/ex3/0_1.png}
   \caption{ $\lambda = 0.1$ }
   \label{fig:sub1}
 \end{subfigure}
 \begin{subfigure}{.7\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex3/relative001.png}
+  \includegraphics[width=1\linewidth]{img/ex3/00_1.png}
   \caption{$\lambda = 0.01$}
   \label{fig:sub1}
 \end{subfigure}
 \begin{subfigure}{.7\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex3/relative0001.png}
+  \includegraphics[width=1\linewidth]{img/ex3/00_1.png}
   \caption{$\lambda = 0.001$}
   \label{fig:sub2}
 \end{subfigure}
@@ -1227,16 +1217,14 @@ The measured relative distance of jump-rate matrices seems to be random and it d
 \label{fig:test}
 \end{figure}
 
-\item \textbf{ Conclusion }
+\subsection*{ Conclusion }
 The experiment haven't shown any error propagation by growing the iterations number. So the errors seems to be eliminated as they decrease to the local optima. It is not the proof and it is probable, that under some more extreme edge conditions the matrices may diverge. But, when taking into the account the randomness of the initial configuration and assorted characteristic of the parameter space, we do not see it as problem and we do not think it can, in general, negatively influence the performance of the algorithm.  
-
-\end{itemize}
 
 \section{Soft $\times$ Hard}
 
-\begin{itemize}
-\item \textbf{ Description }
-\item \textbf{ Observation }
+
+\subsubsection*{ Description }
+\subsubsection*{ Observation }
 
 \begin{figure}
 \centering
@@ -1274,9 +1262,7 @@ The experiment haven't shown any error propagation by growing the iterations num
 \label{fig:test}
 \end{figure}
 
-\item \textbf{ Conclusion }
-\end{itemize}
-
+\subsubsection*{ Conclusion }
 
 \section{Hidden States Number}\label{sec:hsn}
 
@@ -1284,8 +1270,7 @@ The number of hidden states is an important parameter, influencing the character
 
 \subsection{Plasticity of the Models}\label{sec:plast}
 
-\begin{itemize}
-\item \textbf{ Description }
+\subsubsection*{ Description }
 For this experiment we have created an artificial model consisting of five hidden states arranged in the way of birth and death chain as in Figure \ref{??}. There is not allowed for the model to change states except in the way of arrows. However to add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model. 
 
 %TODO
@@ -1298,7 +1283,7 @@ For this experiment we have created an artificial model consisting of five hidde
  
 We have generated three random datasets. The \textit{small} training dataset consisting of $15$ sequences each by $15$ observations and two \textit{big} datasets of $100$ sequences by $100$ observations, one for training and other for testing purpose. We have used both training datasets to train models with variable number of hidden states (from 2 to 8) and marked their performance after every of one hundred iteration at the respective training and \textit{big} testing dataset. We have repeated the experiments five times and plotted the average results.   
 
-\item \textbf{ Observation }
+\subsubsection*{ Observation }
 
 The models, except the ones with 2 and 3 hidden states, were able to over-perform the original model at the \textit{small} training dataset after couple of iterations\ref{fig:smtrain}. The bigger number of hidden states makes the convergence faster and also converge to the lower value. The measure at the testing dataset shows, that the models were actually over-fitted after couple of iterations and later diverge from the actual model. \ref{fig:smtest}. 
 
@@ -1340,13 +1325,13 @@ On the contrary the convergence lines plotting the training on the \textit{big} 
 \label{fig:bg}
 \end{figure}
 
-\item \textbf{ Conclusion }
+\subsubsection*{ Conclusion }
 Choosing the correct number of hidden states is crucial as its under-valuating can negatively influence the performance of the algorithm. Insufficient number of the hidden states for models 2-4 does not allow them to converge to the optimum values. The waves on the convergence lines of models 2 and 3 reveal that the averaged convergence lines differ. That marks the instability, thus the model that is too weak to cover the problem space. Model 4 was probably not able to distinguish the states at the ends of the birth and death sequence, that's way it has not reached the peak performance.
 
 We haven't proof that the over-valuated number of hidden states makes the models more vulnerable to over-fitting, as all models has over-fitted similarly. The higher number of states than in the original model makes the model to converge in the smaller number of iterations, but not to the considerably better values. However, the cost of computationally more expensive single iteration makes their convergence slower in real time.
 
 The experiment also stresses the importance of sufficiently sized dataset, as the small one emphasized the statistical error and lead to the over-fitting of the models. That is not the surprise, the weak dataset can't train powerful model. 
-\end{itemize}
+
 
 \begin{figure}
 \centering
