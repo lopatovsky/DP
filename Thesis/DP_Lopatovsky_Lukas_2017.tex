@@ -517,7 +517,7 @@ Another way how to look on the problem two \ref{it:p2} is to find single most pr
 \delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \matr{\theta} )
 \end{equation} 
 
-To get the actual state sequence, we need to store the information about the state in time $t-1$ that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
+To get the actual state sequence, we need to store information about the state in time $t-1$ that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
 
 \begin{equation}
 \delta_1(i) = \pi_i b_i(o_1), \qquad 1 \leq i \leq n 
@@ -563,7 +563,7 @@ The structure of the algorithm is very similar to the Forward-Backward algorithm
 
 \subsection{Expectation-Maximization Algorithm}\label{sec:BWA}
 
-There is any known general analytic solution for the problem~three \ref{it:p3}. There exist more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues called \textit{Baum-Welch} algorithm[ref]. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in state~$s_j$ in the time~$t+1$, later also referred to as ``double state probability''. 
+There is any known general analytic solution for the problem~three \ref{it:p3}. There exist more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues called \textit{Baum-Welch} algorithm \cite{Ba70}. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in the state~$s_j$ in the time~$t+1$, later also referred to as ``double state probability''. 
 
 \begin{equation}
 \xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \matr{\theta} )  
@@ -586,7 +586,7 @@ Obviously it is in relation with already defined variable~$\gamma_t(i)$ - the pr
 \gamma_t(i) = \sum_{j=1}^n \xi_t(i,j)  
 \end{equation}
 
-We can get the expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$\nu-1$. Similarly we would get expected number of visits of state~$s_i$, by summing $\gamma_t(i)$ from~$t=1$ till~$t=\nu$. 
+We can get expected number of transitions from~$s_i$, when summing~$\gamma_t(i)$ over the time till~$\nu-1$. Similarly we would get expected number of visits of state~$s_i$, by summing $\gamma_t(i)$ from~$t=1$ till~$t=\nu$. 
 
 \begin{equation}
 \mathbf{E}(\text{transitions from $s_i$}) = \sum_{t=1}^{\nu-1} \gamma_t(i)  
@@ -620,7 +620,7 @@ Now we have all what is needed to define the reestimated model~$\hat{\matr{\thet
 \end{aligned}
 \end{equation}
 
-The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\matr{\theta},\hat{\matr{\theta}})$ and maximization step, the maximization over parameter~$\hat{\matr{\theta}}$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is the local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
+The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\matr{\theta},\hat{\matr{\theta}})$ and maximization step, the maximization over parameter~$\hat{\matr{\theta}}$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
 
 
 \section{Continuous-Time Hidden Markov Model}
