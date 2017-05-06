@@ -15,9 +15,9 @@ def plot_mixed_tables():
     ax.set_xlabel('iterations')
     ax.set_ylabel('performance ratio')
 
-    plt.plot( d3[3], label = "30 dense"  )
-    plt.plot( d2[3], label = "20 dense"  )
-    plt.plot( d1[3], label = "10 dense"  )
+    plt.plot( d3[3], label = "30 full"  )
+    plt.plot( d2[3], label = "20 full"  )
+    plt.plot( d1[3], label = "10 full"  )
     plt.plot( d3[1], label = "30 sparse"  ) 
     plt.plot( d2[1], label = "20 sparse"  )  
     plt.plot( d1[1], label = "10 sparse"  )
