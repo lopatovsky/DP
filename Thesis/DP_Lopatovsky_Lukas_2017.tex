@@ -1282,15 +1282,15 @@ The number of hidden states is an important parameter, influencing the character
 \subsection{Plasticity of the Models}\label{sec:plast}
 
 \subsubsection*{ Description }
-For this experiment we have created an artificial model consisting of five hidden states arranged in the way of birth and death chain as in Figure \ref{??}. There is not allowed for the model to change states except in the way of arrows. However to add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model. 
+For this experiment we have created an artificial model consisting of five hidden states and four observation symbols arranged in the way of birth and death chain as in Figure \ref{fig:db}. There is not allowed for the model to change states except in the way of arrows. To add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model. 
 
-%TODO
-%\begin{figure}
-%\centering
-%\includegraphics[width=1\linewidth]{img/ex5/hs.svg}
-%caption{...}
-%\label{fig:bg}
-%\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{img/ex5/hs.png}
+\caption{Schema of the model ``birth and death'' }
+\label{fig:db}
+\end{figure}
  
 We have generated three random datasets. The \textit{small} training dataset consisting of $15$ sequences each by $15$ observations and two \textit{big} datasets of $100$ sequences by $100$ observations, one for training and other for testing purpose. We have used both training datasets to train models with variable number of hidden states (from 2 to 8) and marked their performance after every of one hundred iteration at the respective training and \textit{big} testing dataset. We have repeated the experiments five times and plotted the average results.   
 
@@ -1343,7 +1343,11 @@ We haven't proof that the over-valuated number of hidden states makes the models
 
 The experiment also stresses the importance of sufficiently sized dataset, as the small one emphasized the statistical error and lead to the over-fitting of the models. That is not the surprise, the weak dataset can't train powerful model. 
 
+\subsection{High Number of Hidden States}\label{sec:high}
 
+\subsubsection*{ Description }
+
+\subsubsection*{ Observation }
 \begin{figure}
 \centering
 \includegraphics[width=1\linewidth]{img/ex5.2/time.png}
@@ -1352,6 +1356,14 @@ The experiment also stresses the importance of sufficiently sized dataset, as th
 \end{figure}
 
 
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{img/ex5.3/big.png}
+\caption{...}
+\label{fig:bgtrain}
+\end{figure}
+
+\subsubsection*{ Conclusion }
 
 % expm reference form scipy: The Scaling and Squaring Method for the Matrix Exponential Revisited",
 %    SIAM. J. Matrix Anal. & Appl. 26, 1179 (2005).
