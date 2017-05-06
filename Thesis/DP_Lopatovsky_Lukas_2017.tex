@@ -376,31 +376,37 @@ Sometimes state can change, without emitting a single observation. The large num
 
 Expectation-maximization (EM) algorithm (first introduced in \cite{De77}) is the method for finding the maximum likelihood estimates(MLE) of parameters in probabilistic models over incomplete data-set ( i.e. data-set containing unobserved (latent) variables ). It is a natural generalization of maximum likelihood estimation, however the latent variables make finding of the MLE more difficult. Direct count can be very computationally expensive, so the EM algorithm uses iterative approach to approximate the solution by repeating sequence of simpler consecutive steps.
 
-Let's have $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and the vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\matr{\theta}$ for the unknown parameters we want to estimate. We will use the notation $\mathrm{log}\mathrm(P)(\mathbf{x},\mathbf{z};\matr{\theta})$ as the log-likelihood function, which estimates the probabilities for the given parameters. Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
-
-Look at \cite{Do08} for more detailed, easily understandable tutorial with examples.    
+Let's have $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (observed) variables and the vector $\mathbf{z} = (z_{1},z_{2},\dotsc,z_{n})$ containing latent (unobserved) variables. We will set $\boldsymbol{\theta}$ for the unknown parameters we want to estimate. We will use the notation $\mathcal{L}(\mathbf{x},\mathbf{z}; \boldsymbol{\theta}) = \mathrm{P}(\mathbf{x},\mathbf{z} | \boldsymbol{\theta})$ as the likelihood function, which estimates the probabilities for the given parameters. We can count MLE directly by summing through all possible values of latent variables $\matr{z}$ as in following equation $\mathcal{L}(\mathbf{x};\boldsymbol{\theta}) = \mathrm{P}(\mathbf{x} | \boldsymbol{\theta}) = \sum\limits_{\matr{z}} \mathrm{P}(\mathbf{x},\mathbf{z} | \boldsymbol{\theta})$ or get its approximation by EM algorithm in following steps \cite{Li14}.
+%Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
 
 \begin{enumerate}
-\item \textbf{Initialization:} We will make initial guess of the parameters $\matr{ \hat \theta_{0} } $.
+\item \textbf{Initialization:} We will make initial guess of the parameters $\matr{ \boldsymbol{\hat \theta_{0} }} $.
 \end{enumerate} 
 
 We will continue by iterating through two following steps: 
 
 \begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the likelihood function $\mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}})$. Where ${\matr{\hat \theta_{0}}}$ is the current parameters estimation. We will find the function $\mathrm{Q}$ that lower bounds $\mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}})$.
-
-%TODO komentare - poupravit
+\item \textbf{Expectation:} Calculate the expected value of the log-likelihood function $\log\mathcal{L}(\mathbf{x},\mathbf{z}; \boldsymbol{\theta})$ conditioned by $\matr{z}$ and given $\matr{x}$. Where ${\matr{\hat \theta_{t}}}$ is the current parameters estimation.
 
 \begin{equation}\label{eq:exp}
- \mathrm{Q}( {\matr{\hat \theta_{t}}}) =  \mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}})
+ \mathrm{M}(\boldsymbol\theta|\boldsymbol{ \hat \theta_{t} }) = \mathbf{E}_{\matr{z}|\matr{x},\boldsymbol{ \hat \theta_{t}}}\left[ \log \mathcal{L} (\boldsymbol\theta;\matr{x},\matr{z})  \right]
 \end{equation}
 
-\item \textbf{Maximization:} Find the value $ {\matr{\hat \theta_{t+1}}}$ that maximize $\mathrm{Q}( {\matr{\hat \theta_{t}}})$.  
+\item \textbf{Maximization:} Find the values of parameters $ \boldsymbol{\hat \theta_{t+1}}$ that maximize the function defined in expectation step. 
+
+\begin{equation}
+\boldsymbol{ \hat \theta_{t+1} } = \underset{\boldsymbol\theta}{\operatorname{arg\,max}} \ \mathrm{M}(\boldsymbol\theta|\boldsymbol{ \hat \theta_{t} })
+\end{equation}
 \end{enumerate}  
 
-As the value of $\mathrm{Q}({\matr{\hat \theta_{t}}})$ matches the log-likelihood function at $ {\matr{ \hat \theta_{t}}}$, it follows that $ \mathrm{Q}( {\matr{\hat \theta_{t}}}) =  \mathrm{logP}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t}}}) \leq \mathrm{Q}( {\matr{\hat \theta_{t+1}}}) =  \mathrm{log}\mathrm{P}(\mathbf{x},\mathbf{z}; {\matr{\hat \theta_{t+1}}}) $ thus the function values in consecutive iterations form non-decreasing sequence. The computation can be stopped once the parameters converge to some values, or if their change is not more significant.  
+As the value of $\mathrm{M}( \boldsymbol{ \hat \theta_{t} } )$ matches the log-likelihood function at 
+$ {\boldsymbol{ \hat \theta_{t}}}$, it follows that 
+$ \mathrm{Q}( \boldsymbol{\hat \theta_{t}}) =  \log \mathrm{P}(\mathbf{x},\mathbf{z}; \boldsymbol{\hat \theta_{t}}) \leq \mathrm{M}( \boldsymbol{  \hat \theta_{t+1}}) =  \log \mathrm{P}(\mathbf{x},\mathbf{z}; \boldsymbol{\hat \theta_{t+1}})$ 
+thus the function values in consecutive iterations form non-decreasing sequence. The computation can be stopped once the parameters converge to some values, or if their change is not more significant.  
 
 It is important to notice that this approach may lead to the local optima. To get better results the algorithm can be launched more times, starting always from different randomly initiated parameters. Possibly enhanced by the use of some more advance non-linear optimization technique.
+
+Look at \cite{Do08} for more detailed, easily understandable tutorial with examples.
 
 \section{Discrete-Time Hidden Markov Model}\label{sec:3p}
 % citate: Jack Ferguson of IDA in lectures at Bell laboratories
@@ -1225,7 +1231,13 @@ The experiment haven't shown any significant error propagation. It has been a bi
 This experiment compare the soft and hard method of EM algorithm described in Section \ref{sec:shm}. The methods differ in their maximization function. The soft method maximize the probability of the dataset being generated by the model, whereas the hard method maximize the probability of most likely state sequence generating the dataset. We have examined the results of these functions for both models.   
 
 \subsubsection*{ Description }
+
+There is any unified result of comparing the methods. Different models generating dataset often produce very different results. However, it still reveals enough about methods for making some conclusions. In the observation part we show ...      
+
 \subsubsection*{ Observation }
+
+
+
 
 \begin{figure}
 \centering

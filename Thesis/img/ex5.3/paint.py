@@ -5,8 +5,8 @@ from matplotlib.patches import Rectangle
 def plot_mixed_tables():
 
 
-    d1 = ( np.loadtxt("d10", delimiter=',') + np.loadtxt("d10_2", delimiter=',') )/2.0
-    d2 = ( np.loadtxt("d20", delimiter=',') + np.loadtxt("d20_2", delimiter=',') )/2.0
+    d1 = ( np.loadtxt("d10", delimiter=',') + np.loadtxt("d10_2", delimiter=',') + np.loadtxt("d10_3", delimiter=',') + np.loadtxt("d10_4", delimiter=',') )/4.0
+    d2 = ( np.loadtxt("d20", delimiter=',') + np.loadtxt("d20_2", delimiter=',') + np.loadtxt("d20_3", delimiter=',') + np.loadtxt("d20_3", delimiter=',') )/4.0
 
     fig = plt.figure()
 
