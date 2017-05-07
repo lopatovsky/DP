@@ -349,13 +349,13 @@ We will define the $r$ as the number of all distinct time intervals from the set
     
 %TODO P_{ij}(t) counting possibilities.
 
-\section{Continuous-Time Hidden Markov Model}
+\section{Continuous-Time Hidden Markov Model}\label{sec:cthmm1}
 
 %The actual state remained hidden, but it has always emitted the observable variable $v_i$.
 
  %Also it may not be documented by the observation. The emission of the observable variable can happen at any time, however it is independent on the state transition times. For example, it could be times, when the patient undergoes medical examination. The times can generally have highly irregular and unbalanced distribution.
 
-Continuous-time hidden Markov model is the extension of CTMP, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{\nu} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = (  o_0, o_1, \dots, o_{\nu} )$, emitted by the current state $s_i$ with the probability $b_i(o)$.
+Continuous-time hidden Markov model is the extension of CTMP \ref{sec:ctmp}, where the states in times $\matr{T} = ( t_0, t_1, \dots, t_{\nu} )$ are not directly observed, just seen as the observation symbols sequence $\matr{O} = (  o_0, o_1, \dots, o_{\nu} )$, emitted by the current state $s_i$ with the probability $b_i(o)$.
 The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be similar to the $\mathcal{L}_{FO}$ of CTMP \eqref{eq:CL1} \eqref{eq:CL2} with the difference we need to take into account the probability of actual observation.
 
 \begin{equation}\label{eq:HMCL1}
@@ -934,16 +934,31 @@ The code, tutorial and documentation to the library can be found in supplementar
 
 \section{About Library}
 
-The goal was to create a library, that can be used by broad range of users. Such a library should be written in the well known programming language. It should be easy to install and also it should have the introductory tutorial, that would help to get orientation in the most of the library functionality. 
+The goal was to create a library, that can be used by broad range of users. Such a library should be written in the well known programming language. It should be easy to install and also it should have introductory tutorial, that would help to get orientation in the most of the library functionality. 
 
 To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip}. %TODO [link to pip]. 
 
-The continuous-time hidden Markov model parameter estimation is computationally highly demanding. The using of the plain \textit{Python} would make it cumbersome. To deal with the issue, we have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} \cite{Sc01} for the implementation of \textit{exmp} algorithm. To make the computational performance even higher, we have decided to code all the most demanding parts in \textit{Cython} [http://cython.org/]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.
+The continuous-time hidden Markov model parameter estimation is computationally highly demanding. The using of the plain \textit{Python} would make it cumbersome. To deal with the issue, we have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} \cite{Sc01} for the implementation of \textit{exmp} algorithm. To make the computational performance even higher, we have decided to code all the most demanding parts in \textit{Cython} [http://cython.org/ TODO]. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.
 
 The best way how to learn to use the library is follow the code examples. That's way we have decided to create \textit{IPython} notebook with library usage examples, covering all the main use-cases of the library. Reading it, the follower can get the understanding how to correctly use the library and learn, what features are supported.          
 
+\section{Library Functionality}
 
-\section{Logarithmic Probabilities}
+The library implements discrete-time and continuous-time hidden Markov models. Most of the functions are available for both models, sometimes their input parameters or implementation details can differ depending on the model characteristic. 
+
+\subsection{Models Initialization}
+
+New model can be created directly by passing its parameter. $\boldsymbol\theta = ( \matr{A}, \matr{B}, \boldsymbol\pi )$ for the discrete-time model \ref{sec:dthmm} and $\boldsymbol\theta = ( \matr{Q}, \matr{B}, \boldsymbol\pi )$ for the continuous-time model \ref{sec:cthmm1}. The jump rate matrix $\matr{Q}$ can be defined as sparse by setting its elements to zero. The algorithm automatically recognizes such elements and spares the computational demands \ref{sec:alg}.
+
+Other way to initialize the models is set the parameters randomly. The procedure just need to enter the number of hidden states and number of observation symbols. The random initialization is useful for training of the new models to much the dataset or for the experimental purposes. The random initialization of the continuous-time model is optional by uniform or exponential distribution.
+
+It is also possible to read model parameters from file or write them to the file. We have used standard \textit{.npz} format for storing multiple NumPy matrices or arrays.      
+ 
+
+
+\section{Implementation Details}
+
+\subsection{Logarithmic Probabilities}
 
 The probability values obtained in the hidden Markov models can often get extremely small. Using the standard data-types, it could fast reach the underflow. Even the short sequences of few hidden states can underflow, if proper conditions are met. 
 
@@ -955,7 +970,7 @@ More appropriate is to use log-probabilities \eqref{eq:logprob}. This makes the 
 \mathrm{log}(\mathrm{p}_1\mathrm{p}_2) = \mathrm{log}(\mathrm{p}_1) + \mathrm{log}(\mathrm{p}_2)
 \end{equation}   
 
-\section{"Log-sum-exp" Trick}
+\subsection{"Log-sum-exp" Trick}
 
 The log-probabilities work great for multiplication and division, but the problem appears, once we need to sum the probabilities. The so called "log-sum-exp" trick can be used to deal with the issue. 
 
@@ -981,7 +996,7 @@ This approach only dismiss the elements, that are relatively for data-type maxim
 %..stop at the end of convergence
 %second derivative is not monotonous. 
 
-\section{The Sparse Jump-Rate Matrix}
+\subsection{The Sparse Jump-Rate Matrix}
 
 The time-complexity of the CT-HMM EM algorithm can shrink, when using the sparse matrix, as described in Section \ref{it:ctc}. The implementation take advantage of it, but not in the term of the theoretical complexity, since it is still cycling trough all the matrix elements. The algorithm just stop to perform the body of the cycle. Such solution may seems to be less effective in the terms of theoretical time-complexity. The number of states under the real conditions is not bigger than hundreds, so just cycling through all the matrix elements is utterly negligible, comparing the matrix exponentiations taking part in the body of the cycle.  
 
@@ -1003,6 +1018,7 @@ Comparison of the discrete and continuous-time HMM convergences at the equivalen
 Examination of the time complexity and comparison with theoretical expectations.
 \item \textbf{Numerical Stability} \\
 Comparison of the \textit{float-interval} and \textit{integer-interval} method from the point of numerical stability.
+\item \textbf{TODO}
 \item \textbf{Hidden States Number} \\
 Examination of the models behavior, when trained with different numbers of hidden states.
 
