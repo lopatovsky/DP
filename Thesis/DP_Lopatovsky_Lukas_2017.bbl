@@ -50,9 +50,20 @@ Jones, E.; Oliphant, T.; Peterson, P.; etc.: {SciPy}: Open source scientific
 Karlin, S.; Taylor, H.~E.: \emph{A second course in stochastic processes}.
   Elsevier, 1981.
 
+\bibitem{Le11}
+Leiva-Murillo, J.; Rodrguez, A.; Baca-Garca, E.: Visualization and prediction
+  of disease interactions with continuous-time hidden markov models. In
+  \emph{NIPS 2011 Workshop on Personalized Medicine}, 2011.
+
 \bibitem{Li14}
 Little, R.~J.; Rubin, D.~B.: \emph{Statistical analysis with missing data}.
   John Wiley \& Sons, 2014.
+
+\bibitem{Li13}
+Liu, Y.-Y.; Ishikawa, H.; Chen, M.; etc.: Longitudinal modeling of glaucoma
+  progression using 2-dimensional continuous-time hidden markov model. In
+  \emph{International Conference on Medical Image Computing and
+  Computer-Assisted Intervention}, Springer, 2013, pp. 444--451.
 
 \bibitem{Li15}
 Liu, Y.-Y.; Li, S.; Li, F.; etc.: Efficient learning of continuous-time hidden
@@ -72,5 +83,10 @@ Rabiner, L.~R.: A tutorial on hidden Markov models and selected applications in
 \bibitem{Va78}
 Van~Loan, C.: Computing integrals involving the matrix exponential. \emph{IEEE
   transactions on automatic control}, volume~23, no.~3, 1978: pp. 395--404.
+
+\bibitem{Zr10}
+Zraiaa, M.: \emph{Hidden Markov Models : A Continuous-Time Version of the
+  Baum-Welch Algorithm}. Master's thesis, Imperial College London, Department
+  of computing, United Kingdom, 2010.
 
 \end{thebibliography}
