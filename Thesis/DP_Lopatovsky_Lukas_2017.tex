@@ -87,25 +87,12 @@ The main advantage of the CT-HMM is that its observation doesn't need to form eq
 
 The cost for the higher flexibility of the model is more complex inference procedure. There is not just the unknown hidden states in observation points, but also the unknown time and number of state transition. Older attempts to solve the model parameter estimation have only worked for restricted number of hidden states \cite{Zr10} \cite{Ja11}. There were a need for more effective learning algorithm as the older approaches based on the direct maximizing of the data likelihood, summing the probability through all possible hidden state sequences were limited to the 3-state model \cite{Li13}.    
 
-The expectation maximization framework for the continuous-time Markov process and Bayesian networks in general was introduce in Article \cite{No12}. It was later extended to CT-HMM with the first proposed efficient algorithm in Article \cite{Li15}. The the article propose various methods for counting of matrix exponentiation.  Eigendecomposition used in article \cite{Wa14}. ...TODO     
+The expectation maximization (EM) framework for the continuous-time Markov process and Bayesian networks in general was introduce in Article \cite{No12}. It was later extended to CT-HMM with the first proposed efficient EM algorithm in Article \cite{Li15}. The method is based on the computation of expected state transition and expected time spend in the state. That lead to the problem of solving integrals of matrix exponentials, what is the most computationally demanding part of the method. Various methods were used to solve it. \textit{Eigendecomposition} was used in article \cite{Wa14}. However according \cite{Li15} it can't be used for general jump-rate matrix, what makes it unusable in practice. Two other methods was introduced in \cite{Li15}. Direct truncation of the infinite sum expansion of the exponential (referred to as \textit{Unif}) and matrix exponentiation on an auxiliary matrix (referred to as \textit{Expm} ). The \textit{Unif} method was marked as unstable later in the article, whereas \textit{Expm} as being most robust and time efficient and able to compute models with hundreds of hidden states.      
 
--vyuzitia odpisane od clankov + glaukoma + diplomovka London. 
+There was an effective theoretical solution, but it didn't exist any publicly available implementation that would be available for general people. Our intention was to create a first of its kind library, that implements the state-of-the-art methods for CT-HMM, is easy and fast understandable and is licensed as open source so it can be used and improved by everyone. 
 
--odkaz na prace co robili cthmm . odkaz na EM algoritmus pre chain. 
-
-	
-\section{Motivation and objectives}
-	About a discrete model [inspired by Rabiner? ] and why it is not satisfactory  %(as http://delivery.acm.org/10.1145/350000/343402/p162-aziz.pdf?ip=147.32.98.33&id=343402&acc=ACTIVE%20SERVICE&key=D6C3EEB3AD96C931%2E9BD1EC80ACA8C1C5%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=702042173&CFTOKEN=62280276&__acm__=1481276923_1a71eb623e1c42d4c8e9b84178eb248f)	
-	Add articles and DP that have done it before - less or more successfully 
-	
-The figure example \ref{fig:gb}.
-
-CT-HMM is the natural extension of discrete-time model, that ..
-
-%\section{Continuous-Time Hidden Markov Model}
-[move or delete]When we mention continuous-time hidden Markov model, we consider its finite states variant. Also the infinite states models exist, but they are out of the scope for these thesis.[]
-
-
+As the result of these thesis, we have defined the theory of the hidden Markov Models (Chapter \textbf{Probabilistic Models} \ref{ch:pm}), described and explained the HMMs algorithms (Chapter \textbf{Statistics} \ref{ch:s} ), implemented the general efficient HMM library for Python (Details in Chapter \textbf{Implementation} \ref{ch:i} ). The library implement both discrete-time and continuous-time HMM, provide all useful methods for work with the models as well as all algorithms described in second chapter, and as the key feature contains the EM algorithm for continuous-time HMM parameters estimation. We have implemented various variants of \textit{Expm} algorithm. User can choose between \textit{soft} and \textit{hard} method \ref{sec:shm}, \textit{float-interval} and \textit{integer-interval} variant of algorithm \ref{sec:alg} and train with both full and sparse jump-rate matrix.      
+ 	
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{img/ps.jpg}
@@ -118,7 +105,7 @@ CT-HMM is the natural extension of discrete-time model, that ..
 
 \setsecnumdepth{all}
 
-\chapter{Probabilistic Models}
+\chapter{Probabilistic Models}\label{ch:pm}
 
 Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we will briefly explain its discrete-time variant, usually just referred to as Hidden Markov Model (HMM or DT-HMM), starting by explaining the underlaying Markov process. We find it as logical hierarchy as the CT-HMM is the natural extension of the discrete model, sharing many ideas and subroutines and Markov process is base building block of overall model. The main reference for the DT-HMM was the tutorial article \cite{Ra89}, where more detailed descriptions and examples can be found. The CT-HMM is like the one described in article \cite{Li15}.
 
@@ -382,7 +369,7 @@ The likelihood of the completely observed system  $\mathcal{L}_{FO}$ will be sim
 There is much more latent information in such defined model. Not just the hidden states, but also the unknown transition times and unknown state sojourn time (how long will the system remain in the state).
 Sometimes state can change, without emitting a single observation. The large number of hidden information make it to be more complex problem then the discrete time model.
 
-\chapter{Statistics}
+\chapter{Statistics}\label{ch:s}
 
 
 \section{Expectation-Maximization Algorithm}\label{ch:EM}
@@ -939,7 +926,7 @@ In the discrete-time algorithm the biggest array is the one for storing double s
 
 In the continuous time model there are more arrays of size $n^2\nu$ and the array of size $n^4$ to store precomputed matrix exponentials. So the final memory complexity is $\mathcal{O}( n^2\nu + n^4 )$.
 
-\chapter{Implementation}
+\chapter{Implementation}\label{ch:i}
 
 The chapter discuss chosen technology and specific details of implementation. 
 The code, tutorial and documentation to the library can be found in supplementary materials.
@@ -983,7 +970,7 @@ We use EM algorithms to estimate the models parameters. The Baum-welch algorithm
 The Baum-welch algorithm function can optionally return the probability estimation sequence containing the measures for every iteration. It is useful for plotting algorithm convergences and deciding, when is the best time to stop the algorithm. To use the algorithm for the training, we need to pass the dataset of observation and for continuous-time model also time sequences. They can be passed in the form of NumPy matrices or as list of NumPy arrays. The second approach enable the training with sequences of different lengths.
 
 The continuous-time algorithm is implemented in multiple variants. The soft or hard method can be used as described in Section \ref{sec:shm}. The optional boolean parameter can be set to enable fast convergence. The fast convergence use, if possible the integer variant of the algorithm. If the option is set to false, algorithm always use the float variant. The integer and float variant of the algorithm are described in Section \ref{sec:alg}. 
-Soft method and fast option are set to true by default, because they are given best expected results and time efficiency \ref{sec:exper}.
+Soft method and fast option are set to true by default, because they are given best expected results and time efficiency \ref{ch:e}.
 
 \section{Implementation Details}
 
@@ -1033,7 +1020,7 @@ The time-complexity of the CT-HMM EM algorithm can shrink, when using the sparse
 %TODO Tahle kapitola je poměrně krátká... Chtělo by to popsat základní funkcionality, které jste implementoval. Tj. jaké funkce a co počítají. Aby měl čtenář představu...
  
  
-\chapter{Experiments}\label{sec:exper}
+\chapter{Experiments}\label{ch:e}
 
 
 %TODO Intel(R) Core(TM) i5-2520M CPU @ 2.50GHz
