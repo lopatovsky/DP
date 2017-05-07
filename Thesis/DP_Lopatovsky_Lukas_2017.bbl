@@ -28,6 +28,11 @@ Dempster, A.~P.; Laird, N.~M.; Rubin, D.~B.: Maximum likelihood from incomplete
 Do, C.~B.; Batzoglou, S.: What is the expectation maximization algorithm?
   \emph{Nature biotechnology}, volume~26, no.~8, 2008: p. 897.
 
+\bibitem{Hi05}
+Higham, N.~J.: The scaling and squaring method for the matrix exponential
+  revisited. \emph{SIAM Journal on Matrix Analysis and Applications},
+  volume~26, no.~4, 2005: pp. 1179--1193.
+
 \bibitem{Hi08}
 Higham, N.~J.: \emph{Functions of matrices: theory and computation}. SIAM,
   2008.
@@ -40,6 +45,10 @@ Hobolth, A.; Jensen, J.~L.: Summary statistics for endpoint-conditioned
 \bibitem{Ho05}
 Hobolth, A.; Jensen, J.~L.; etc.: \emph{Statistical inference in evolutionary
   models of DNA sequences via the EM algorithm}. University of Aarhus, 2005.
+
+\bibitem{Ja11}
+Jackson, C.~H.; etc.: Multi-state models for panel data: the msm package for R.
+  \emph{Journal of Statistical Software}, volume~38, no.~8, 2011: pp. 1--29.
 
 \bibitem{Sc01}
 Jones, E.; Oliphant, T.; Peterson, P.; etc.: {SciPy}: Open source scientific
@@ -88,6 +97,11 @@ Rabiner, L.~R.: A tutorial on hidden Markov models and selected applications in
 \bibitem{Va78}
 Van~Loan, C.: Computing integrals involving the matrix exponential. \emph{IEEE
   transactions on automatic control}, volume~23, no.~3, 1978: pp. 395--404.
+
+\bibitem{Wa14}
+Wang, X.; Sontag, D.; Wang, F.: Unsupervised learning of disease progression
+  models. In \emph{Proceedings of the 20th ACM SIGKDD international conference
+  on Knowledge discovery and data mining}, ACM, 2014, pp. 85--94.
 
 \bibitem{Zr10}
 Zraiaa, M.: \emph{Hidden Markov Models : A Continuous-Time Version of the

@@ -7,7 +7,7 @@ def plot_tables():
 
     s = np.loadtxt("sparse", delimiter=',')
     d = np.loadtxt("dense", delimiter=',')
-    Xs = range(5,140,5)
+    Xs = range(5,175,5)
     Xd = range(5,80,5)
 
     fig = plt.figure()
@@ -17,7 +17,7 @@ def plot_tables():
     ax.set_ylabel('time [s]')
 
     plt.plot( Xs , s, label = "sparse matrix"  )
-    plt.plot( Xd , d, label = "dense matrix"  )
+    plt.plot( Xd , d, label = "full matrix"  )
     plt.legend()
     fig.show()
     input()
