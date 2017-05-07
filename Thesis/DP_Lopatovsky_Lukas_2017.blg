@@ -3,49 +3,50 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: DP_Lopatovsky_Lukas_2017.aux
 The style file: iso690.bst
 Database file #1: bibliography.bib
-Warning--I didn't find a database entry for "Ho03"
+Warning--I didn't find a database entry for "Ja11"
+Warning--I didn't find a database entry for "Wa14"
 Warning--I didn't find a database entry for "TODO"
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Warning--empty pages in Le11
-You've used 17 entries,
+You've used 18 entries,
             3151 wiz_defined-function locations,
-            780 strings with 8279 characters,
-and the built_in function-call counts, 9186 in all, are:
-= -- 676
-> -- 294
+            788 strings with 8483 characters,
+and the built_in function-call counts, 9614 in all, are:
+= -- 705
+> -- 315
 < -- 22
-+ -- 154
-- -- 84
-* -- 498
-:= -- 1019
-add.period$ -- 34
-call.type$ -- 17
-change.case$ -- 81
++ -- 165
+- -- 90
+* -- 520
+:= -- 1071
+add.period$ -- 36
+call.type$ -- 18
+change.case$ -- 86
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 877
-empty$ -- 843
-format.name$ -- 97
-if$ -- 2018
+cite$ -- 19
+duplicate$ -- 919
+empty$ -- 879
+format.name$ -- 104
+if$ -- 2107
 int.to.chr$ -- 0
-int.to.str$ -- 17
-missing$ -- 204
-newline$ -- 62
-num.names$ -- 34
-pop$ -- 445
+int.to.str$ -- 18
+missing$ -- 215
+newline$ -- 65
+num.names$ -- 36
+pop$ -- 473
 preamble$ -- 1
-purify$ -- 71
+purify$ -- 76
 quote$ -- 0
-skip$ -- 411
+skip$ -- 427
 stack$ -- 0
-substring$ -- 394
-swap$ -- 493
+substring$ -- 399
+swap$ -- 511
 text.length$ -- 22
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 60
+type$ -- 64
 warning$ -- 1
-while$ -- 62
-width$ -- 19
-write$ -- 158
-(There were 3 warnings)
+while$ -- 64
+width$ -- 20
+write$ -- 166
+(There were 4 warnings)
