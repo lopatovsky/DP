@@ -371,7 +371,7 @@ Let's have $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (obser
 %Notice that we are using the log-likelihood to avoid underflow of parameters values that could otherwise easily arise during the computation.  
 
 \begin{enumerate}
-\item \textbf{Initialization:} We will make initial guess of the parameters $\matr{ \boldsymbol{\hat \theta_{0} }} $.
+\item \textbf{Initialization:} Make initial guess of the parameters $\matr{ \boldsymbol{\hat \theta_{0} }} $.
 \end{enumerate} 
 
 We will continue by iterating through two following steps: 
@@ -677,7 +677,7 @@ For the EM parameters estimation in DT-HMM, we have used the well known Baum-Wel
 
 The estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model, because the state transitions do not depend on the observation times and there can even be more of them between two consecutive observations. The following method proposed in the article \cite{Li15}, was the first which could efficiently solve the issue.        
 
-The expectation step will be the log-likelihood of the model. Simply just the logarithm of the full observation probability function \eqref{eq:HMCL1}.
+In the expectation step we will calculate the expected value for logarithm of fully observable likelihood function \eqref{eq:HMCL1} given the model parameters and observation sequences.
 
 \begin{equation}\label{eq:EMCTHMM}
 \begin{aligned}  
