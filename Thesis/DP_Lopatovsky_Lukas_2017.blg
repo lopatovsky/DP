@@ -6,45 +6,45 @@ Database file #1: bibliography.bib
 Warning--I didn't find a database entry for "TODO"
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Warning--empty pages in Le11
-You've used 21 entries,
+You've used 23 entries,
             3151 wiz_defined-function locations,
-            803 strings with 8945 characters,
-and the built_in function-call counts, 11375 in all, are:
-= -- 842
-> -- 357
-< -- 29
-+ -- 187
-- -- 102
-* -- 621
-:= -- 1257
-add.period$ -- 42
-call.type$ -- 21
-change.case$ -- 99
+            817 strings with 9200 characters,
+and the built_in function-call counts, 12311 in all, are:
+= -- 905
+> -- 385
+< -- 32
++ -- 201
+- -- 110
+* -- 673
+:= -- 1359
+add.period$ -- 46
+call.type$ -- 23
+change.case$ -- 107
 chr.to.int$ -- 0
-cite$ -- 22
-duplicate$ -- 1091
-empty$ -- 1043
-format.name$ -- 118
-if$ -- 2499
+cite$ -- 24
+duplicate$ -- 1187
+empty$ -- 1135
+format.name$ -- 128
+if$ -- 2702
 int.to.chr$ -- 0
-int.to.str$ -- 21
-missing$ -- 252
-newline$ -- 74
-num.names$ -- 42
-pop$ -- 547
+int.to.str$ -- 23
+missing$ -- 276
+newline$ -- 80
+num.names$ -- 46
+pop$ -- 600
 preamble$ -- 1
-purify$ -- 87
+purify$ -- 95
 quote$ -- 0
-skip$ -- 504
+skip$ -- 540
 stack$ -- 0
-substring$ -- 498
-swap$ -- 617
-text.length$ -- 29
+substring$ -- 527
+swap$ -- 669
+text.length$ -- 32
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 76
+type$ -- 82
 warning$ -- 1
-while$ -- 79
-width$ -- 23
-write$ -- 194
+while$ -- 86
+width$ -- 25
+write$ -- 211
 (There were 2 warnings)

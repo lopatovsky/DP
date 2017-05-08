@@ -64,9 +64,10 @@
 \supervisor{Ing. Daniel Va{\v s}ata, Ph.D.}
 \acknowledgements{I would like to express my gratitude to my supervisor Ing. Daniel Va{\v s}ata, Ph.D. for the useful comments, remarks and engagement through the learning process of this master thesis. Furthermore I would like to thanks to Ing. Tomáš Šabata for introducing me to this interesting topic and to the Datamole Ltd. for the support of open-source development. }
 \abstractEN{ The continuous-time hidden Markov model is the promising model not only for the biomedical research. The lack of efficient learning algorithms has limited its use in the past. However, recently the new efficient EM approaches were presented. In this thesis we are examining and comparing current state-of-the-art methods that are able to train models containing hundreds of hidden states. As the part of the work we have developed the general purpose continuous-time and discrete-time hidden Markov model library effectively implementing the best performing learning methods that is easy to use and available for everyone under open-source license. }
-\abstractCS{ Skrytý Markovův model spojitého času je slibným modelem s využitím nejen pro biomedicínský výzkum. Nedostatek efektivních algoritmů strojového učení v minulosti výrazne omezoval jeho použití. Nedávno však byly prezentovány nové efektivní přístupy využivajíci EM algoritmus. V této diplomové práci zkoumáme a srovnáváme současné moderní metody, které jsou schopné vycvičit modely obsahující až stovky skrytých stavů. Jako součást práce jsme vyvinuli univerzální knihovnu pro skrytý Markovův model spojitého a diskrétniho času, která efektivně implementuje nejslibnější učební metody. Knihovna je snadno použitelné a dostupná všem uživatelům pod licencí open-source.}
+
+\abstractCS{ Skrytý Markovův proces se spojitým časem je slibným modelem s využitím nejen pro biomedicínský výzkum. Nedostatek efektivních algoritmů pro jeho učení v minulosti výrazne omezoval jeho použití. Nedávno však byly prezentovány nové efektivní metody založené na EM algoritmu. V této diplomové práci zkoumáme a srovnáváme současné moderní metody, které jsou schopné vycvičit modely obsahující až stovky skrytých stavů. Jako součást práce jsme vyvinuli univerzální knihovnu pro skrytý Markovův proces se spojitým a diskrétním časem, která efektivně implementuje nejslibnější učební metody. Knihovna je snadno použitelná a dostupná všem uživatelům pod licencí open-source.}
 \placeForDeclarationOfAuthenticity{Prague}
-\keywordsCS{ skrytý Markovův model, skrytý Markovův model spojitého času, strojové učení.}
+\keywordsCS{ skrytý Markovův proces, skrytý Markovův proces se spojitým časem, strojové učení.}
 \keywordsEN{ HMM, CT-HMM, hidden Markov model, continuous-time hidden Markov model, EM, HMMs, machine learning.}
 \declarationOfAuthenticityOption{5} %select as appropriate, according to the desired license (integer 1-6)
 % \website{http://site.example/thesis} %optional thesis URL
@@ -1078,15 +1079,15 @@ For example, the average convergence from the first experiment \ref{fig:avgc} is
 
 \begin{figure}
 \centering
-\begin{minipage}{.8\textwidth}
+\begin{minipage}{1\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex1/g1.png}
   \captionof{figure}{Convergence }
   \label{fig:sr50}
 \end{minipage}
-\begin{minipage}{.8\textwidth}
+\begin{minipage}{1\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex1/g2.png}
+  \includegraphics[width=1\linewidth]{img/ex1/g2.png}
   \captionof{figure}{Average of the convergences from various random starting points}
   \label{fig:avgc}
 \end{minipage}
@@ -1094,15 +1095,15 @@ For example, the average convergence from the first experiment \ref{fig:avgc} is
 
 \begin{figure}
 \centering
-\begin{minipage}{.8\textwidth}
+\begin{minipage}{1\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex1/g3.png}
   \captionof{figure}{Average of the convergences for various generated datasets}
   \label{fig:all}
 \end{minipage}
-\begin{minipage}{.8\textwidth}
+\begin{minipage}{1\textwidth}
   \centering
-  \includegraphics[width=.95\linewidth]{img/ex1/g4.png}
+  \includegraphics[width=1\linewidth]{img/ex1/g4.png}
   \captionof{figure}{Average of the convergences for various generated datasets (zoom)}
   \label{fig:random}
 \end{minipage}
@@ -1146,13 +1147,13 @@ The increase of the dataset size caused the larger gap among the whole algorithm
 
 \begin{figure}
 \centering
-\begin{subfigure}{.8\textwidth}
+\begin{subfigure}{1\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex2/small.png}
   \caption{Small dataset}
   \label{fig:e2small}
 \end{subfigure}
-\begin{subfigure}{.8\textwidth}
+\begin{subfigure}{1\textwidth}
   \centering
   \includegraphics[width=\linewidth]{img/ex2/big.png}
   \caption{Big dataset}
@@ -1185,7 +1186,7 @@ Contrary to initial expectation both float and integer interval algorithm comput
 
 \begin{figure}[h]
 \centering
-\begin{minipage}{.8\textwidth}
+\begin{minipage}{1\textwidth}
   \centering
   \includegraphics[width=1.0\linewidth]{img/ex2/log.png}
   \captionof{figure}{log.}
@@ -1227,19 +1228,19 @@ The measured relative error of jump-rate matrices seems to grow faster at the be
 
 \begin{figure}
 \centering
-\begin{subfigure}{.7\textwidth}
+\begin{subfigure}{.9\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex3/0_1.png}
   \caption{ $\lambda = 0.1$ }
   \label{fig:l1}
 \end{subfigure}
-\begin{subfigure}{.7\textwidth}
+\begin{subfigure}{.9\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex3/00_1.png}
   \caption{$\lambda = 0.01$}
   \label{fig:l2}
 \end{subfigure}
-\begin{subfigure}{.7\textwidth}
+\begin{subfigure}{.9\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex3/000_1.png}
   \caption{$\lambda = 0.001$}
@@ -1327,15 +1328,15 @@ On the contrary the convergence lines plotting the training on the \textit{big} 
 
 \begin{figure}
 \centering
-\begin{subfigure}{.8\textwidth}
+\begin{subfigure}{1\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex5/train_small.png}
+  \includegraphics[width=1\linewidth]{img/ex5/small_train.png}
   \caption{Performance on the \textit{small} training dataset}
   \label{fig:smtrain}
 \end{subfigure}
-\begin{subfigure}{.8\textwidth}
+\begin{subfigure}{1\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex5/test_small.png}
+  \includegraphics[width=1\linewidth]{img/ex5/small_test.png}
   \caption{Performance on the testing dataset}
   \label{fig:smtest}
 \end{subfigure}
@@ -1345,15 +1346,15 @@ On the contrary the convergence lines plotting the training on the \textit{big} 
 
 \begin{figure}
 \centering
-\begin{subfigure}{.8\textwidth}
+\begin{subfigure}{1\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex5/train_big.png}
+  \includegraphics[width=1\linewidth]{img/ex5/big_train.png}
   \caption{Performance on the \textit{big} training dataset}
   \label{fig:bgtrain}
 \end{subfigure}
-\begin{subfigure}{.8\textwidth}
+\begin{subfigure}{1\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{img/ex5/test_big.png}
+  \includegraphics[width=1\linewidth]{img/ex5/big_test.png}
   \caption{Performance on the testing dataset}
   \label{fig:bgtest}
 \end{subfigure}

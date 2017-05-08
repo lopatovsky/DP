@@ -28,6 +28,10 @@ Dempster, A.~P.; Laird, N.~M.; Rubin, D.~B.: Maximum likelihood from incomplete
 Do, C.~B.; Batzoglou, S.: What is the expectation maximization algorithm?
   \emph{Nature biotechnology}, volume~26, no.~8, 2008: p. 897.
 
+\bibitem{Gr01}
+Grimmett, G.; Stirzaker, D.: \emph{Probability and random processes}. Oxford
+  university press, 2001.
+
 \bibitem{Hi05}
 Higham, N.~J.: The scaling and squaring method for the matrix exponential
   revisited. \emph{SIAM Journal on Matrix Analysis and Applications},
@@ -83,6 +87,11 @@ Liu, Y.-Y.; Li, S.; Li, F.; etc.: Efficient learning of continuous-time hidden
 Metzner, P.; Horenko, I.; Sch{\"u}tte, C.: Generator estimation of Markov jump
   processes based on incomplete observations nonequidistant in time.
   \emph{Physical Review E}, volume~76, no.~6, 2007: p. 066702.
+
+\bibitem{Mo03}
+Moler, C.; Van~Loan, C.: Nineteen dubious ways to compute the exponential of a
+  matrix, twenty-five years later. \emph{SIAM review}, volume~45, no.~1, 2003:
+  pp. 3--49.
 
 \bibitem{No12}
 Nodelman, U.; Shelton, C.~R.; Koller, D.: Expectation maximization and complex
