@@ -59,9 +59,9 @@ Jones, E.; Oliphant, T.; Peterson, P.; etc.: {SciPy}: Open source scientific
   tools for {Python}. 2001--, [Online; accessed 2017-05-03].
 \urlprefix\biburl{http://www.scipy.org/}
 
-\bibitem{Ka81}
-Karlin, S.; Taylor, H.~E.: \emph{A second course in stochastic processes}.
-  Elsevier, 1981.
+\bibitem{Ka75}
+Karlin, S.; Taylor, H.~E.: \emph{A first course in stochastic processes, second
+  edition}. Academic Press, 1975.
 
 \bibitem{Le11}
 Leiva-Murillo, J.; Rodrguez, A.; Baca-Garca, E.: Visualization and prediction

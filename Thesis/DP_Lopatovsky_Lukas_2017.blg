@@ -8,7 +8,7 @@ Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Warning--empty pages in Le11
 You've used 23 entries,
             3151 wiz_defined-function locations,
-            817 strings with 9200 characters,
+            817 strings with 9221 characters,
 and the built_in function-call counts, 12311 in all, are:
 = -- 905
 > -- 385

@@ -104,7 +104,7 @@ Before we start to talk about Continuous-time Hidden Markov Model (CT-HMM), we w
 
 \section{Discrete-time Markov Process}\label{sec:DMP}
     
-Discrete-time Markov process (also referred to as Markov chain) \cite{TODO} is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ 0, 1, 2, \dots \}$, that in every time-step occupies some state of the potentially infinite state set. However, later in the text, we consider restricted definition for the finite state sets $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$.  The process being in time $t_i \in \matr{T}$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. Probability that the process changed from state $s_i$ to state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form square matrix of size $n$ - the transition probabilities matrix $\matr{A}$ . Note that elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
+Discrete-time Markov process (also referred to as Markov chain) \cite{Gr01} is the stochastic process $X_t$ in discrete equidistant time $\matr{T} = \{ 1, 2, 3 \dots \}$, that in every time-step occupies some state of the potentially infinite state set. However, later in the text, we consider restricted definition for the finite state sets $\mathcal{S} = \{ s_1, s_2, \dots, s_n\}$.  The process being in time $t_i \in \matr{T}$ in the state $s_j$ will be denoted as $X_{t_i} = s_j$. The state of the process can change in every time-step. Probability that the process changed from state $s_i$ to state $s_j$ is called transition probability. We will refer to it as $a_{ij}$. The transition probabilities for all pairs of states can form square matrix of size $n$ - the transition probabilities matrix $\matr{A}$ . Note that elements on its diagonal, although referred to as transition probabilities, represent the probabilities of the process remaining in the same state.
 
 The Markov process is memory-less, not holding information about the past states. So the probability of next transition depends only on the current state. This characteristic is called the Markov property and can be expressed by the following equation.
 
@@ -157,13 +157,13 @@ $\matr{B} = \{ b_{i}(k) \}$, where $b_{i}(k)$ is the probability that the observ
 b_i(k) = \mathrm{P}( O_t = v_k  \mid X_t = s_i), \qquad 1 \leq i \leq n, \quad 1 \leq k \leq m
 \end{equation}
 \item \textbf{Initial state distribution} \\
-$\pi = \{ \pi_i \}$, where $\pi_i$ is the probability of the initial state being $s_i$.
+$\boldsymbol\pi = \{ \boldsymbol\pi_i \}$, where $\boldsymbol\pi_i$ is the probability of the initial state being $s_i$.
 \begin{equation}
-\pi_{i} = \mathrm{P}(X_0 = s_i), \qquad 1 \leq i \leq n
+\boldsymbol\pi_{i} = \mathrm{P}(X_1 = s_i), \qquad 1 \leq i \leq n
 \end{equation}
 \end{enumerate}
 
-For the convenience we will declare parameter $\matr{\theta} = (\matr{A},\matr{B},\pi)$, compactly denoting the set of all parameters of the model. 
+For the convenience we will declare parameter $\boldsymbol{\theta} = (\matr{A},\matr{B},\boldsymbol\pi)$, compactly denoting the set of all parameters of the model. 
 
 \section{Continuous-Time Markov Process}\label{sec:ctmp}
 
@@ -197,7 +197,7 @@ The property describes that the stochastic process is memoryless.
 \end{description}
  
 
-The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), i,j = 1,\dots,n$ satisfies following conditions: \cite{Ka81}
+The upper mentioned conditions assert, that the transition probability $\mathrm{p_{ij}}(t), i,j = 1,\dots,n$ satisfies following conditions: \cite{Ka75}
 
 
 \begin{equation}
@@ -221,11 +221,10 @@ We can define the matrix $\matr{P_t}$, where the entry $(i,j)$ is $\mathrm{p_{ij
 
 \subsection{ Jump Rates }
 
-Using the \textit{Chapman-Kolmogorov equation} \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$. 
-%cit[vytistena st. kniha]
+Using the \textit{Chapman-Kolmogorov equation} \eqref{eq:ckeq}, if we know the probability $\mathrm{p_{ij}}(t)$ for every states $i,j$ and time $0 < t < t_0$, we are able to compute the values for any time $t > 0$ \cite{Ka75}. 
 
-The property \eqref{eq:l0}  asserts that $\mathrm{p_{ij}}(t)$ is continuous for $t=0$. It can be showed from equation \eqref{eq:ckm}, after assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
-Moreover from \eqref{eq:ckm} follows that $\mathrm{p_{ij}}(t)$ is continuous for all $t>0$ \cite{Ka81} and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_{ij}}(t)$ for any given time $t>0$.   
+State transition probability $\mathrm{p_{ij}}(t)$ is continuous for $t=0$. After assigning $t=0$ we will get identity matrix $\matr{P_0} = \matr{I}$.
+Moreover from \eqref{eq:ckm} follows that $\mathrm{p_{ij}}(t)$ is continuous for all $t>0$  and so that there exists the right derivative in 0. This knowledge enables us to determine the $\mathrm{p_{ij}}(t)$ for any given time $t>0$.   
 
 \begin{equation}
 q_{ij} =  \left.\frac{\mathrm{d}\mathrm{p_{ij}}(t)}{\mathrm{dt}} \,\right|_{t=0} 
@@ -286,15 +285,18 @@ Now we can derive the equation for probability of transition from state $s_i$ to
 \end{aligned}
 \end{equation} 
 
-%TODO \matr{Q} = \lambda( \matr{A} - \matr{I} )
+By derivative of $ \mathrm{p_t(i,j)} $ with respect to $t$ at $0$, we get the following equation for jump-rate matrix $\matr{Q}$ \cite{Gr01}.  
 
+\begin{equation}
+\matr{Q} = \lambda( \matr{A} - \matr{I} )
+\end{equation}
 
 
 
 \subsection{ Fully Observable Continuous-Time Markov Process }
 %ref Yu-Ying Liu
 
-Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0^{'}, x_1^{'}, \dots, x_{\nu^{'}}^{'} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$) which is the probability of TODO the state sequence $\matr{X^{'}}$ and the time sequence $\matr{T^{'}}$ are generated by the model with parameters $\matr{Q}$. 
+Let's have continuous time Markov process on the state space $\mathcal{S}$, with the jump rates in the matrix $\matr{Q}$, initial state probability distribution $\boldsymbol\pi$ and the known hidden state sequence $\matr{X^{'}}= ( x_0^{'}, x_1^{'}, \dots, x_{\nu^{'}}^{'} ) $ occurring with transitions in times $\matr{T^{'}} = ( t_0^{'}, t_1^{'}, \dots, t_{\nu^{'}}^{'} )$. Such a system, where we know, when and where the transition will happen is called fully observable and we can count its complete likelihood ($\mathcal{L}_{FO}$) which is the probability of TODO the state sequence $\matr{X^{'}}$ and the time sequence $\matr{T^{'}}$ are generated by the model with parameters $\matr{Q}$. 
 
 \begin{equation}\label{eq:CL1}
 \begin{aligned}
@@ -377,7 +379,7 @@ Let's have $\mathbf{x} = (x_{1},x_{2},\dotsc,x_{n})$ containing the known (obser
 We will continue by iterating through two following steps: 
 
 \begin{enumerate}[resume]
-\item \textbf{Expectation:} Calculate the expected value of the log-likelihood function $\log\mathcal{L}(\mathbf{x},\mathbf{z}; \boldsymbol{\theta})$ conditioned by $\matr{z}$ and given $\matr{x}$. Where ${\matr{\hat \theta_{t}}}$ is the current parameters estimation.
+\item \textbf{Expectation:} Calculate the expected value of the log-likelihood function $\log\mathcal{L}(\mathbf{x},\mathbf{z}; \boldsymbol{\theta})$ conditioned by $\matr{z}$ and given $\matr{x}$. Where ${\boldsymbol{\hat \theta_{t}}}$ is the current parameters estimation.
 
 \begin{equation}\label{eq:exp}
  \mathrm{M}(\boldsymbol\theta|\boldsymbol{ \hat \theta_{t} }) = \mathbf{E}_{\matr{z}|\matr{x},\boldsymbol{ \hat \theta_{t}}}\left[ \log \mathcal{L} (\boldsymbol\theta;\matr{x},\matr{z})  \right]
@@ -400,29 +402,29 @@ It is important to notice that this approach may lead to the local optima. To ge
 Look at \cite{Do08} for more detailed, easily understandable tutorial with examples.
 
 \section{Discrete-Time Hidden Markov Model}\label{sec:3p}
-% citate: Jack Ferguson of IDA in lectures at Bell laboratories
-When dealing with HMM real-world application we need to deal with following problems \cite{Ra89}. First we describe them and later in the successive subsections we explain the algorithms that can effectively solve them. 
+
+When dealing with HMM real-world application we need to deal with following problems. First we describe them and later in the successive subsections we explain the algorithms that can effectively solve them (explained in detail in Article \cite{Ra89} Sec. 3 A,B \& C). 
 
 \begin{enumerate}
-\item Compute the probability $\mathrm{P}(\matr{O}|\matr{\theta}) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the parameters $\matr{\theta} = (A,B,\pi)$ defined in  Section \ref{sec:dthmm}. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
-\item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_{\nu}$), having the observation sequence $\matr{O}$ and parameters $\matr{\theta}$. \label{it:p2} 
-\item Adjust the model parameters $\matr{\theta}$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\matr{\theta}) $. \label{it:p3} 
+\item Compute the probability $\mathrm{P}(\matr{O}|\boldsymbol{\theta}) $ of the observation sequence \\ $\matr{O} = (o_1,o_2,\dots,o_{\nu})$, given the parameters $\boldsymbol{\theta} = (A,B,\boldsymbol\pi)$ defined in  Section \ref{sec:dthmm}. Elements of the observation sequence $\matr{O}$ are some specific measured data, taking values from the set~$\mathcal{V}$. \label{it:p1}  
+\item Choose the optimal state sequence $\matr{X} = (x_1,x_2,\dots,x_{\nu}$), having the observation sequence $\matr{O}$ and parameters $\boldsymbol{\theta}$. \label{it:p2} 
+\item Adjust the model parameters $\boldsymbol{\theta}$ in the way it maximizes the probability of observation sequence $ \mathrm{P}(\matr{O}|\boldsymbol{\theta}) $. \label{it:p3} 
 \end{enumerate}
 
 
 \subsection{Forward-Backward Algorithm}\label{sec:fb}
 The \textit{forward-backward} algorithm is actually pair of two separate algorithms (forward vs. backward). We will explain the \textit{forward} one and at the end we will describe the modifications that are needed to do the \textit{backward}. Both of them are sufficient to solve the first proposed problem \ref{it:p1} separately, however we need to define both, because of the use in the later text.  
 
-Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in time $t$ emitted by state $s_i$, given the model parameters $\matr{\theta}$.
+Forward algorithm is the dynamic programming algorithm benefiting from the Markov property \eqref{eq:mp} - the independence upon past events. We will define the forward variable $\alpha_t(i)$ as the probability of the partial observation sequence, with the last observation in time $t$ emitted by state $s_i$, given the model parameters $\boldsymbol{\theta}$.
 
 \begin{equation}
-\alpha_t(i) = \mathrm{P}(o_1,o_2,\dots,o_t,X_t = s_i \mid \matr{\theta} )
+\alpha_t(i) = \mathrm{P}(o_1,o_2,\dots,o_t,X_t = s_i \mid \boldsymbol{\theta} )
 \end{equation}
 
 The forward variables can be gradually counted using the bottom-up strategy following equations for $t=1$ and $t=t+1$.
 
 \begin{equation}
-\alpha_1(i) = \pi_i b_i(o_1), \qquad 1 \leq i \leq n
+\alpha_1(i) = \boldsymbol\pi_i b_i(o_1), \qquad 1 \leq i \leq n
 \end{equation}
 
 \begin{equation}
@@ -434,12 +436,12 @@ The forward variables can be gradually counted using the bottom-up strategy foll
 Now we can obtain the solution of the first problem simply by summing through the all forward variables in the time $\nu$.
 
 \begin{equation}
-\mathrm{P}(\matr{O}|\matr{\theta}) = \sum_{i=1}^n \alpha_{\nu}(i)
+\mathrm{P}(\matr{O}|\boldsymbol{\theta}) = \sum_{i=1}^n \alpha_{\nu}(i)
 \end{equation} 
 
 Similarly we can define backward variable $\beta_t(i)$ as
 \begin{equation}
-\beta_t(i) = \mathrm{P}(o_{t+1},o_{t+2},\dots,o_{\nu},X_t = s_i \mid \matr{\theta} ) 
+\beta_t(i) = \mathrm{P}(o_{t+1},o_{t+2},\dots,o_{\nu},X_t = s_i \mid \boldsymbol{\theta} ) 
 \end{equation}
 The Dynamic programming (DP) algorithm consist from two following equations for times $t = \nu$ and $t < \nu$. 
 
@@ -456,7 +458,7 @@ The Dynamic programming (DP) algorithm consist from two following equations for 
 The solution for the problem 1 can be obtain by summing probabilities for all the beginning states. We need to be careful not to forget to multiply by probability of the first observation symbol, as it is not part of the definition for backward variable in time $t=1$.
 
 \begin{equation}
-\mathrm{P}(\matr{O}|\matr{\theta}) = \sum_{i=1}^n \beta_{1}(i) b_i(o_1)
+\mathrm{P}(\matr{O}|\boldsymbol{\theta}) = \sum_{i=1}^n \beta_{1}(i) b_i(o_1)
 \end{equation} 
 
 
@@ -466,14 +468,14 @@ We need to count $n$ variables at each time-step, each of them takes exactly $n$
 There are more ways how we can look at the word ``optimal'' in the problem two statement \ref{it:p2}. One of the possible approaches is to maximize the expected number of correctly assigned states. To solve it, we need to define the variable determining the probability of being in the specific state in the particular time. We will also call it ``single state probability''.
 
 \begin{equation}
-\gamma_t(i) = \mathrm{P}(X_t = s_i \mid \matr{O},\matr{\theta} ) 
+\gamma_t(i) = \mathrm{P}(X_t = s_i \mid \matr{O},\boldsymbol{\theta} ) 
 \end{equation}
 
 Here we can use already defined forward and backward variables and count the $\gamma_t(i)$ as
 \begin{equation}
 \begin{aligned}
-\gamma_t(i) &= \frac{ \mathrm{P}( X_t = s_i, \matr{O} \mid \matr{\theta} )}{ \mathrm{P}( \matr{O} \mid \matr{\theta} )} =
-               \frac{  \alpha_t(i) \beta_t(i) }{ \mathrm{P}( \matr{O} \mid \matr{\theta} )} = \\
+\gamma_t(i) &= \frac{ \mathrm{P}( X_t = s_i, \matr{O} \mid \boldsymbol{\theta} )}{ \mathrm{P}( \matr{O} \mid \boldsymbol{\theta} )} =
+               \frac{  \alpha_t(i) \beta_t(i) }{ \mathrm{P}( \matr{O} \mid \boldsymbol{\theta} )} = \\
             &= \frac{  \alpha_t(i) \beta_t(i) }{ \sum\limits_{j=1}^n \alpha_t(j) \beta_t(j) } 
 \end{aligned}
 \end{equation}
@@ -490,18 +492,18 @@ Applying this algorithm to the whole sequence would lead to the highest expected
    
 \subsection{Viterbi Algorithm}\label{sec:viterbi}  
 
-Another way how to look on the problem two \ref{it:p2} is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X} | \matr{O},\matr{\theta})$, what is equivalent to maximizing of $\mathrm{P}(\matr{X},\matr{O} \mid \matr{\theta})$.
+Another way how to look on the problem two \ref{it:p2} is to find single most probable state sequence. It means to maximize $\mathrm{P}(\matr{X} | \matr{O},\boldsymbol{\theta})$, what is equivalent to maximizing of $\mathrm{P}(\matr{X},\matr{O} \mid \boldsymbol{\theta})$.
 
 \textit{Viterbi} algorithm is the dynamic programming algorithm, that similarly to the forward-backward algorithm  benefits from memorylessness of Markov Chain. In DP we can gradually count the variable $\delta_t(i)$, that represents the maximal probability of the state chain from its beginning till the state time $t$, with the state $x_{t}$  being $s_i$.
 
 \begin{equation}\label{eq:delta}
-\delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \matr{\theta} )
+\delta_t(i) = \max_{x_1,x_2,\dots,x_{t-1}} \mathrm{P}( x_1,x_2,\dots, x_t = s_i, o_1, o_2, \dots, o_t \mid \boldsymbol{\theta} )
 \end{equation} 
 
 To get the actual state sequence, we need to store information about the state in time $t-1$ that has maximized the previous equation \eqref{eq:delta}. We will store it in the array $\psi_t(i)$. Now we can define the initialization of the algorithm as
 
 \begin{equation}
-\delta_1(i) = \pi_i b_i(o_1), \qquad 1 \leq i \leq n 
+\delta_1(i) = \boldsymbol\pi_i b_i(o_1), \qquad 1 \leq i \leq n 
 \end{equation}
 
 \begin{equation}
@@ -547,7 +549,7 @@ The structure of the algorithm is very similar to the Forward-Backward algorithm
 There is any known general analytic solution for the problem~three \ref{it:p3}. There exist more possible iterative algorithms from which we will describe the expectation-maximization approach~\ref{ch:EM}, based on the classic work of Baum and his colleagues called \textit{Baum-Welch} algorithm \cite{Ba70}. We will start by defining the variable~$\xi_t(i,j)$ as the probability~of being in the state~$s_i$ in the time~$t$ and in the state~$s_j$ in the time~$t+1$, later also referred to as ``double state probability''. 
 
 \begin{equation}
-\xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \matr{\theta} )  
+\xi_t(i,j) = \mathrm{P}( X_t = s_i, X_{t+1} = s_j \mid \matr{O}, \boldsymbol{\theta} )  
 \end{equation}
 
 The probability can be compute using forward-backward variables as follows
@@ -555,7 +557,7 @@ The probability can be compute using forward-backward variables as follows
 \begin{equation}\label{eq:xi}
 \begin{aligned}
 \xi_t(i,j) &= \frac{ \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
-		   		   { \mathrm{P}( \matr{O} \mid \matr{\theta} ) } \\
+		   		   { \mathrm{P}( \matr{O} \mid \boldsymbol{\theta} ) } \\
 		   &= \frac{ \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
 		   		   { \sum\limits_{i=1}^n \sum\limits_{j=1}^n \alpha_t(i) a_{ij} b_j(o_{t+1}) \beta_{t+1}(j) }
 \end{aligned}
@@ -579,10 +581,10 @@ If summing~$\xi_t(i,j)$ over the time, we will get expected number of transition
 \mathbf{E}(\text{transitions from $s_i$ to $s_j$}) = \sum_{t=1}^{\nu-1} \xi_t(i,j)  
 \end{equation}
 
-Now we have all what is needed to define the reestimated model~$\hat{\matr{\theta}}=(\hat{\matr{A}},\hat{\matr{B}},\hat\pi)$.
+Now we have all what is needed to define the reestimated model~$\boldsymbol{\hat{\theta}}=({\matr{\hat A}},{\matr{\hat B}},\boldsymbol{\hat\pi})$.
 
 \begin{equation}\label{eq:bwpi}
-\hat\pi_i = \gamma_1(i)  
+\boldsymbol{\hat\pi_i} = \gamma_1(i)  
 \end{equation}
 
 \begin{equation}\label{eq:bwa}
@@ -601,7 +603,7 @@ Now we have all what is needed to define the reestimated model~$\hat{\matr{\thet
 \end{aligned}
 \end{equation}
 
-The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\matr{\theta},\hat{\matr{\theta}})$ and maximization step, the maximization over parameter~$\hat{\matr{\theta}}$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
+The formulas can be interpreted as the steps of EM-algorithm, with the expectation step being the computation of auxiliary function~$Q(\boldsymbol{\theta},\boldsymbol{\hat{\theta}})$ and maximization step, the maximization over parameter~$\boldsymbol{\hat{\theta}}$. The algorithm will stop ones it is no longer improving (re-estimation doesn't bring higher probability). It is important to notice, that the found solution is local optimum, the searched space can be very complicated containing many local optima, that's way it can be helpful to start the algorithm more times with different parameter initialization.  
 
 
 \section{Continuous-Time Hidden Markov Model}
@@ -673,7 +675,7 @@ The Markov property and homogeneity of the Markov process allows to reduce the c
    
 \subsection{Continuous-Time Hidden Markov Model EM}\label{sec:CBWA}
 
-For the EM parameters estimation in DT-HMM, we have used the well known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\hat \pi$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in Subsection \ref{sec:pos}.  
+For the EM parameters estimation in DT-HMM, we have used the well known Baum-Welch algorithm \ref{sec:BWA}. We can use the similar approach for the estimation of parameters $\boldsymbol{\hat \pi}$ \eqref{eq:bwpi} and $\matr{ \hat B }$ \eqref{eq:bwb}. We just need to use the different transition probabilities matrix for every different interval as described in Subsection \ref{sec:pos}.  
 
 The estimation of the $\matr{ \hat Q }$ can't be inherited from the discrete model, because the state transitions do not depend on the observation times and there can even be more of them between two consecutive observations. The following method proposed in the article \cite{Li15}, was the first which could efficiently solve the issue.        
 
@@ -752,7 +754,7 @@ We have got the matrix exponential form, for which conventional methods for matr
 
 \section{Algorithms for CT-HMM parameters estimation}\label{sec:alg}
 
-This section roughly describe the algorithm \ref{pe} for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ also denoting as continuous-time Baum-Welch algorithm. We only show the parts specific for continuous-time model. The estimation of the other parameters ($\matr{\pi},\matr{B}$), forward and backward algorithm so as the single and double state probabilities can be easily derived from DT-HMM algorithm explained in Section \ref{sec:3p}. It is also described in details in article \cite{Ra89}.
+This section roughly describe the algorithm \ref{pe} for CT-HMM learning - expectation maximization approach estimating the jump-rate matrix $\matr{Q}$ also denoting as continuous-time Baum-Welch algorithm. We only show the parts specific for continuous-time model. The estimation of the other parameters ($\boldsymbol{\pi},\matr{B}$), forward and backward algorithm so as the single and double state probabilities can be easily derived from DT-HMM algorithm explained in Section \ref{sec:3p}. It is also described in details in article \cite{Ra89}.
 
 The base of the algorithm is described in \ref{pe}, reffering to its most important, frame parts. The algorithm shows training at a single observation and time sequence. 
 It is for the sake of simplicity, the training by more complex dataset can be made by iterating trough all the sequences. 
@@ -1015,6 +1017,7 @@ The time-complexity of the CT-HMM EM algorithm can shrink, when using the sparse
 
 
 %TODO Intel(R) Core(TM) i5-2520M CPU @ 2.50GHz
+%TODO performance ratio
 
 The definition of the hidden Markov models may seem to be simple. However, in consequences it covers many non-trivial characteristics that needs some intuition to be understood correctly. This chapter is purposed to discuss such characteristic, and simultaneously try to support the allegations by presenting the experiments.
 
@@ -1028,9 +1031,10 @@ Comparison of the discrete and continuous-time HMM convergences at the equivalen
 Examination of the time complexity and comparison with theoretical expectations.
 \item \textbf{Numerical Stability} \\
 Comparison of the \textit{float-interval} and \textit{integer-interval} method from the point of numerical stability.
-\item \textbf{TODO}
+\item \textbf{Soft vs. Hard Method}\\
+Comparison of Soft and Hard method from two different points of view.
 \item \textbf{Hidden States Number} \\
-Examination of the models behavior, when trained with different numbers of hidden states.
+Examination of the models behavior, when trained with variable numbers of hidden states.
 
 \end{enumerate}
 
@@ -1043,7 +1047,7 @@ As the continuous-time model takes, except the observations, also the time vecto
 
 \subsection*{ Description }
 
-In the first part of the experiment we have used the dataset generated by the model, which we have created artificially to suit its purpose well. %TODO See its parameter here [table]. 
+In the first part of the experiment we have used the dataset generated by the model, which we have created artificially to suit its purpose well. 
 The model contains three hidden states and three observation symbols. Comparing the general randomly generated model (model with the parameters generated by exponential distribution), it takes advantage of its more extreme position in the parameter space, so its distance to the majority of the random generated parameters is bigger. This makes the problem of convergence harder and in final produces nicer graphs, unfolding more of the process characteristics.
 
 Training dataset consists of 50 vectors, each of them compounding 50 observation. For the continuous-time model we have add the same number of time vectors, with unit time differences.
@@ -1082,7 +1086,7 @@ For example, the average convergence from the first experiment \ref{fig:avgc} is
 \begin{minipage}{1\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex1/g1.png}
-  \captionof{figure}{Convergence }
+  \captionof{figure}{Models convergences }
   \label{fig:sr50}
 \end{minipage}
 \begin{minipage}{1\textwidth}
@@ -1159,7 +1163,7 @@ The increase of the dataset size caused the larger gap among the whole algorithm
   \caption{Big dataset}
   \label{fig:e2big}
 \end{subfigure}
-\caption{ The time-complexity of the two algorithm variants and their subparts }
+\caption{ Time-complexity of two algorithm variants and their subparts }
 \label{fig:e2n}
 \end{figure}
 
@@ -1173,7 +1177,7 @@ Training over the big dataset \label{fig:e2big} has decreased the percentage of 
 
 \subsection{Variable Maximal Time Interval}
 
-The other parameter presented in the theoretical time-complexity of the integer-interval algorithm - $\mathcal{O}(r n^5 \log(t_{\max}))$ is $t_{\max}$ - maximal length of the time interval. On the oder side the parameter is not part of the float-interval algorithm complexity term - $\mathcal{O}(r n^5)$ \ref{it:ctc}. The experiment aims to observe how the variable value of $t_{\max}$ changes the computational demand of the algorithm.  
+The other parameter presented in the theoretical time complexity of the integer-interval algorithm $\mathcal{O}(r n^5 \log(t_{\max}))$ is $t_{\max}$ - maximal length of the time interval. On the oder side the parameter is not part of the float-interval algorithm complexity term $\mathcal{O}(r n^5)$ \ref{it:ctc}. The experiment aims to observe how the variable value of $t_{\max}$ changes the computational demand of the algorithm.  
 
 
 \subsubsection*{ Description }
@@ -1185,19 +1189,12 @@ In the experiment we have set $t_{\max}$ as the variable, taking values of power
 Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $t_{\max}$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is the steep growth of the float-interval algorithm time demand present for small $t_{\max}$ values.
 
 \begin{figure}[h]
+
+
 \centering
-\begin{minipage}{1\textwidth}
-  \centering
-  \includegraphics[width=1.0\linewidth]{img/ex2/log.png}
-  \captionof{figure}{log.}
-  \label{fig:e2log}
-\end{minipage}
-%\begin{minipage}{.8\textwidth}
-%  \centering
-%  \includegraphics[width=1.0\linewidth]{img/ex2/exp180.png}
-%  \captionof{figure}{log2.}
-%  \label{fig:e2big}
-%\end{minipage}
+\includegraphics[width=1.0\linewidth]{img/ex2/log.png}
+\captionof{figure}{Time-complexity of two algorithm variants and their subparts}
+\label{fig:e2log}
 \end{figure}
 
 \subsubsection*{ Conclusion }
@@ -1246,7 +1243,7 @@ The measured relative error of jump-rate matrices seems to grow faster at the be
   \caption{$\lambda = 0.001$}
   \label{fig:l3}
 \end{subfigure}
-\caption{Relative distances of jump-rates matrices for data generated with different exponential distribution parameter $\lambda$}
+\caption{Relative distances of jump-rates matrices for data generated by exponential distribution with variable parameter $\lambda$}
 \label{fig:test}
 \end{figure}
 
@@ -1283,16 +1280,16 @@ Figures \ref{fig:vit_all} show two different results of hard method convergence.
 \begin{subfigure}{1.1\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex4/hard_good.png}
-  \caption{}
+  \caption{example of the hard method successful convergence}
   \label{fig:vit_good}
 \end{subfigure}
 \begin{subfigure}{1.1\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{img/ex4/hard_bad.png}
-  \caption{A todo subfigure}
+  \caption{example of the hard method misleading convergence}
   \label{fig:vit_bad}
 \end{subfigure}
-\caption{Performance ratio of the most probable state sequence}
+\caption{Performance ratio of the most probable state sequence }
 \label{fig:vit_all}
 \end{figure}
 
