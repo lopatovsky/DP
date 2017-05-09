@@ -29,6 +29,7 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage[hang,flushmargin]{footmisc}
+\usepackage{footnotebackref}
 
 
 \usepackage{dirtree} %directory tree visualisation
@@ -925,8 +926,7 @@ The code, tutorial and documentation to the library can be found in supplementar
 
 The goal was to create a library, that can be used by broad range of users. Such a library should be written in the well known programming language. It should be easy to install and also it should have introductory tutorial that would help to get orientation in the most of the library functionality. 
 
-To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip}. %TODO [link to pip]. 
-
+To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip} \footnote{https://pypi.python.org/pypi/hmms} or \textit{GitHub} \footnote{https://github.com/lopatovsky/HMMs}.
 The continuous-time hidden Markov model parameter estimation is computationally highly demanding. The using of the plain \textit{Python} would make it cumbersome. To deal with the issue, we have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} \cite{Sc01} for the implementation of \textit{exmp} algorithm \cite{Hi05}. To make the computational performance even higher, we have decided to code all the most demanding parts in \textit{Cython} \cite{Be10}. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.
 
 The best way how to learn to use the library is follow the code examples. That's way we have decided to create \textit{IPython} notebook with library usage examples, covering all the main use-cases of the library. Reading it, the follower can get the understanding how to correctly use the library and learn, what features are supported.          
@@ -1189,7 +1189,7 @@ Contrary to initial expectation both float and integer interval algorithm comput
 
 The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is higher probability of more same-sized time-intervals. That has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
 
-The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method, we need to look deeper in its implementation \cite{Al09}. 
+The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method, we need to look deeper in its implementation \cite{al2009new}. 
 The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability of the more complex Pad\'{e} approximant being chosen.
 
 \section{Numerical Stability}\label{sec:ns} 
@@ -1434,16 +1434,28 @@ It would be interesting to examine CT-HMM comparing to recurrent neural network 
 %change appropriately
 
 \begin{figure}
-	\dirtree{%
-		.1 readme.txt\DTcomment{the file with CD contents description}.
-		.1 exe\DTcomment{the directory with executables}.
-		.1 src\DTcomment{the directory of source codes}.
-		.2 wbdcm\DTcomment{implementation sources}.
-		.2 thesis\DTcomment{the directory of \LaTeX{} source codes of the thesis}.
-		.1 text\DTcomment{the thesis text directory}.
-		.2 thesis.pdf\DTcomment{the thesis text in PDF format}.
-		.2 thesis.ps\DTcomment{the thesis text in PS format}.
-	}
+
+\dirtree{%
+.1  .
+.2 readme.txt\DTcomment{brief description of the CD content}.
+.2 HMMs\DTcomment{hidden Markov models library}.
+.3 hmms\DTcomment{source files}.
+.4 cthmm.pyx\DTcomment{continuous-time hidden Markov model class}.
+.4 dthmm.pyx\DTcomment{discrete-time hidden Markov model class}.
+.4 art.py\DTcomment{additional functions for visualization}.
+.4 train.py\DTcomment{additional functions for multi-training}.
+.3 docs\DTcomment{documentation files}.
+.3 tests\DTcomment{testing and experiment files}.
+.4 experiments.py \DTcomment{source code for experiments}.
+.3 hmms.ipynb \DTcomment{interactive tutorial}.
+.3 setup.py \DTcomment{installation script}.
+.3 README.md \DTcomment{description of the library}.
+.2 text\DTcomment{text of the thesis}.
+.3 DP\_Lopatovsky\_Lukas\_2017.tex\DTcomment{text of the thesis in latex}.
+.3 DP\_Lopatovsky\_Lukas\_2017.pdf\DTcomment{text of the thesis in pdf}.
+.3 img\DTcomment{images and data files to experiments}.
+}
+	
 \end{figure}
 
 \end{document}

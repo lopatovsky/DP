@@ -8,6 +8,11 @@
 \providecommand{\selectlanguage}[1]{\relax}
 \providecommand{\eprint}[2][]{\biburl{#2}}
 
+\bibitem{al2009new}
+Al-Mohy, A.~H.; Higham, N.~J.: A new scaling and squaring algorithm for the
+  matrix exponential. \emph{SIAM Journal on Matrix Analysis and Applications},
+  volume~31, no.~3, 2009: pp. 970--989.
+
 \bibitem{Al11}
 Allahverdyan, A.; Galstyan, A.: Comparative analysis of viterbi training and
   maximum likelihood estimation for hmms. In \emph{Advances in Neural
