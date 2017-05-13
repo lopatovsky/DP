@@ -29,6 +29,10 @@ Behnel, S.; Bradshaw, R.; Citro, C.; etc.: Cython: The Best of Both Worlds.
   \emph{Computing in Science Engineering}, volume~13, no.~2, 2011: pp. 31 --39,
   ISSN 1521-9615, \doi{10.1109/MCSE.2010.118}.
 
+\bibitem{Co77}
+Cox, D.~R.; Miller, H.~D.: \emph{The theory of stochastic processes}, volume
+  134. CRC Press, 1977.
+
 \bibitem{De77}
 Dempster, A.~P.; Laird, N.~M.; Rubin, D.~B.: Maximum likelihood from incomplete
   data via the EM algorithm. \emph{Journal of the royal statistical society.

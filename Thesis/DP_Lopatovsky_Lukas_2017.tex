@@ -63,7 +63,7 @@
 \author{Luk{\' a}{\v s} Lopatovsk{\' y}} %author's name without academic degrees
 \authorWithDegrees{Bc. Luk{\' a}{\v s} Lopatovsk{\' y}} %author's name with academic degrees
 \supervisor{Ing. Daniel Va{\v s}ata, Ph.D.}
-\acknowledgements{I would like to express my gratitude to my supervisor Ing. Daniel Va{\v s}ata, Ph.D. for the useful comments, remarks and engagement through the learning process of this master thesis. Furthermore I would like to thanks to Ing. Tomáš Šabata for introducing me to this interesting topic and to the Datamole Ltd. for support of open-source development. }
+\acknowledgements{I would like to express my gratitude to my supervisor Ing. Daniel Va{\v s}ata, Ph.D. for the useful comments, remarks and engagement through the learning process of this master thesis. Furthermore, I would like to thanks to Ing. Tomáš Šabata for introducing me to this interesting topic and to the Datamole Ltd. for support of open-source development. }
 \abstractEN{ The continuous-time hidden Markov model is promising not only for the biomedical research. The lack of efficient learning algorithms has limited its use in the past. However, recently the new efficient EM approaches were presented. In this thesis we are examining and comparing current state-of-the-art methods that are able to train models containing hundreds of hidden states. As the part of the work we have developed the general purpose continuous-time and discrete-time hidden Markov model library effectively implementing the best performing learning methods that is easy to use and available for everyone under open-source license. }
 
 \abstractCS{ Skrytý Markovův proces se spojitým časem je slibným modelem s využitím nejen pro biomedicínský výzkum. Nedostatek efektivních algoritmů pro jeho učení v minulosti výrazne omezoval jeho použití. Nedávno však byly prezentovány nové efektivní metody založené na EM algoritmu. V této diplomové práci zkoumáme a srovnáváme současné moderní metody, které jsou schopné vycvičit modely obsahující až stovky skrytých stavů. Jako součást práce jsme vyvinuli univerzální knihovnu pro skrytý Markovův proces se spojitým a diskrétním časem, která efektivně implementuje nejslibnější učební metody. Knihovna je snadno použitelná a dostupná všem uživatelům pod licencí open-source.}
@@ -240,7 +240,7 @@ We will call this derivative $q_{ij}$ the jump rate from state~$s_i$ to some oth
 1 = \mathrm{p_{ii}}(t) + \sum_{j = 1,j \neq i}^{ n } \mathrm{p_{ij}}(t) 
 \end{equation}
 
-Dividing it by time interval $t$ and letting $t$ decrease close to zero, we obtain the following equation. 
+Dividing it by time interval $t$ and letting $t$ decrease close to zero, we obtain the following equation \cite{Co77}. 
 
 \begin{equation}\label{eq:qii}
  q_{ii} =  - \sum_{j = 1,j \neq i}^{ n} q_{ij} 
@@ -889,7 +889,7 @@ Count end-state conditioned expectations \ref{sec:endexp}:
 \begin{itemize}
 \item Preprocessing end-state conditioned expectation - complexity $\mathcal{O}(n^5)$. 
     In this step we compute all the integrals\eqref{eq:int} for unit time interval. It needs to call expm method $\mathcal{O}(n^3)$ at matrix $\matr{W}$ for every $i$ and $j$ \ref{sec:solve}.   
-\item Count matrices for every time interval - complexity $\mathcal{O}(r n^5\log(t_{\max}))$, where $t_{\max}$ is the longest time interval among two consecutive observations.
+\item Count matrices for every time interval - complexity \\ $\mathcal{O}(r n^5\log(t_{\max}))$, where $t_{\max}$ is the longest time interval among two consecutive observations.
 
 For every time interval, we go trough $n^2$ matrices, that we have already precomputed and we count its value for actual interval by using square and multiply approach. 
 
@@ -926,7 +926,7 @@ The code, tutorial and documentation to the library can be found in supplementar
 
 The goal was to create a library, that can be used by broad range of users. Such a library should be written in the well known programming language. It should be easy to install and also it should have introductory tutorial that would help to get orientation in the most of the library functionality. 
 
-To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip} \footnote{https://pypi.python.org/pypi/hmms} or \textit{GitHub} \footnote{https://github.com/lopatovsky/HMMs}.
+To accomplish the established goal we have chosen to create \textit{Python} library. Specifically, the development was done under \textit{Python 3.5}. The Python is highly used among machine-learning community and the library is easily accessible by downloading from \textit{Pip} \footnote{ \url{https://pypi.python.org/pypi/hmms} } or \textit{GitHub} \footnote{ \url{https://github.com/lopatovsky/HMMs} }.
 The continuous-time hidden Markov model parameter estimation is computationally highly demanding. The using of the plain \textit{Python} would make it cumbersome. To deal with the issue, we have used libraries \textit{NumPy} - for effective work with array and matrices and \textit{SciPy} \cite{Sc01} for the implementation of \textit{exmp} algorithm \cite{Hi05}. To make the computational performance even higher, we have decided to code all the most demanding parts in \textit{Cython} \cite{Be10}. Cython is a compiled language that generates \textit{CPython} extension modules, so that the code-parts written in the language can get \textit{C}-like performance. The advantage is its easy integration into the Python module.
 
 The best way how to learn to use the library is follow the code examples. That's way we have decided to create \textit{IPython} notebook with library usage examples, covering all the main use-cases of the library. Reading it, the follower can get the understanding how to correctly use the library and learn, what features are supported.          
@@ -1106,7 +1106,7 @@ For example, the average convergence from the first experiment \ref{fig:avgc} is
 The slower convergence of continuous-time model is bounded with different character of the model. Since in the discrete-time model we always know the precise time when the state-change can happen (always at observation point), in continuous-time model it can happen in any time in between as well. Thus, computing of the new estimated parameters in maximization step needs to deal with more uncertainty. 
 In continuous-time model is uncertainty not only caused by indirect observation of hidden states, but also by possible state changes in between of the observations. As we have any observations from that area, the probability estimation is counted by parameters from the last iteration, what is creating momentum in favor of old parameters and slow down the convergence process. The longer is the time interval, the stronger is the momentum.
 
-In the second experiment we have showed, how characteristic of the searched model influenced training complexity. The randomly generated models usually generate datasets with higher entropy. Such datasets are closer to converge from most regions of the parameter space. 
+In the second experiment we have shown, how characteristic of the searched model influenced training complexity. The randomly generated models usually generate datasets with higher entropy. Such datasets are closer to converge from most regions of the parameter space. 
 
 The over-performing of the original model is caused by the overfitting. The small size of dataset was not sufficient to cover characteristic of the model completely, instead the trained models were learned to fit its imprecision. It is not a problem for our experiment as the original models were chosen more-less randomly and it fills in its purpose. The over-performing would probably gradually disappear with growing size of the data-set. It is shown in experiment \ref{sec:plast}.
 
@@ -1120,22 +1120,22 @@ In two following subsections we experiment with variable hidden states number an
 
 \subsection{Variable Hidden States Number}
 
-The hidden states number, referred to as $n$ is the key parameter in overall algorithm complexity. Due to computing of the matrix exponentials $\mathcal{O}(n^3)$ for every pair of end states, it influence the final time-complexity by its fifth power $n^5$. The upper bound theoretical complexity dependence on $n$ is the same for both of the variants. However, the float-algorithm counts the matrix exponential by \textit{expm} method separately for every time interval, while the integer-algorithm counts it only once and then use the matrix multiplication to get the individual results \ref{it:ctc}. In the experiment we measure and compare the times of most costly algorithm parts, and notice how big is the portion of the overall computational complexity consumed by them. 
+The hidden states number, referred to as $n$ is key parameter in overall algorithm complexity. Due to computing of the matrix exponentials $\mathcal{O}(n^3)$ for every pair of end states, it influences the final time-complexity by its fifth power $n^5$. The upper bound theoretical complexity dependence on $n$ is the same for both of the variants. However, the float-algorithm counts the matrix exponential by \textit{expm} method separately for every time interval, while the integer-algorithm counts it only once and then use the matrix multiplication to get the individual results \ref{it:ctc}. In the experiment we measure and compare times of most costly algorithm parts, and notice how big is the portion of the overall computational complexity consumed by them. 
 
 
 \subsubsection*{ Description }
 
-We have trained the models with the variable number of hidden states. To minimize the impact of the other factors, we have let the number of output variables to be constantly 10 and we have used the same randomly generated dataset for both algorithm variants. The integral times intervals were generated by exponential distribution with parameter 0.5. To minimize the time measurements error, we have always run 10 iterations of algorithm and repeated the overall procedure 5 times. 
+We have trained the models with the variable number of hidden states. To minimize the impact of the other factors we have let the number of output variables to be constantly 10 and we have used the same randomly generated dataset for both algorithm variants. The integral times intervals were generated by exponential distribution with parameter $0.5$. To minimize the time measurements error we have always run 10 iterations of algorithm and repeated the overall procedure 5 times. 
 
-To see how the size of the dataset influence time-demand, we have conducted all the described experiments twice. Once with the \textit{small} dataset - compounding 10 sequences of 10 observations and once with the \textit{big} dataset - compounding 10 sequences of 100 observations.  
+To see how the size of the dataset influence time demand, we have conducted all the described experiments twice. Once with the \textit{small} dataset - compounding 10 sequences of 10 observations and once with the \textit{big} dataset - compounding 10 sequences of 100 observations.  
 
 \subsubsection*{ Observation }
 
-In Figure \ref{fig:e2n}, we can observe that the float-interval algorithm is always slower. The prevalent source of complexity is the \textit{expm} method. In the float-interval algorithm over the small dataset are all other parts of the algorithm almost neglectable comparing to it.
+In Figure \ref{fig:e2n} we can observe that the float-interval algorithm is always slower. The prevalent source of complexity is the \textit{expm} method. In the float-interval algorithm over the small dataset are all other parts of the algorithm almost neglectable comparing to it.
 
-Comparing to the \textit{expm} are the time-demands of \textit{square and multiply} algorithm considerably smaller. It is called multiple times over different time-intervals and still takes smaller portion of the time as the single \textit{expm} call.
+Comparing to the \textit{expm} are the time demands of \textit{square and multiply} algorithm considerably smaller. It is called multiple times over different time intervals and still takes smaller portion of the time as the single \textit{expm} call.
 
-The increase of the dataset size caused the larger gap among the whole algorithm time-complexity and its measured subparts - either \textit{expm} or the sum of \textit{expm} and \textit{square and multiply} depending on the algorithm \ref{fig:e2big}.   
+The increase of the dataset size caused the larger gap among the whole algorithm time complexity and its measured subparts - either \textit{expm} or the sum of \textit{expm} and \textit{square and multiply} depending on the algorithm \ref{fig:e2big}.   
 
 \begin{figure}
 \centering
@@ -1151,30 +1151,30 @@ The increase of the dataset size caused the larger gap among the whole algorithm
   \caption{Big dataset}
   \label{fig:e2big}
 \end{subfigure}
-\caption{ Time-complexity of two algorithm variants and their subparts }
+\caption{ Time complexity of two algorithm variants and their subparts }
 \label{fig:e2n}
 \end{figure}
 
 \subsubsection*{ Conclusion }
 
-We have only changed the number of states and let the dataset to be the same, so the $t_{\max}$ parameter from the integer-interval complexity $\mathcal{O}(r n^5 \log(t_{\max}))$ is fixed as constant. This makes both algorithm variants to have same complexity $\mathcal{O}(r n^5)$. The measurements have shown, the big multiplicative constant of \textit{expm} method. That's way it is almost always better to use the integer-interval algorithm. (Its numerical stability is tested later in Section \ref{sec:ns}) 
+We have only changed the number of states and let the dataset to be the same so the $t_{\max}$ parameter from the integer-interval complexity $\mathcal{O}(r n^5 \log(t_{\max}))$ is fixed as constant. This makes both algorithm variants to have same complexity $\mathcal{O}(r n^5)$. The measurements have shown the big multiplicative constant of \textit{expm} method. That's way it is almost always better to use the integer-interval algorithm. (Its numerical stability is tested later in Section \ref{sec:ns}) 
 
-The most of the computational power is used to count matrix exponentials $expm$. In most cases it is the predominant cause of algorithm "slowness". It makes not much sense to edge-optimize other parts of the algorithm. Instead, the faster implementation of \textit{expm}, its parallelization or replacement with other method could spare the significant portion of time.      
+The most of the computational power is used to count matrix exponentials $expm$. In most cases it is the predominant cause of algorithm ``slowness''. It makes not much sense to edge-optimize other parts of the algorithm. Instead, the faster implementation of \textit{expm}, its parallelization or replacement with other method could spare the significant portion of time.      
 
-Training over the big dataset \label{fig:e2big} has decreased the percentage of the time spent by $expm$ method. It is because the higher demand of other algorithm parts. Potentially, it can happen that this gap would overgrowth the $expm$ part. The complexity of the algorithm part that call $expm$ method only depend on $r$ - the number of different time intervals, however there are parts of the algorithms with complexity ${O}(n^2T)$ \ref{it:ctc}, where $T$ is number of all time intervals. So for the huge dataset with lower number of hidden states and many identical time intervals can this part be the predominant cause of the complexity.   
+Training over the big dataset \label{fig:e2big} has decreased the percentage of the time spent by $expm$ method. It is because the higher demand of other algorithm parts. Potentially, it can happen that this gap would overgrowth the $expm$ part. The complexity of the algorithm part that call $expm$ method only depend on $r$, the number of different time intervals, however there are parts of the algorithms with complexity ${O}(n^2T)$ \ref{it:ctc} where $T$ is number of all time intervals. So for the huge dataset with lower number of hidden states and many identical time intervals can this part be the predominant cause of the complexity.   
 
 \subsection{Variable Maximal Time Interval}
 
-The other parameter presented in the theoretical time complexity of the integer-interval algorithm $\mathcal{O}(r n^5 \log(t_{\max}))$ is $t_{\max}$ - maximal length of the time interval. On the oder side the parameter is not part of the float-interval algorithm complexity term $\mathcal{O}(r n^5)$ \ref{it:ctc}. The experiment aims to observe how the variable value of $t_{\max}$ changes the computational demand of the algorithm.  
+The other parameter presented in the theoretical time complexity of the integer-interval algorithm $\mathcal{O}(r n^5 \log(t_{\max}))$ is $t_{\max}$, maximal length of the time interval. On the oder side the parameter is not part of the float-interval algorithm complexity term $\mathcal{O}(r n^5)$ \ref{it:ctc}. The experiment aims to observe how the variable value of $t_{\max}$ changes the computational demand of the algorithm.  
 
 
 \subsubsection*{ Description }
 
-In the experiment we have set $t_{\max}$ as the variable, taking values of powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in \textit{SciPy} \textit{expm} method, that eventually causes the integer overflow. We have generated the dataset of 10 sequences by 10 observations. There was always at least one time-interval of length $t_{\max}$ and all other were chosen uniformly from interval $[1,t_{\max}]$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of the time measurement imprecision, we have run $10$ iterations and repeated the whole experiment $5$ times.   
+In the experiment we have set $t_{\max}$ as the variable taking values of powers of two from $2^1$ to $2^{56}$. The use of higher values (even floats) was impossible, because of conversion to 64-bites integer used in \textit{SciPy} \textit{expm} method that eventually causes the integer overflow. We have generated the dataset of 10 sequences by 10 observations. There was always at least one time-interval of length $t_{\max}$ and all other were chosen uniformly from interval $(1,t_{\max})$. We have trained the model of $10$ hidden states and $10$ observation variables. To smooth the influence of the time measurement imprecision we have run $10$ iterations and repeated the whole experiment $5$ times.   
 
 \subsubsection*{ Observation }
 
-Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $t_{\max}$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is the steep growth of the float-interval algorithm time demand present for small $t_{\max}$ values.
+Contrary to initial expectation both float and integer interval algorithm computational times are growing seemingly logarithmically with increasing $t_{\max}$. The cause of growth in float-interval algorithm is \textit{expm} method, in integer-interval algorithm it is caused mainly by \textit{square and multiply} method. There is a steep growth of the float-interval algorithm time demands present for small $t_{\max}$ values.
 
 \begin{figure}[h]
 
@@ -1187,21 +1187,21 @@ Contrary to initial expectation both float and integer interval algorithm comput
 
 \subsubsection*{ Conclusion }
 
-The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is higher probability of more same-sized time-intervals. That has direct impact at the complexity, where variable $r$ is directly present. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
+The steep growth at the beginning is caused by choice of integral interval lengths. For small values of $t_{\max}$ is higher probability of more same sized time intervals. That has direct impact at the complexity where variable $r$ is directly presented. The chance of choosing two same interval length for bigger $t_{\max}$ values is extremely low.
 
-The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method, we need to look deeper in its implementation \cite{al2009new}. 
-The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant, which securely not overgrow the wished threshold error. Our observation suggest, that the bigger the numbers in the exponentiated matrix are, the bigger is the probability of the more complex Pad\'{e} approximant being chosen.
+The logarithmic grow of \textit{square and multiply} method is obvious. But to explain similar behavior of the $expm$ method we need to look deeper into its implementation \cite{al2009new}. 
+The method is using Pad\'{e} approximants of different values from $3$ to $13$. The computation of the approximants of higher order is computationally more costly. The algorithm is choosing the smallest  Pad\'{e} approximant which securely not overgrow the wished threshold error. Our observation suggest that the bigger the numbers in the exponentiated matrix are, the bigger is the probability of the more complex Pad\'{e} approximant being chosen.
 
 \section{Numerical Stability}\label{sec:ns} 
 
-The main advantage of integer-interval variant of algorithm is that it computes costly matrix exponential only once and derive all other exponentials of the matrix multiplications by computing its powers, via \textit{square and multiply} method. It arise the question of numerical stability of the method. Can inaccuracies acquired by \textit{square and multiply} significantly change direction of convergence?   
+The main advantage of integer-interval variant of algorithm is that it computes costly matrix exponential only once and derives all other exponentials of the matrix multiplications by computing its powers via \textit{square and multiply} method. It arises the question of numerical stability of the method. Can inaccuracies acquired by \textit{square and multiply} significantly change direction of convergence?   
 
 \subsection*{ Description }
-In the experiment we have run both integer and float-algorithms with same initial parameters. As the value of interest, we have measured the relative euclidean distance among both models jump-rates matrices $\matr{Q}$. We have used the models of $5$ hidden states and $5$ observable variables at the dataset of $100$ observation points. Time intervals were generated by exponential distribution with parameter $\lambda$ equal $0.1$, $0.01$ and $0.001$ consecutively. The obtained plotted error is the average value of $10$ runs of the experiment.      
+In the experiment we have run both integer-interval and float-interval algorithms with same initial parameters. As the value of interest we have measured the relative euclidean distance among both models jump-rates matrices $\matr{Q}$. We have used the models of $5$ hidden states and $5$ observable variables at the dataset of $100$ observation points. Time intervals were generated by exponential distribution with parameter $\lambda$ equals $0.1$, $0.01$ and $0.001$ consecutively. The obtained plotted error is the average value of $10$ runs of the experiment.      
 
 \subsection*{ Observation }
 
-The measured relative error of jump-rate matrices seems to grow faster at the beginning and gradually slowing its pace by growing iteration. Values of the relative error are very small. However it seems that the variance magnitude grows with the decreasing magnitude of exponential parameter $\lambda$. (Figures \ref{fig:l1},\ref{fig:l2},\ref{fig:l3})  
+The measured relative error of jump-rate matrices seems to grow faster at the beginning and gradually slowing its pace by growing iterations. Values of the relative error are very small. However it seems that the variance magnitude grows with the decreasing magnitude of exponential parameter $\lambda$. (Figures \ref{fig:l1},\ref{fig:l2},\ref{fig:l3})  
 
 
 \begin{figure}
@@ -1229,7 +1229,7 @@ The measured relative error of jump-rate matrices seems to grow faster at the be
 \end{figure}
 
 \subsection*{ Conclusion }
-The experiment haven't shown any significant error propagation. It has been a bit more prevalent at the beginning of the convergence as during this phase are the changes in the jump-rate matrices most prominent. Later errors seems to be eliminated as the solutions converging to the local optima. Probably, under some more extreme edge conditions the matrices may diverge. But, when taking into the account the randomness of the initial configuration and assorted characteristic of the parameter space, we do not see it as problem and we do not think it can, in general, negatively influence the performance of the algorithm. 
+The experiment haven't shown any significant error propagation. It has been a bit more prevalent at the beginning of the convergence as during this phase are the changes in the jump-rate matrices most prominent. Later errors seems to be eliminated as the solutions converging to the local optima. Probably, under some more extreme edge conditions the matrices may diverge. But, when taking into the account the randomness of the initial configuration and assorted characteristic of the parameter space we do not see it as problem and we do not think it can, in general, negatively influence the performance of the algorithm. 
 
 \section{Soft vs. Hard method}
 
@@ -1275,18 +1275,18 @@ Figures \ref{fig:vit_all} show two different results of hard method convergence.
 \end{figure}
 
 \subsubsection*{ Conclusion }
-The hard method is maximizing the different likelihood function as described in Section \ref{sec:shm}. Its use for maximizing the probability of dataset being generated by the model is very unstable. Although sometimes it can produce satisfying results, it just appears as the side-effect of its original purpose.
+The hard method is maximizing the different likelihood function as described in Section \ref{sec:shm}. Its use for maximizing the probability of dataset being generated by the model is very unstable. Although sometimes it can produce satisfying results, it just appears as the side effect of its original purpose.
 
-The hard method behave considerably well in maximizing the probability of most probable state sequence. However, as the experiments uncovered, the resulting sequence has often very low probability of being generated by the original model, thus the models parameters are different.    
+The hard method behaves considerably well in maximizing the probability of most probable state sequence. However, as the experiments uncovered the resulting sequence has often very low probability of being generated by the original model, thus the models parameters are different.    
 
 \section{Hidden States Number}\label{sec:hsn}
 
-The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model. It can be beneficial as the model can better fit the domain space, however sometimes it may not be useful at all and cause the over-training. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we observe, how variable number of states behave, when matching the dataset generating by single model, and in the later we try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
+The number of hidden states is an important parameter, influencing the characteristic of the model. The higher number means the higher plasticity of the model. It can be beneficial as the model can better fit the domain space, however sometimes it may not be useful at all and cause the over-training. The parameter also critically influence the time and memory complexity of the algorithm. In following two experiments we observe how variable number of states behave when matching the dataset generating by single model, and in the later one we try to find the limits of the algorithm regarding the number of states and examine how the increasing complexity of the parameter space influence the convergence ability.    
 
 \subsection{Plasticity of the Models}\label{sec:plast}
 
 \subsubsection*{ Description }
-For this experiment we considered an artificial model consisting of five hidden states and four observation symbols arranged in the way of birth and death chain as in Figure \ref{fig:db}. There is not allowed for the model to change states except in the way of arrows. To add the uncertainty into the dataset, we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol. The model is deliberately build in the way, so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model. 
+For this experiment we considered an artificial model consisting of five hidden states and four observation symbols arranged in the way of birth and death chain as in Figure \ref{fig:db}. There is not allowed for the model to change states except in the way of arrows. To add the uncertainty into the dataset we have blurred the observation symbol emission by adding the $15\%$ error to the emitted symbol. The model is deliberately built in the way so it uncovers the properties worthy to explore. However the properties are more or less visibly present in any model. 
 
 
 \begin{figure}
@@ -1341,9 +1341,9 @@ On the contrary the convergence lines plotting the training on the \textit{big} 
 \end{figure}
 
 \subsubsection*{ Conclusion }
-Choosing the correct number of hidden states is crucial as its under-valuating can negatively influence the performance of the algorithm. Insufficient number of the hidden states for models 2-4 does not allow them to converge to the optimum values. The waves on the convergence lines of models 2 and 3 reveal that the averaged convergence lines differ. That marks the instability, thus the model that is too weak to cover the problem space. Model 4 was probably not able to distinguish the states at the ends of the birth and death sequence, that's way it has not reached the peak performance.
+Choosing the correct number of hidden states is crucial as its under-valuating can negatively influence the performance of the algorithm. Insufficient number of the hidden states for models 2-4 does not allow them to converge to the optimum values. The waves on the convergence lines of models 2 and 3 reveal that the averaged convergence lines differ. That marks the instability, thus the model that is too weak to cover the problem space. Model 4 was probably not able to distinguish the states at the ends of the birth and death sequence. That's way it has not reached the peak performance.
 
-We haven't proof that the over-valuated number of hidden states makes the models more vulnerable to over-fitting, as all models has over-fitted similarly. The higher number of states than in the original model makes the model to converge in the smaller number of iterations, but not to the considerably better values. However, the cost of computationally more expensive single iteration makes their convergence slower in real time.
+We haven't proof that the over-valuated number of hidden states makes the models more vulnerable to overfitting as all models has overfitted similarly. The higher number of states than in the original model makes the model to converge in the smaller number of iterations, but not to the considerably better values. However, the cost of computationally more expensive single iteration makes their convergence slower in real time.
 
 The experiment also stresses the importance of sufficiently sized dataset, as the small one emphasized the statistical error and lead to the over-fitting of the models. That is not the surprise, the weak dataset can't train powerful model. 
 
@@ -1382,28 +1382,28 @@ The second part of the experiment in Figure \ref{fig:big} shows the results of t
 
 \subsubsection*{ Conclusion }
 
-We have showed that the implemented algorithm is fast enough to train models with high number of hidden states. The use of the sparse jump-rate matrix can significantly shrink the time-demands and also produce faster and better convergence. We recommend to use the sparse matrix always, when the characteristic of the problem allows it and if we are sure that the transition between two states can't occur. 
+We have shown that the implemented algorithm is fast enough to train models with high number of hidden states. The use of the sparse jump-rate matrix can significantly shrink the time-demands and also produce faster and better convergence. We recommend to use the sparse matrix always when the characteristic of the problem allows it, and if we are sure that the transition between two states can't occur. 
 
 The higher is the number of nonzero elements in the jump-rate matrix, the harder problem is need to be solved because convergence in multidimensional parameter space is more likely to fall in a local minima.  
 
 \setsecnumdepth{part}
 \chapter{Conclusion}
 
-In this Master's thesis we provide detailed theoretical description of discrete-time and continuous-time hidden Markov models. We have examined general characteristic of CTHMM and explained how it differs from discrete-time model. Most emphases was given to continuous-time model learning methods, which various variants were described and implemented.   
+In this Master's thesis we have provided detailed theoretical description of discrete-time and continuous-time hidden Markov models. We have examined general characteristic of CTHMM and explained how it differs from discrete-time model. Most emphases was given to continuous-time model learning methods which various variants were described and implemented.   
 
-We have created the first of its kind general purpose continuous-time hidden Markov model library under open-source license. The computationally effective and simple to use library provides broad functionality and implementation of current state-of-the-art algorithms for both discrete-time and continuous-time hidden Markov model. The most novel part are several variations of EM learning algorithm using method of matrix exponentiation for counting end-state conditioned expectations (\textit{expm}).
+We have created the first of its kind general purpose continuous-time hidden Markov model library under open-source license \footnote{ accesible at pip \url{https://pypi.python.org/pypi/hmms} and GitHub \url{https://github.com/lopatovsky/HMMs} }. The computationally effective and simple to use library provides broad functionality and implementation of current state-of-the-art algorithms for both discrete-time and continuous-time hidden Markov model. The most novel part are several variations of EM learning algorithm using method of matrix exponentiation for counting end-state conditioned expectations (\textit{expm}).
 
 The implemented algorithms are able to handle hundreds of hidden states.  Fully connected model of 75 hidden states or sparse model of 170 hidden states can run one iteration of continuous-time learning algorithm in time under 20 minutes on 2.50GHz machine, when trained on the medium sized dataset.  
 
-We have implemented two variants of the \textit{expm} algorithm different in the maximized likelihood function, so called soft and hard method. Soft method maximizes the probability of the training dataset being generated by the model, hard method uses the results of the Viterbi algorithm maximizing the most probable state sequence. We have showed the superiority of the soft method as the hard method is not directly optimizing the wished likelihood function and often produces misleading results.
+We have implemented two variants of the \textit{expm} algorithm different in the maximized likelihood function, so called soft and hard method. Soft method maximizes the probability of the training dataset being generated by the model, hard method uses the results of the Viterbi algorithm maximizing the most probable state sequence. We have shown the superiority of the soft method as the hard method is not directly optimizing the wished likelihood function and often produces misleading results.
 
-The models trained on the dataset with integer lengths of time intervals can benefit from \textit{intege-interval} variant of algorithm sparing the number of matrix exponential computations, which as we have showed is the most time demanding part of the algorithm. The experiments referring to its numerical stability demonstrated that the relative error is negligible to negatively influence the computation, whereas the time demands decreased radically.  
+The models trained on the dataset with integer lengths of time intervals can benefit from \textit{intege-interval} variant of algorithm sparing the number of matrix exponential computations, which as we have shown is the most time demanding part of the algorithm. The experiments referring to its numerical stability demonstrated that the relative error is negligible to negatively influence the computation, whereas the time demands decreased radically.  
 
 \section{Future Work}
 
-The effective algorithm for the continuous-time hidden Markov model parameters learning is relatively new. It has showed to be successful in biomedical field, but it certainly could be applied to solve different domains. The open-source library may help to spread the method to the broader range of data scientist with different fields of interests. 
+The effective algorithm for the continuous-time hidden Markov model parameters learning is relatively new. It has shown to be successful in biomedical field, but it certainly could be applied to solve problems of different domains. The open-source library may help to spread the method to the broader range of data scientist with different fields of interests. 
 
-The functionality of the library can be further increased. Either by looking for the new convergence methods or implementing the model extension (for example continuous or multiple observations).
+The functionality of the library can be further increased. Either by looking for the new convergence methods or implementing the model extension (for example support of continuous or multiple observations).
 
 It would be interesting to examine CT-HMM comparing to recurrent neural network as they share some common characteristics. Possibly some hybrid method could be developed. 
 
